@@ -3,7 +3,7 @@ package DataTypes;
 import java.awt.*;
 /**
  *
- * @author G
+ * @author Dawson
  */
 public class Line {
     public boolean vert;

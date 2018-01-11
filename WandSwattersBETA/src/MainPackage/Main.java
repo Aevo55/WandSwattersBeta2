@@ -56,9 +56,9 @@ public class Main extends JFrame{
     private void initialize() {
         this.setResizable(false);
         this.setUndecorated(true);
-        this.setBounds(new Rectangle(312, 184, 250, 250));
-        this.setMinimumSize(new Dimension(400, 400));
-        this.setMaximumSize(new Dimension(400, 400));
+        this.setBounds(new Rectangle(312, 184, 500, 500));
+        this.setMinimumSize(new Dimension(500, 500));
+        this.setMaximumSize(new Dimension(500, 500));
         this.setContentPane(getJContentPane());
         this.setTitle("Dance Dance Deatholution");
     }

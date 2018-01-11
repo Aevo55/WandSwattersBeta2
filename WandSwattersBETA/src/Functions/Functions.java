@@ -8,8 +8,8 @@ package Functions;
  *
  * @author G
  */
-public class Sysout {
-    public Sysout(){}
+public class Functions {
+    public Functions(){}
     public void out(Object... in){
         for(int x = 0;x<in.length;x++){
             Class c = in[x].getClass();

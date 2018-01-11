@@ -30,10 +30,7 @@ public class Sprite {
     }
     
     public void live(){
-        
         life --;
-        
-        
     }
     
 //<editor-fold defaultstate="collapsed" desc="Getters and Setters">

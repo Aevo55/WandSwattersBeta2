@@ -5,17 +5,30 @@ import java.awt.*;
  *
  * @author Dawson
  * @param vert Boolean for if line has infinite slope
+ * @param x1 x Coordinate of first point
+ * @param y1 y Coordinate of first point
+ * @param x2 x Coordinate of first point
+ * @param y2 y Coordinate of first point
+ * @param p1 Coordinate for second point
+ * @param p2 Coordinate for second point
+ * @param rise Vertical distance between p1 and p2
+ * @param run Horizontal distance between p1 and p2
+ * @param slope M value of y=mx+b representation of line
+ * @param b y-intercept of y=mx+b representation of line
+ * @param mag length of the line
+ * @param angle angle (deg between 0 and 360 or rad between 0 2pi) of the line
+ * @param temp Temporary coordinate used for colission detection
  * 
  */
-public class Line {
-    public boolean vert;
-    public double x1,x2;
-    public double y1,y2;
-    public Coord p2 = new Coord();
-    public Coord p1 = new Coord();
-    public double rise, run, slope, b;
-    public double mag;
-    public Angle angle = new Angle();
+public class Line{
+    boolean vert;
+    double x1,x2;
+    double y1,y2;
+    Coord p2 = new Coord();
+    Coord p1 = new Coord();
+    double rise, run, slope, b;
+    double mag;
+    Angle angle = new Angle();
     Coord temp;
     public Line(Coord _p1, Coord _p2){
         p1 = _p1;
@@ -235,124 +248,72 @@ public class Line {
         int[] pts = {(int)x1,(int)y1,(int)x2,(int)y2};
         return pts;
     }
-    public void rotateBy(Line anchor,Coord p, Angle a){
-        if(p.equals(p1)){
-            anchor.recalc(p1,angle.getDeg() + a.getDeg(),mag);
-        }else{
+    public void compRotate(Line anchor,Coord p, Angle a){
+        if(!p.equals(p1)){
             anchor.recalc(p,p1);
-            
-            //anchor.recalc(p,anchor.angle.getDeg() + a.getDeg(), anchor.mag);
+            anchor.rotate(a);
+            rotate(a);
+            moveTo(anchor.p2);
+        }else{
+            rotate(a);
         }
-        angle.setDeg(angle.getDeg() + a.getDeg());
-        recalc(anchor.p2,angle,mag);
+        
     }
-    public void simpleRotate(Angle a){
+    public void rotate(Angle a){
         angle.setDeg(angle.getDeg() + a.getDeg());
         recalc(p1,angle,mag);
     }
-    //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
+    //<editor-fold defaultstate="collapsed" desc="Setters">
     public boolean isVert() {
         return vert;
-    }
-
-    public void setVert(boolean vert) {
-        this.vert = vert;
     }
 
     public double getX1() {
         return x1;
     }
 
-    public void setX1(double x1) {
-        this.x1 = x1;
-    }
-
     public double getX2() {
         return x2;
-    }
-
-    public void setX2(double x2) {
-        this.x2 = x2;
     }
 
     public double getY1() {
         return y1;
     }
 
-    public void setY1(double y1) {
-        this.y1 = y1;
-    }
-
     public double getY2() {
         return y2;
-    }
-
-    public void setY2(double y2) {
-        this.y2 = y2;
     }
 
     public Coord getP2() {
         return p2;
     }
 
-    public void setP2(Coord p2) {
-        this.p2 = p2;
-    }
-
     public Coord getP1() {
         return p1;
-    }
-
-    public void setP1(Coord p1) {
-        this.p1 = p1;
     }
 
     public double getRise() {
         return rise;
     }
 
-    public void setRise(double rise) {
-        this.rise = rise;
-    }
-
     public double getRun() {
         return run;
-    }
-
-    public void setRun(double run) {
-        this.run = run;
     }
 
     public double getSlope() {
         return slope;
     }
 
-    public void setSlope(double slope) {
-        this.slope = slope;
-    }
-
     public double getB() {
         return b;
-    }
-
-    public void setB(double b) {
-        this.b = b;
     }
 
     public double getMag() {
         return mag;
     }
 
-    public void setMag(double mag) {
-        this.mag = mag;
-    }
-
     public Angle getAngle() {
         return angle;
-    }
-
-    public void setAngle(Angle angle) {
-        this.angle = angle;
     }
     //</editor-fold>
 }

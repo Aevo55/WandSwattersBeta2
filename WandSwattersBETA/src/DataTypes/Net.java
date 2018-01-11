@@ -6,8 +6,9 @@
 package DataTypes;
 import java.awt.*;
 /**
- *
  * @author G
+ * @param coords Array of coordinates present in the net
+ * @param lines Array of lines forming the net
  */
 public class Net {
     public Coord[] coords;

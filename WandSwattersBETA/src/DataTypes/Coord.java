@@ -23,6 +23,10 @@ public class Coord{
         x = (double)_x;
         y = (double)_y;
     }
+    public void move(double _x, double _y){
+        x = x + _x;
+        y = y + _y;
+    }
     public void setX(double _x){
         x = _x;
     }

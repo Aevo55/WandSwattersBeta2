@@ -98,7 +98,7 @@ public class Game extends JPanel implements Runnable {
         for (int x = 0; x<m1.nets.length;x++){
             for (int y = 0; y<m1.nets[x].coords.length;y++){
                 gc.fillOval((int)m1.nets[x].coords[y].getX() - 2, (int)m1.nets[x].coords[y].getY() - 2, 4, 4);
-                gc.drawLine((int)m1.nets[x].lines[y].x1, (int)m1.nets[x].lines[y].y1, (int)m1.nets[x].lines[y].x2, (int)m1.nets[x].lines[y].y2);
+                gc.drawLine((int)m1.nets[x].lines[y].getX1(), (int)m1.nets[x].lines[y].getY1(), (int)m1.nets[x].lines[y].getX2(), (int)m1.nets[x].lines[y].getY2());
             }
         }
         
@@ -106,7 +106,7 @@ public class Game extends JPanel implements Runnable {
         gc.drawLine(phor.draw()[0],phor.draw()[1],phor.draw()[2],phor.draw()[3]);
         gc.setColor(Color.BLUE);
         gc.fillOval((int)player.getX()-1,(int)player.getY()-1,2,2);
-        gc.drawLine((int)anchor.x1,(int)anchor.y1,(int)anchor.x2,(int)anchor.y2);
+        gc.drawLine((int)anchor.getX1(),(int)anchor.getY1(),(int)anchor.getX2(),(int)anchor.getY2());
         gc.drawLine(aimline.draw()[0],aimline.draw()[1],aimline.draw()[2],aimline.draw()[3]);
         Color spritecol = new Color(test.red,test.blue,test.green);
         gc.setColor(spritecol);
@@ -187,14 +187,13 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_Q:
                 for(int x = 0; x<m1.nets[1].lines.length;x++){
-                    out.sysout(m1.nets[1].lines[x].angle.getDeg());
+                    out.sysout(m1.nets[1].lines[x].getAngle().getDeg());
                 }
             break;
             case KeyEvent.VK_I:
-                prevplayer.setY(10);
-                prevplayer.setX(10);
+                prevplayer = player;
                 ang.setDeg(10);
-                phor.rotateBy(anchor, prevplayer, ang);
+                phor.compRotate(anchor, prevplayer, ang);
             break;
             case KeyEvent.VK_UP:   
                 bool_upPressed = false;
@@ -242,11 +241,11 @@ public class Game extends JPanel implements Runnable {
             
             if(bool_aimup == true){
                 System.out.println("UP");
-                aimline.simpleRotate(aimupangle);
+                aimline.rotate(aimupangle);
             }
             if(bool_aimdown == true){
                 System.out.println("DOWN");
-                aimline.simpleRotate(aimdownangle);
+                aimline.rotate(aimdownangle);
             }
         }
         

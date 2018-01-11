@@ -18,7 +18,7 @@ public class Sprite {
     public double heading;
     
     //heading should be in degrees
-    public Coord loc;
+    public Coord loc = new Coord();
     public Line vector = new Line(loc, new Angle(heading), (double)velocity);
     
     public Sprite(Coord _loc,int _life, double _velocity, int _heading, int _size, int _red, int _blue, int _green){
@@ -36,7 +36,7 @@ public class Sprite {
     }
     
     public void live(){
-        vector.setMag(velocity);
+        vector.recalc(loc, new Angle(heading), velocity);
         loc.setX(vector.getX2());
         loc.setY(vector.getY2());
         //System.out.println(loc.getX() +  "  " + loc.getY());
@@ -45,8 +45,6 @@ public class Sprite {
         System.out.println(vector.getY2());
         vector.moveTo(vector.p2);
         life --;
-        
-        
     }
     
 //<editor-fold defaultstate="collapsed" desc="Getters and Setters">

@@ -11,25 +11,39 @@ public class Sprite {
     
     public int life;
     public double velocity;
+    public int size;
     public int red;
     public int green;
     public int blue;
     public double heading;
     
     //heading should be in degrees
-    public Coord loc = new Coord(0,0);
+    public Coord loc = new Coord();
     public Line vector = new Line(loc, new Angle(heading), (double)velocity);
     
-    public Sprite(int _life, double _velocity, int _heading, int _red, int _blue, int _green){
+    public Sprite(Coord _loc,int _life, double _velocity, int _heading, int _size, int _red, int _blue, int _green){
+        loc.setX(_loc.getX());
+        loc.setY(_loc.getY());
         life = _life;
         velocity = _velocity;
         heading = _heading;
+        size = _size;
         red = _red;
         blue = _blue;
         green = _green;
+        
+        
     }
     
     public void live(){
+        vector.recalc(loc, new Angle(heading), velocity);
+        loc.setX(vector.getX2());
+        loc.setY(vector.getY2());
+        //System.out.println(loc.getX() +  "  " + loc.getY());
+        //System.out.println(vector.getMag());
+        System.out.println(vector.getY1());
+        System.out.println(vector.getY2());
+        vector.moveTo(vector.p2);
         life --;
     }
     

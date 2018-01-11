@@ -9,7 +9,7 @@ package DataTypes;
  *
  * @author G
  */
-public class Coord {
+public class Coord{
     double x,y;
     public Coord(){
         x = 0;

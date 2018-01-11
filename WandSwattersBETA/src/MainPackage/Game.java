@@ -15,7 +15,7 @@ public class Game extends JPanel implements Runnable {
     Functions out = new Functions();
     double x = 1;
     int y = 1;
-    Sprite test = new Sprite(25,4,45,10,10,10);
+    Sprite test = new Sprite(new Coord(100,100),25,4,45,10,100,200,50);
     
     boolean
         bool_right = false, //If right arrow is pressed (can be overwritten by other keys)
@@ -108,6 +108,10 @@ public class Game extends JPanel implements Runnable {
         gc.fillOval((int)player.getX()-1,(int)player.getY()-1,2,2);
         gc.drawLine((int)anchor.x1,(int)anchor.y1,(int)anchor.x2,(int)anchor.y2);
         gc.drawLine(aimline.draw()[0],aimline.draw()[1],aimline.draw()[2],aimline.draw()[3]);
+        Color spritecol = new Color(test.red,test.blue,test.green);
+        gc.setColor(spritecol);
+        
+        if(test.getLife()>0)gc.fillOval((int)test.getLoc().getX(), (int)test.getLoc().getY(), test.size, test.size);
         
     }
     public void keyPressed(KeyEvent evt){
@@ -255,6 +259,7 @@ public class Game extends JPanel implements Runnable {
         
         while(true){
             Move();
+            test.live();
             repaint();
             try{
                 Thread.sleep(33);

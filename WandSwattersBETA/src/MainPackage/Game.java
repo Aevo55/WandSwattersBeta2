@@ -25,7 +25,11 @@ public class Game extends JPanel implements Runnable {
         bool_up2 = false,
         bool_down = false,
         bool_down2 = false,
-        bool_collide = false
+        bool_collide = false,
+        bool_aimup = false,
+        bool_aimdown = false,
+        bool_upPressed = false,
+        bool_downPressed = false
     ;
     double 
         xcol,
@@ -40,7 +44,8 @@ public class Game extends JPanel implements Runnable {
     Point prevplayer = new Point(50,50);
     Line anchor = new Line(player, prevplayer);
     Angle aimangle = new Angle();
-    
+    Angle aimupangle = new Angle();
+    Angle aimdownangle = new Angle();
     Line aimline;
     
     Point[] pillar2points = {
@@ -95,12 +100,13 @@ public class Game extends JPanel implements Runnable {
                 gc.drawLine((int)m1.nets[x].lines[y].x1, (int)m1.nets[x].lines[y].y1, (int)m1.nets[x].lines[y].x2, (int)m1.nets[x].lines[y].y2);
             }
         }
+        
         gc.setColor(Color.red);
-        gc.drawLine((int)phor.x1,(int)phor.y1,(int)phor.x2,(int)phor.y2);
+        gc.drawLine(phor.draw()[0],phor.draw()[1],phor.draw()[2],phor.draw()[3]);
         gc.setColor(Color.BLUE);
         gc.fillOval(player.x-1,player.y-1,2,2);
         gc.drawLine((int)anchor.x1,(int)anchor.y1,(int)anchor.x2,(int)anchor.y2);
-        gc.drawLine(player.x, player.y, player.x, player.y);
+        gc.drawLine(aimline.draw()[0],aimline.draw()[1],aimline.draw()[2],aimline.draw()[3]);
         
     }
     public void keyPressed(KeyEvent evt){
@@ -124,6 +130,19 @@ public class Game extends JPanel implements Runnable {
                 bool_right = true;
                 bool_right2 = true;
                 bool_left = false;
+            break;
+            case KeyEvent.VK_UP:   
+                bool_upPressed = true;
+                bool_aimup = true;
+                bool_aimdown = false;
+                
+            break;
+            case KeyEvent.VK_DOWN:
+                bool_downPressed = true;
+                bool_aimup = false;
+                bool_aimdown = true;
+                
+                
             break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
@@ -171,6 +190,17 @@ public class Game extends JPanel implements Runnable {
                 prevplayer.x = 10;
                 ang.setDeg(10);
                 phor.rotateBy(anchor, prevplayer, ang);
+            break;
+            case KeyEvent.VK_UP:   
+                bool_upPressed = false;
+                bool_aimup = false;
+                if(bool_downPressed == true){bool_aimdown = true;}
+            break;
+            case KeyEvent.VK_DOWN:
+                bool_downPressed = false;
+                bool_aimdown = false;
+                if(bool_upPressed == true){bool_aimup = true;}
+            break;
         }
     }
     public void Move(){
@@ -202,11 +232,26 @@ public class Game extends JPanel implements Runnable {
                 player.y = player.y + 2;
                 phor.moveBy(0, -2);
             }
+            aimline.moveTo(player.x, player.y);
+            
+            
+            if(bool_aimup == true){
+                System.out.println("UP");
+                aimline.simpleRotate(aimupangle);
+            }
+            if(bool_aimdown == true){
+                System.out.println("DOWN");
+                aimline.simpleRotate(aimdownangle);
+            }
         }
         
     }
     public void run() {
         aimangle.setDeg(0);
+        aimupangle.setDeg(5);
+        aimdownangle.setDeg(-5);
+        aimline = new Line(player,aimangle,25.0);
+        
         while(true){
             Move();
             repaint();

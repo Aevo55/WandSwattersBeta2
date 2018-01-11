@@ -15,7 +15,7 @@ public class Game extends JPanel implements Runnable {
     Functions out = new Functions();
     double x = 1;
     int y = 1;
-    Sprite test = new Sprite(25,4,45,10,10,10);
+    //Sprite test = new Sprite(25,4,45,10,10,10);
     
     boolean
         bool_right = false, //If right arrow is pressed (can be overwritten by other keys)

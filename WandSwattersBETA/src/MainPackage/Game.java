@@ -15,7 +15,7 @@ public class Game extends JPanel implements Runnable {
     Functions out = new Functions();
     double x = 1;
     int y = 1;
-    Sprite test = new Sprite(new Coord(100,100),1000,4,45,10,100,200,50);
+    Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,0,10,100,200,50);
     
     boolean
         bool_right = false, //If right arrow is pressed (can be overwritten by other keys)
@@ -48,7 +48,7 @@ public class Game extends JPanel implements Runnable {
     Angle aimupangle = new Angle();
     Angle aimdownangle = new Angle();
     Line aimline;
-    
+    Intersect testint = new Intersect();
     Coord[] pillar2points = {
         new Coord (50,50),
         new Coord (50,60),
@@ -104,7 +104,7 @@ public class Game extends JPanel implements Runnable {
                 gc.fillOval((int)m1.nets[x].coords[y].getX() - 2, (int)m1.nets[x].coords[y].getY() - 2, 4, 4);
             }//*/
         }
-        
+        gc.fillOval((int)testint.getX()-1,(int)testint.getY()-1,2,2);
         gc.setColor(Color.red);
         gc.drawLine(phor.draw()[0],phor.draw()[1],phor.draw()[2],phor.draw()[3]);
         gc.setColor(Color.BLUE);
@@ -239,17 +239,17 @@ public class Game extends JPanel implements Runnable {
                 phor.moveBy(0, -2);
             }
             aimline.moveTo(player);
-            
+            testint.recalc(phor, test.vector);
             
             if(bool_aimdown == true){
-                System.out.println("UP");
-                aimline.rotate(aimupangle);
-                test.vector.rotate(new Angle(-20));
+                System.out.println("DOWN");
+                aimline.rotate(new Angle(-10));
+                test.vector.rotate(new Angle(-10));
             }
             if(bool_aimup == true){
-                System.out.println("DOWN");
-                aimline.rotate(aimdownangle);
-                test.vector.rotate(new Angle(20));
+                System.out.println("UP");
+                aimline.rotate(new Angle(10));
+                test.vector.rotate(new Angle(10));
             }
         }
         

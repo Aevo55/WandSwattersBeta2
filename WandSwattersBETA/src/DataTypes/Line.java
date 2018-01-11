@@ -222,6 +222,10 @@ public class Line {
         y1 = y;
         y2 = y - rise;
     }
+    public int[] draw(){
+        int[] pts = {(int)x1,(int)y1,(int)x2,(int)y2};
+        return pts;
+    }
     public void rotateBy(Line anchor,Point p, Angle a){
         if(p.equals(p1)){
             anchor.recalc(p1,angle.getDeg() + a.getDeg(),mag);

@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Game extends JPanel implements Runnable { 
-    Sysout out = new Sysout();
+    Functions out = new Functions();
     double x = 1;
     int y = 1;
        

@@ -3,7 +3,7 @@ import Functions.*;
 import java.awt.*;
 public class Angle {
     double deg,rad;
-    Sysout out = new Sysout();
+    Functions out = new Functions();
     public Angle(){
         deg = 0;
         rad = 0;

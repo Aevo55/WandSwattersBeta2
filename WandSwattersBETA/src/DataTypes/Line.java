@@ -9,7 +9,8 @@ public class Line {
     public boolean vert;
     public double x1,x2;
     public double y1,y2;
-    public Point p1, p2;
+    public Point p2 = new Point();
+    public Point p1 = new Point();
     public double rise, run, slope, b;
     public double mag;
     public Angle angle = new Angle();
@@ -141,8 +142,7 @@ public class Line {
             b = y1 - (slope*x1);
             vert = false;
         }
-        p2.x = (int)x2;
-        p2.y = (int)y2;
+        Point p2 = new Point((int)x2,(int)y2);
     }
     public void recalc(Point _p1, Point _p2){
         p1 = _p1;
@@ -223,7 +223,14 @@ public class Line {
         y2 = y - rise;
     }
     public void rotateBy(Line anchor,Point p, Angle a){
+        if(p.equals(p1)){
+            anchor.recalc(p1,angle.getDeg() + a.getDeg(),mag);
+        }else{
+            anchor.recalc(p,p1);
+            
+            //anchor.recalc(p,anchor.angle.getDeg() + a.getDeg(), anchor.mag);
+        }
         angle.setDeg(angle.getDeg() + a.getDeg());
-        recalc(p1,angle,mag);
+        recalc(anchor.p2,angle,mag);
     }
 }

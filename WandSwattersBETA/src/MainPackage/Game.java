@@ -13,6 +13,8 @@ import java.io.IOException;
 
 public class Game extends JPanel implements Runnable { 
     Sysout out = new Sysout();
+    double x = 1;
+    int y = 1;
     boolean
         bool_right = false, //If right arrow is pressed (can be overwritten by other keys)
         bool_left = false, //If left arrow is pressed (can be overwritten by other keys)
@@ -32,7 +34,7 @@ public class Game extends JPanel implements Runnable {
     ;
     int gamewidth = 400;
     Angle ang = new Angle();
-    Point aim = new Point(50,50);
+    Point aim = new Point(10,10);
     Point player = new Point(50,50);
     Point prevplayer = new Point(50,50);
     Line anchor = new Line(player, prevplayer);
@@ -93,6 +95,7 @@ public class Game extends JPanel implements Runnable {
         gc.drawLine((int)phor.x1,(int)phor.y1,(int)phor.x2,(int)phor.y2);
         gc.setColor(Color.BLUE);
         gc.fillOval(player.x-1,player.y-1,2,2);
+        gc.drawLine((int)anchor.x1,(int)anchor.y1,(int)anchor.x2,(int)anchor.y2);
     }
     public void keyPressed(KeyEvent evt){
         switch(evt.getKeyCode()){
@@ -158,29 +161,43 @@ public class Game extends JPanel implements Runnable {
                 }
             break;
             case KeyEvent.VK_I:
-                System.out.println(anchor.p2);
+                prevplayer.y = 10;
+                prevplayer.x = 10;
                 ang.setDeg(10);
-                phor.rotateBy(anchor, player, ang);
+                phor.rotateBy(anchor, prevplayer, ang);
         }
     }
     public void Move(){
+        /*
+        if (x > 50 || x < -50){
+            y = -y;
+        }
+        x = x + (1 * y);
+        out.out(x);
+        ang.setDeg(x);
+        phor.rotateBy(anchor, phor.p1, ang);
+        //*/
         if (bool_collide == false){
             if (bool_left == true){
                 prevplayer.x = player.x;
                 player.x = player.x - 2;
+                phor.moveBy(-2, 0);
             }else if(bool_right == true){
                 prevplayer.x = player.x;
                 player.x = player.x + 2;
+                phor.moveBy(2, 0);
             }
             if (bool_up == true){
                 prevplayer.y = player.y;
                 player.y = player.y - 2;
+                phor.moveBy(0, 2);
             }else if(bool_down == true){
                 prevplayer.y = player.y;
                 player.y = player.y + 2;
+                phor.moveBy(0, -2);
             }
         }
-        phor.moveTo(player.x, player.y);
+        
     }
     public void run() {
         while(true){

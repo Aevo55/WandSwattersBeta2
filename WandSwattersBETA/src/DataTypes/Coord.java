@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package DataTypes;
-
+import java.awt.*;
 /**
  *
  * @author G
@@ -29,6 +29,9 @@ public class Coord{
     }
     public Coord offset(double _x, double _y){
         return new Coord((x + _x), (y + _y));
+    }
+    public Point toPoint(){
+        return new Point((int)x,(int)y);
     }
     public void setX(double _x){
         x = _x;

@@ -95,11 +95,14 @@ public class Game extends JPanel implements Runnable {
         gc.fillRect(0, 0, 5, 405);
         gc.fillRect(0, 395, 405, 5);
         gc.fillRect(395, 0, 5, 405);
+        
         for (int x = 0; x<m1.nets.length;x++){
+            gc.drawPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
+            gc.fillPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
+            /*
             for (int y = 0; y<m1.nets[x].coords.length;y++){
                 gc.fillOval((int)m1.nets[x].coords[y].getX() - 2, (int)m1.nets[x].coords[y].getY() - 2, 4, 4);
-                gc.drawLine((int)m1.nets[x].lines[y].getX1(), (int)m1.nets[x].lines[y].getY1(), (int)m1.nets[x].lines[y].getX2(), (int)m1.nets[x].lines[y].getY2());
-            }
+            }//*/
         }
         
         gc.setColor(Color.red);

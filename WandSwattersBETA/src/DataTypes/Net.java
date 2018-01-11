@@ -24,6 +24,29 @@ public class Net {
             }
         }
     }
+    public int[] getXs(){
+        Point[] _points = getPoints();
+        int[] xs = new int[length()];
+        for(int z = 0;z<length();z++){
+            xs[z] = _points[z].x;
+        }
+        return xs;
+    }
+    public int[] getYs(){
+        Point[] _points = getPoints();
+        int[] ys = new int[length()];
+        for(int z = 0;z<length();z++){
+            ys[z] = _points[z].y;
+        }
+        return ys;
+    }
+    public Point[] getPoints(){
+        Point[] points = new Point[length()];
+        for (int z = 0;z<length();z++){
+            points[z] = coords[z].toPoint();
+        }
+        return points;
+    }
     public int length(){
         return coords.length;
     }

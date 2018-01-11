@@ -39,10 +39,6 @@ public class Sprite {
         vector.recalc(loc, new Angle(heading), velocity);
         loc.setX(vector.getX2());
         loc.setY(vector.getY2());
-        //System.out.println(loc.getX() +  "  " + loc.getY());
-        //System.out.println(vector.getMag());
-        System.out.println(vector.getY1());
-        System.out.println(vector.getY2());
         vector.moveTo(vector.p2);
         life --;
     }

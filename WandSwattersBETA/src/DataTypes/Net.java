@@ -10,20 +10,20 @@ import java.awt.*;
  * @author G
  */
 public class Net {
-    public Point[] points;
+    public Coord[] coords;
     public Line[] lines;
-    public Net(Point... _points){
-        points = _points;
-        lines = new Line[points.length];
+    public Net(Coord... _coords){
+        coords = _coords;
+        lines = new Line[coords.length];
         for (int x = 0;x<lines.length;x++){
             if (x == 0){
-                lines[x] = new Line(points[lines.length - 1], points[x]);
+                lines[x] = new Line(coords[lines.length - 1], coords[x]);
             }else{
-                lines[x] = new Line(points[x-1], points[x]);
+                lines[x] = new Line(coords[x-1], coords[x]);
             }
         }
     }
     public int length(){
-        return points.length;
+        return coords.length;
     }
 }

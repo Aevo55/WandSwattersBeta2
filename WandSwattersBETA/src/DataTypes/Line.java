@@ -4,18 +4,20 @@ import java.awt.*;
 /**
  *
  * @author Dawson
+ * @param vert Boolean for if line has infinite slope
+ * 
  */
 public class Line {
     public boolean vert;
     public double x1,x2;
     public double y1,y2;
-    public Point p2 = new Point();
-    public Point p1 = new Point();
+    public Coord p2 = new Coord();
+    public Coord p1 = new Coord();
     public double rise, run, slope, b;
     public double mag;
     public Angle angle = new Angle();
-    Point temp;
-    public Line(Point _p1, Point _p2){
+    Coord temp;
+    public Line(Coord _p1, Coord _p2){
         p1 = _p1;
         p2 = _p2;
         x1 = p1.x;
@@ -46,7 +48,7 @@ public class Line {
             mag = Math.sqrt((rise*rise)+(run*run));
         }
     }
-    public Line(Point _p1, double _slope, double _mag){
+    public Line(Coord _p1, double _slope, double _mag){
         p1 = _p1;
         x1 = p1.x;
         y1 = p1.y;
@@ -81,7 +83,7 @@ public class Line {
             b = y1 - (slope*x1);
         }
     }
-    public Line(Point _p1, Angle _angle, double _mag){
+    public Line(Coord _p1, Angle _angle, double _mag){
         p1 = _p1;
         x1 = p1.x;
         y1 = p1.y;
@@ -113,7 +115,7 @@ public class Line {
         p2.x = (int)x2;
         p2.y = (int)y2;
     }
-    public void recalc(Point _p1, Angle _angle, double _mag){
+    public void recalc(Coord _p1, Angle _angle, double _mag){
         p1 = _p1;
         x1 = p1.x;
         y1 = p1.y;
@@ -144,7 +146,7 @@ public class Line {
         }
         Point p2 = new Point((int)x2,(int)y2);
     }
-    public void recalc(Point _p1, Point _p2){
+    public void recalc(Coord _p1, Coord _p2){
         p1 = _p1;
         p2 = _p2;
         x1 = p1.x;
@@ -175,7 +177,7 @@ public class Line {
             mag = Math.sqrt((rise*rise)+(run*run));
         }
     }
-    public void recalc(Point _p1, double _slope, double _mag){
+    public void recalc(Coord _p1, double _slope, double _mag){
         p1 = _p1;
         x1 = p1.x;
         y1 = p1.y;
@@ -216,17 +218,24 @@ public class Line {
         y1 -= y;
         y2 -= y;
     }
+    
     public void moveTo(double x, double y){
         x1 = x;
         x2 = x + run;
         y1 = y;
         y2 = y - rise;
     }
+    public void moveTo(Coord c){
+        x1 = c.getX();
+        y1 = c.getY();
+        x2 = c.getX() + run;
+        y2 = c.getY() - rise;
+    }
     public int[] draw(){
         int[] pts = {(int)x1,(int)y1,(int)x2,(int)y2};
         return pts;
     }
-    public void rotateBy(Line anchor,Point p, Angle a){
+    public void rotateBy(Line anchor,Coord p, Angle a){
         if(p.equals(p1)){
             anchor.recalc(p1,angle.getDeg() + a.getDeg(),mag);
         }else{
@@ -240,6 +249,110 @@ public class Line {
     public void simpleRotate(Angle a){
         angle.setDeg(angle.getDeg() + a.getDeg());
         recalc(p1,angle,mag);
-    
     }
+    //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
+    public boolean isVert() {
+        return vert;
+    }
+
+    public void setVert(boolean vert) {
+        this.vert = vert;
+    }
+
+    public double getX1() {
+        return x1;
+    }
+
+    public void setX1(double x1) {
+        this.x1 = x1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public void setX2(double x2) {
+        this.x2 = x2;
+    }
+
+    public double getY1() {
+        return y1;
+    }
+
+    public void setY1(double y1) {
+        this.y1 = y1;
+    }
+
+    public double getY2() {
+        return y2;
+    }
+
+    public void setY2(double y2) {
+        this.y2 = y2;
+    }
+
+    public Coord getP2() {
+        return p2;
+    }
+
+    public void setP2(Coord p2) {
+        this.p2 = p2;
+    }
+
+    public Coord getP1() {
+        return p1;
+    }
+
+    public void setP1(Coord p1) {
+        this.p1 = p1;
+    }
+
+    public double getRise() {
+        return rise;
+    }
+
+    public void setRise(double rise) {
+        this.rise = rise;
+    }
+
+    public double getRun() {
+        return run;
+    }
+
+    public void setRun(double run) {
+        this.run = run;
+    }
+
+    public double getSlope() {
+        return slope;
+    }
+
+    public void setSlope(double slope) {
+        this.slope = slope;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public void setB(double b) {
+        this.b = b;
+    }
+
+    public double getMag() {
+        return mag;
+    }
+
+    public void setMag(double mag) {
+        this.mag = mag;
+    }
+
+    public Angle getAngle() {
+        return angle;
+    }
+
+    public void setAngle(Angle angle) {
+        this.angle = angle;
+    }
+    //</editor-fold>
 }

@@ -39,34 +39,34 @@ public class Game extends JPanel implements Runnable {
     ;
     int gamewidth = 400;
     Angle ang = new Angle();
-    Point aim = new Point(10,10);
-    Point player = new Point(50,50);
-    Point prevplayer = new Point(50,50);
+    Coord aim = new Coord(10,10);
+    Coord player = new Coord(50,50);
+    Coord prevplayer = new Coord(50,50);
     Line anchor = new Line(player, prevplayer);
     Angle aimangle = new Angle();
     Angle aimupangle = new Angle();
     Angle aimdownangle = new Angle();
     Line aimline;
     
-    Point[] pillar2points = {
-        new Point (50,50),
-        new Point (50,60),
-        new Point (60,60),
-        new Point (60,50)
+    Coord[] pillar2points = {
+        new Coord (50,50),
+        new Coord (50,60),
+        new Coord (60,60),
+        new Coord (60,50)
     };
-    Point[] edgepoints = {
-        new Point(0,0), 
-        new Point(0,100),
-        new Point(100,100),
-        new Point(100,0)
+    Coord[] edgepoints = {
+        new Coord(0,0), 
+        new Coord(0,100),
+        new Coord(100,100),
+        new Coord(100,0)
     };
-    Point[] pillarpoints = {
-        new Point(20,20), 
-        new Point(20,40),
-        new Point(30,50),
-        new Point(40,40),
-        new Point(50,30),
-        new Point(40,20)
+    Coord[] pillarpoints = {
+        new Coord(20,20), 
+        new Coord(20,40),
+        new Coord(30,50),
+        new Coord(40,40),
+        new Coord(50,30),
+        new Coord(40,20)
     };
     Net pillar = new Net(pillarpoints);
     Net pillar2 = new Net(pillar2points);
@@ -95,8 +95,8 @@ public class Game extends JPanel implements Runnable {
         gc.fillRect(0, 395, 405, 5);
         gc.fillRect(395, 0, 5, 405);
         for (int x = 0; x<m1.nets.length;x++){
-            for (int y = 0; y<m1.nets[x].points.length;y++){
-                gc.fillOval(m1.nets[x].points[y].x - 2, m1.nets[x].points[y].y - 2, 4, 4);
+            for (int y = 0; y<m1.nets[x].coords.length;y++){
+                gc.fillOval((int)m1.nets[x].coords[y].getX() - 2, (int)m1.nets[x].coords[y].getY() - 2, 4, 4);
                 gc.drawLine((int)m1.nets[x].lines[y].x1, (int)m1.nets[x].lines[y].y1, (int)m1.nets[x].lines[y].x2, (int)m1.nets[x].lines[y].y2);
             }
         }
@@ -104,7 +104,7 @@ public class Game extends JPanel implements Runnable {
         gc.setColor(Color.red);
         gc.drawLine(phor.draw()[0],phor.draw()[1],phor.draw()[2],phor.draw()[3]);
         gc.setColor(Color.BLUE);
-        gc.fillOval(player.x-1,player.y-1,2,2);
+        gc.fillOval((int)player.getX()-1,(int)player.getY()-1,2,2);
         gc.drawLine((int)anchor.x1,(int)anchor.y1,(int)anchor.x2,(int)anchor.y2);
         gc.drawLine(aimline.draw()[0],aimline.draw()[1],aimline.draw()[2],aimline.draw()[3]);
         
@@ -186,8 +186,8 @@ public class Game extends JPanel implements Runnable {
                 }
             break;
             case KeyEvent.VK_I:
-                prevplayer.y = 10;
-                prevplayer.x = 10;
+                prevplayer.setY(10);
+                prevplayer.setX(10);
                 ang.setDeg(10);
                 phor.rotateBy(anchor, prevplayer, ang);
             break;
@@ -215,24 +215,24 @@ public class Game extends JPanel implements Runnable {
         //*/
         if (bool_collide == false){
             if (bool_left == true){
-                prevplayer.x = player.x;
-                player.x = player.x - 2;
+                prevplayer.setX(player.getX());
+                player.setX(player.getX() - 2);
                 phor.moveBy(-2, 0);
             }else if(bool_right == true){
-                prevplayer.x = player.x;
-                player.x = player.x + 2;
+                prevplayer.setX(player.getX());
+                player.setX(player.getX() + 2);
                 phor.moveBy(2, 0);
             }
             if (bool_up == true){
-                prevplayer.y = player.y;
-                player.y = player.y - 2;
+                prevplayer.setY(player.getY());
+                player.setY(player.getY() - 2);
                 phor.moveBy(0, 2);
             }else if(bool_down == true){
-                prevplayer.y = player.y;
-                player.y = player.y + 2;
+                prevplayer.setY(player.getY());
+                player.setY(player.getY() + 2);
                 phor.moveBy(0, -2);
             }
-            aimline.moveTo(player.x, player.y);
+            aimline.moveTo(player);
             
             
             if(bool_aimup == true){

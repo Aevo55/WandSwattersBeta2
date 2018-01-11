@@ -157,7 +157,7 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_Q:
                 for(int x = 0; x<m1.nets[1].lines.length;x++){
-                    out.out(m1.nets[1].lines[x].angle.getDeg());
+                    out.sysout(m1.nets[1].lines[x].angle.getDeg());
                 }
             break;
             case KeyEvent.VK_I:

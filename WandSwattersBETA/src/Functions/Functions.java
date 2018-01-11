@@ -10,13 +10,20 @@ package Functions;
  */
 public class Functions {
     public Functions(){}
-    public void out(Object... in){
+    public boolean range(double a, double b, double c){
+        if(a < b && b < c){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public void sysout(Object... in){
         for(int x = 0;x<in.length;x++){
             Class c = in[x].getClass();
             if(c==Integer.class || c==Double.class||c==String.class||c==Long.class||c==Float.class||c==null||c==char.class||c==Boolean.class||c==Class.class){
                 System.out.println(in[x]);
             }else{
-                out(c);
+                sysout(c);
             }
         }
     }

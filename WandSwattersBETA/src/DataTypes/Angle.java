@@ -9,6 +9,12 @@ public class Angle {
         rad = 0;
         out.sysout();
     }
+    public Angle(double _deg){
+        deg = _deg;
+        deg = fix(deg);
+        rad = deg/360*(2*Math.PI);
+        out.sysout();
+    }
     public double getDeg(){
         return deg;
     }

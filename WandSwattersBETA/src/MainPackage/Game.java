@@ -15,6 +15,7 @@ public class Game extends JPanel implements Runnable {
     Sysout out = new Sysout();
     double x = 1;
     int y = 1;
+       
     boolean
         bool_right = false, //If right arrow is pressed (can be overwritten by other keys)
         bool_left = false, //If left arrow is pressed (can be overwritten by other keys)
@@ -38,6 +39,10 @@ public class Game extends JPanel implements Runnable {
     Point player = new Point(50,50);
     Point prevplayer = new Point(50,50);
     Line anchor = new Line(player, prevplayer);
+    Angle aimangle = new Angle();
+    
+    Line aimline;
+    
     Point[] pillar2points = {
         new Point (50,50),
         new Point (50,60),
@@ -63,14 +68,13 @@ public class Game extends JPanel implements Runnable {
     //Net edge = new Net(edgepoints);
     Map m1 = new Map(pillar, pillar2);
     Line[] rays = new Line[m1.totalpoints()];
-    Line phor = new Line(player,0.0,999);
+    Line phor = new Line(player,0.0,20);
     Line aiml = new Line(player, aim);
     String 
         str_appath = (System.getProperty("user.dir"))
     ;
-    Thread 
-        timer
-    ;
+    Thread timer;
+    
     public Game() {
         timer=new Thread(this); //initializes the thread and puts Class1 into it
         timer.start(); //begins the thread
@@ -96,6 +100,8 @@ public class Game extends JPanel implements Runnable {
         gc.setColor(Color.BLUE);
         gc.fillOval(player.x-1,player.y-1,2,2);
         gc.drawLine((int)anchor.x1,(int)anchor.y1,(int)anchor.x2,(int)anchor.y2);
+        gc.drawLine(player.x, player.y, player.x, player.y);
+        
     }
     public void keyPressed(KeyEvent evt){
         switch(evt.getKeyCode()){
@@ -200,6 +206,7 @@ public class Game extends JPanel implements Runnable {
         
     }
     public void run() {
+        aimangle.setDeg(0);
         while(true){
             Move();
             repaint();

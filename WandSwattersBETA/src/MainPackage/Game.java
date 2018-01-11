@@ -15,7 +15,7 @@ public class Game extends JPanel implements Runnable {
     Functions out = new Functions();
     double x = 1;
     int y = 1;
-    Sprite test = new Sprite(new Coord(100,100),25,4,45,10,100,200,50);
+    Sprite test = new Sprite(new Coord(100,100),1000,4,45,10,100,200,50);
     
     boolean
         bool_right = false, //If right arrow is pressed (can be overwritten by other keys)
@@ -238,13 +238,15 @@ public class Game extends JPanel implements Runnable {
             aimline.moveTo(player);
             
             
-            if(bool_aimup == true){
+            if(bool_aimdown == true){
                 System.out.println("UP");
                 aimline.rotate(aimupangle);
+                test.vector.rotate(new Angle(-20));
             }
-            if(bool_aimdown == true){
+            if(bool_aimup == true){
                 System.out.println("DOWN");
                 aimline.rotate(aimdownangle);
+                test.vector.rotate(new Angle(20));
             }
         }
         

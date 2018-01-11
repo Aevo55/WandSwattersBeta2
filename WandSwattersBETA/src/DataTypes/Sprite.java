@@ -36,7 +36,7 @@ public class Sprite {
     }
     
     public void live(){
-        vector.recalc(loc, new Angle(heading), velocity);
+        vector.recalc(loc, vector.getAngle(), velocity);
         loc.setX(vector.getX2());
         loc.setY(vector.getY2());
         //System.out.println(loc.getX() +  "  " + loc.getY());

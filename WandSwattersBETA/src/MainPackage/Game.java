@@ -10,12 +10,17 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Game extends JPanel implements Runnable { 
     Functions out = new Functions();
     double x = 1;
     int y = 1;
-    Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,0,10,100,200,50);
+    Sprite test = new Sprite(new Coord(100,100),1000,4,45,10,100,200,50);
+    ArrayList cloud = new ArrayList();
+    int red = 100;
+    int green = 100;
+    int blue = 100;
     
     boolean
         bool_right = false, //If right arrow is pressed (can be overwritten by other keys)
@@ -89,13 +94,12 @@ public class Game extends JPanel implements Runnable {
         setOpaque(false); //wipes everything on the frame
         super.paintComponent(gc); //creates the class for painting indavidual objects in the frame
         gc.setColor(Color.WHITE);
-        gc.fillRect(0, 0, 405, 405);
+        gc.fillRect(0, 0, 505, 505);
         gc.setColor(Color.BLACK);
-        gc.fillRect(0, 0, 405, 5);
-        gc.fillRect(0, 0, 5, 405);
-        gc.fillRect(0, 395, 405, 5);
-        gc.fillRect(395, 0, 5, 405);
-        
+        gc.fillRect(0, 0, 505, 5);
+        gc.fillRect(0, 0, 5, 505);
+        gc.fillRect(0, 495, 505, 5);
+        gc.fillRect(495, 0, 5, 505);
         for (int x = 0; x<m1.nets.length;x++){
             gc.drawPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
             gc.fillPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
@@ -107,7 +111,11 @@ public class Game extends JPanel implements Runnable {
         gc.fillOval((int)testint.getX()-1,(int)testint.getY()-1,2,2);
         gc.setColor(Color.red);
         gc.drawLine(phor.draw()[0],phor.draw()[1],phor.draw()[2],phor.draw()[3]);
+        gc.fillOval(40, 450, (int)(red/10), (int)(red/10));
+        gc.setColor(Color.green);
+        gc.fillOval(100,450,(int)(green/10),(int)(green/10));
         gc.setColor(Color.BLUE);
+        gc.fillOval(70,450,(int)(blue/10),(int)(blue/10));
         gc.fillOval((int)player.getX()-1,(int)player.getY()-1,2,2);
         gc.drawLine((int)anchor.getX1(),(int)anchor.getY1(),(int)anchor.getX2(),(int)anchor.getY2());
         gc.drawLine(aimline.draw()[0],aimline.draw()[1],aimline.draw()[2],aimline.draw()[3]);
@@ -154,6 +162,9 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
+            break;
+            case KeyEvent.VK_SPACE:
+                
             break;
         }
     }
@@ -208,7 +219,14 @@ public class Game extends JPanel implements Runnable {
                 if(bool_upPressed == true){bool_aimup = true;}
             break;
         }
+    }   
+    
+    public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
+    
+        cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
+        
     }
+    
     public void Move(){
         /*
         if (x > 50 || x < -50){

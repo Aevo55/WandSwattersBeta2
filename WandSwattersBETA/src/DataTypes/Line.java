@@ -237,4 +237,9 @@ public class Line {
         angle.setDeg(angle.getDeg() + a.getDeg());
         recalc(anchor.p2,angle,mag);
     }
+    public void simpleRotate(Angle a){
+        angle.setDeg(angle.getDeg() + a.getDeg());
+        recalc(p1,angle,mag);
+    
+    }
 }

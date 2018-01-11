@@ -17,7 +17,7 @@ public class Sprite {
     public double heading;
     
     //heading should be in degrees
-    public Point loc = new Point (0,0);
+    public Coord loc = new Coord(0,0);
     public Line vector = new Line(loc, new Angle(heading), (double)velocity);
     
     public Sprite(int _life, double _velocity, int _heading, int _red, int _blue, int _green){
@@ -85,11 +85,11 @@ public class Sprite {
         this.heading = heading;
     }
 
-    public Point getLoc() {
+    public Coord getLoc() {
         return loc;
     }
 
-    public void setLoc(Point loc) {
+    public void setLoc(Coord loc) {
         this.loc = loc;
     }
     //</editor-fold>

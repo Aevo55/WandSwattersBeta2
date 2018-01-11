@@ -187,9 +187,8 @@ public class Game extends JPanel implements Runnable {
                 }
             break;
             case KeyEvent.VK_I:
-                prevplayer = player;
-                ang.setDeg(10);
-                phor.compRotate(anchor, prevplayer, ang);
+                prevplayer = player.offset(10, 10);
+                phor.compRotate(anchor, prevplayer, new Angle(10));
             break;
             case KeyEvent.VK_UP:   
                 bool_upPressed = false;

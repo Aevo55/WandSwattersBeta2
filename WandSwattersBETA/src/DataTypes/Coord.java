@@ -27,6 +27,9 @@ public class Coord {
         x = x + _x;
         y = y + _y;
     }
+    public Coord offset(double _x, double _y){
+        return new Coord((x + _x), (y + _y));
+    }
     public void setX(double _x){
         x = _x;
     }

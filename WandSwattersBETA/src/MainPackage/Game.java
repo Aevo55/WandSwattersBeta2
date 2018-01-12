@@ -17,7 +17,7 @@ public class Game extends JPanel implements Runnable {
     double x = 1;
     int y = 1;
     Sprite test = new Sprite(new Coord(100,100),1000,4,45,10,100,200,50);
-    ArrayList cloud = new ArrayList();
+    Cloud cloud = new Cloud();
     int red = 100;
     int green = 100;
     int blue = 100;
@@ -222,9 +222,7 @@ public class Game extends JPanel implements Runnable {
     }   
     
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
-    
-        cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
-        
+        cloud.addSprite(new Sprite(location, life, velocity, heading, size, red, blue, green));
     }
     
     public void Move(){
@@ -233,9 +231,9 @@ public class Game extends JPanel implements Runnable {
             y = -y;
         }
         x = x + (1 * y);
-        out.out(x);
+        out.sysout(x);
         ang.setDeg(x);
-        phor.rotateBy(anchor, phor.p1, ang);
+        phor.rotate(ang);
         //*/
         if (bool_collide == false){
             if (bool_left == true){

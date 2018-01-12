@@ -18,6 +18,7 @@ public class Intersect extends Coord{
         
     }
     public Intersect(Line _l1, Line _l2){
+        exists = false;
         l1 = _l1;
         l2 = _l2;
         if (l1.getSlope() == l2.getSlope()){
@@ -33,10 +34,16 @@ public class Intersect extends Coord{
         }
     }
     public void recalc(Line _l1, Line _l2){
+     
+        exists = false;
         l1 = _l1;
-        l2 = _l2;
+        l2 = _l2;        
+        System.out.println(l1.getSlope());
+        System.out.println(l2.getSlope());   
         if (l1.getSlope() == l2.getSlope()){
             exists = false;
+            setX(0);
+            setY(0);
         }else{
             setX((l2.getB()-l1.getB())/(l1.getSlope()-l2.getSlope()));
             setY((getX() * l1.getSlope()) + l1.getB());

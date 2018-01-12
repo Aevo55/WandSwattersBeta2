@@ -18,10 +18,16 @@ public class Game extends JPanel implements Runnable {
     int y = 1;
     Sprite test = new Sprite(new Coord(100,100),1000,4,45,10,100,200,50);
     ArrayList cloud = new ArrayList();
-    int red = 100;
-    int green = 100;
-    int blue = 100;
-    
+    int red = 60;
+    int green = 60;
+    int blue = 60;
+    int redx = 50;
+    int redy = 400;
+    int bluex = 270;
+    int bluey = 400;
+    int greenx = 160;
+    int greeny = 400;
+            
     boolean
         bool_right = false, //If right arrow is pressed (can be overwritten by other keys)
         bool_left = false, //If left arrow is pressed (can be overwritten by other keys)
@@ -111,18 +117,33 @@ public class Game extends JPanel implements Runnable {
         
         gc.setColor(Color.red);
         gc.drawLine(phor.draw()[0],phor.draw()[1],phor.draw()[2],phor.draw()[3]);
-        gc.fillOval(40, 450, (int)(red/10), (int)(red/10));
+        gc.fillOval(redx, redy, (int)((red/5)*2), (int)((red/5)*2));
         gc.setColor(Color.green);
-        gc.fillOval(100,450,(int)(green/10),(int)(green/10));
+        gc.fillOval(greenx,greeny,(int)((green/5)*2),(int)((green/5)*2));
         gc.setColor(Color.BLUE);
-        gc.fillOval(70,450,(int)(blue/10),(int)(blue/10));
+        gc.fillOval(bluex,bluey,(int)((blue/5)*2),(int)((blue/5)*2));
         gc.fillOval((int)player.getX()-1,(int)player.getY()-1,2,2);
         gc.drawLine((int)anchor.getX1(),(int)anchor.getY1(),(int)anchor.getX2(),(int)anchor.getY2());
         gc.drawLine(aimline.draw()[0],aimline.draw()[1],aimline.draw()[2],aimline.draw()[3]);
         Color spritecol = new Color(test.red,test.blue,test.green);
         gc.setColor(spritecol);
-        
         if(test.getLife()>0)gc.fillOval((int)test.getLoc().getX(), (int)test.getLoc().getY(), test.size, test.size);
+        
+        /*Sprite list[] = (Sprite[])cloud.toArray();
+        for(int i = 0; i < cloud.size();i++){
+            gc.setColor(new Color(list[i].red,list[i].green,list[i].blue));         
+            if(list[i].life >0){
+                gc.fillOval((int)list[i].getLoc().getX(),(int)list[i].getLoc().getY(),list[i].size,list[i].size);
+            }
+ 
+        }
+        */
+        
+        
+        gc.setColor(Color.black);
+        gc.drawOval(redx, redy, (int)((red/5)*2), (int)((red/5)*2));
+        gc.drawOval(greenx,greeny,(int)((green/5)*2),(int)((green/5)*2));
+        gc.drawOval(bluex,bluey,(int)((blue/5)*2),(int)((blue/5)*2));
         
     }
     public void keyPressed(KeyEvent evt){
@@ -132,6 +153,67 @@ public class Game extends JPanel implements Runnable {
                 bool_up = true;
                 bool_down = false;
             break;
+            case KeyEvent.VK_U:
+                if(red<255){
+                red +=15;
+                
+                
+                redx -= 3;
+                redy -= 3;}
+                
+                if(red>255){red = 255;}
+                
+            break;
+            case KeyEvent.VK_I:
+                if(green<255){
+                green +=15;
+                
+                
+                greenx -= 3;
+                greeny -= 3;}
+                
+                if(green>255){green = 255;}
+                
+            break;
+            case KeyEvent.VK_O:
+                if(blue<255){
+                blue +=15;
+                
+                
+                bluex -= 3;
+                bluey -= 3;}
+                
+                if(blue>255){blue = 255;}
+            break;
+            
+            case KeyEvent.VK_J:
+                if(red>0){
+                red -=15;
+                
+                redx += 3;
+                redy +=3;
+                }
+                if(red<0){red = 0;}
+            break;
+            case KeyEvent.VK_K:
+                if(green>0){
+                green -=15;
+                
+                greenx += 3;
+                greeny +=3;
+                }
+                if(green<0){green = 0;}
+            break;
+            case KeyEvent.VK_L:
+                if(blue>0){
+                blue -=15;
+                
+                bluex += 3;
+                bluey +=3;
+                }
+                if(blue<0){blue = 0;}
+            break;
+            
             case KeyEvent.VK_S:
                 bool_down = true;
                 bool_down2 = true;
@@ -164,7 +246,7 @@ public class Game extends JPanel implements Runnable {
                 System.exit(0);
             break;
             case KeyEvent.VK_SPACE:
-                
+                createSprite(player,25,5,(int)aimangle.getDeg(),5,red,blue,green);
             break;
         }
     }
@@ -204,7 +286,7 @@ public class Game extends JPanel implements Runnable {
                     out.sysout(m1.nets[1].lines[x].getAngle().getDeg());
                 }
             break;
-            case KeyEvent.VK_I:
+            case KeyEvent.VK_V:
                 prevplayer = player.offset(10, 10);
                 phor.compRotate(anchor, prevplayer, new Angle(10));
             break;

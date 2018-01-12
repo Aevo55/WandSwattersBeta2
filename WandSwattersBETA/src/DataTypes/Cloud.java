@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package DataTypes;
+import Entities.Sprite;
 import Functions.Functions;
 import java.util.ArrayList;
 /**

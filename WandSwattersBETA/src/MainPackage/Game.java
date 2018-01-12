@@ -1,4 +1,5 @@
 package MainPackage;
+import Entities.Sprite;
 import DataTypes.*;
 import Functions.*;
 import java.awt.*;

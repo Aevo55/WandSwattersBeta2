@@ -1,5 +1,6 @@
 
-package DataTypes;
+package Entities;
+import DataTypes.*;
 import java.awt.*;
 /**
  *
@@ -39,7 +40,7 @@ public class Sprite {
         vector.recalc(loc, vector.getAngle(), velocity);
         loc.setX(vector.getX2());
         loc.setY(vector.getY2());
-        vector.moveTo(vector.p2);
+        vector.moveTo(vector.getP2());
         if(life != Integer.MAX_VALUE){
             life --;
         }

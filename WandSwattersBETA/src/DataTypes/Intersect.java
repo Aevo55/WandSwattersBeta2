@@ -34,7 +34,6 @@ public class Intersect extends Coord{
         }
     }
     public void recalc(Line _l1, Line _l2){
-     
         exists = false;
         l1 = _l1;
         l2 = _l2;        

@@ -1,5 +1,5 @@
 package MainPackage;
-import Entities.Sprite;
+import Entities.*;
 import DataTypes.*;
 import Functions.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class Game extends JPanel implements Runnable {
     Functions out = new Functions();
     double x = 1;
     int y = 1;
-    Sprite test = new Sprite(new Coord(100,100),1000,4,45,10,100,200,50);
+    Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,45,10,100,200,50);
     Cloud cloud = new Cloud();
     int red = 100;
     int green = 100;

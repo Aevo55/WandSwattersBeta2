@@ -137,15 +137,15 @@ public class Game extends JPanel implements Runnable {
         gc.setColor(spritecol);
         if(test.getLife()>0)gc.fillOval((int)test.getLoc().getX(), (int)test.getLoc().getY(), test.size, test.size);
         
-        /*Sprite list[] = (Sprite[])cloud.toArray();
-        for(int i = 0; i < cloud.size();i++){
-            gc.setColor(new Color(list[i].red,list[i].green,list[i].blue));         
-            if(list[i].life >0){
-                gc.fillOval((int)list[i].getLoc().getX(),(int)list[i].getLoc().getY(),list[i].size,list[i].size);
+       
+        for(int i = 0; i < cloud.getSize();i++){
+            gc.setColor(new Color(cloud.cloud[i].red,cloud.cloud[i].green,cloud.cloud[i].blue));         
+            if(cloud.cloud[i].life >0){
+                gc.fillOval((int)cloud.cloud[i].getLoc().getX(),(int)cloud.cloud[i].getLoc().getY(),cloud.cloud[i].size,cloud.cloud[i].size);
             }
  
         }
-        */
+        
         
         
         gc.setColor(Color.black);
@@ -291,7 +291,7 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_Q:
                 for(int x = 0; x<m1.nets[1].lines.length;x++){
-                    out.sysout(m1.nets[1].lines[x].getAngle().getDeg());
+                    //out.sysout(m1.nets[1].lines[x].getAngle().getDeg());
                 }
             break;
             case KeyEvent.VK_V:
@@ -348,12 +348,12 @@ public class Game extends JPanel implements Runnable {
             testint.recalc(phor, test.vector);
             
             if(bool_aimdown == true){
-                System.out.println("DOWN");
+                //System.out.println("DOWN");
                 aimline.rotate(new Angle(-10));
                 test.vector.rotate(new Angle(-10));
             }
             if(bool_aimup == true){
-                System.out.println("UP");
+                //System.out.println("UP");
                 aimline.rotate(new Angle(10));
                 test.vector.rotate(new Angle(10));
             }

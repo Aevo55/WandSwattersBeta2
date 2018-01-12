@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DataTypes;
 import Entities.Sprite;
 import Functions.Functions;
@@ -12,7 +8,7 @@ import java.util.ArrayList;
  * @author dawsg
  */
 public class Cloud {
-    Sprite[] cloud;
+    public Sprite[] cloud;
     Sprite[] temp;
     Functions func = new Functions();
     Sprite base = new Sprite(new Coord(0,0), Integer.MAX_VALUE, 0, 0, 0, 0, 0, 0);
@@ -28,6 +24,7 @@ public class Cloud {
         }
     }
     public void addSprite(Sprite... s){
+        
         if(cloud[0].getLife() == Integer.MAX_VALUE){
             cloud = new Sprite[s.length];
             for(int x = 0;x<s.length;x++){
@@ -47,10 +44,12 @@ public class Cloud {
     }
     public void addSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
         addSprite(new Sprite(location, life, velocity, heading, size, red, blue, green));
+        System.out.println("new sprite");
     }
     public void killSprite(int i){
         if(cloud[0].getLife() == Integer.MAX_VALUE){
             func.sysout("Tried to remove a sprite that doesnt exist!");
+            //this is fuckin' shady
         }else{
             if(cloud.length == 1){
                 cloud[0] = base;
@@ -67,5 +66,8 @@ public class Cloud {
                 }
             }
         }
+    }
+    public int getSize(){
+        return cloud.length;
     }
 }

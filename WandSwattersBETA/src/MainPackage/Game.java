@@ -18,11 +18,12 @@ public class Game extends JPanel implements Runnable {
     double x = 1;
     int y = 1;
     Sprite test = new Sprite(new Coord(100,100),1000,4,45,10,100,200,50);
-
+    Cloud cloud = new Cloud();
+    int red = 100;
+    int green = 100;
+    int blue = 100;
     
-    int red = 60;
-    int green = 60;
-    int blue = 60;
+    
     int redx = 50;
     int redy = 400;
     int bluex = 270;
@@ -31,7 +32,7 @@ public class Game extends JPanel implements Runnable {
     int greeny = 400;
             
 
-    Cloud cloud = new Cloud();
+    
     
     
 

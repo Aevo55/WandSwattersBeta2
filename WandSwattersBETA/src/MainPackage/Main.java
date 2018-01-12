@@ -55,11 +55,11 @@ public class Main extends JFrame{
     }
     private void initialize() {
         this.setResizable(false);
-        this.setUndecorated(true);
+        //this.setUndecorated(true);
         this.setBounds(new Rectangle(312, 184, 500, 500));
         this.setMinimumSize(new Dimension(500, 500));
         this.setMaximumSize(new Dimension(500, 500));
         this.setContentPane(getJContentPane());
-        this.setTitle("Dance Dance Deatholution");
+        this.setTitle("Wand Swatters BETA");
     }
 }

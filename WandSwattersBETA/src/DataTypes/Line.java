@@ -30,6 +30,9 @@ public class Line{
     double mag;
     Angle angle = new Angle();
     Coord temp;
+    public Line(){
+        
+    }
     public Line(Coord _p1, Coord _p2){
         p1 = _p1;
         p2 = _p2;

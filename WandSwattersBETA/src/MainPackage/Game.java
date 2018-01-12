@@ -1,4 +1,5 @@
 package MainPackage;
+import Entities.Sprite;
 import DataTypes.*;
 import Functions.*;
 import java.awt.*;
@@ -17,7 +18,8 @@ public class Game extends JPanel implements Runnable {
     double x = 1;
     int y = 1;
     Sprite test = new Sprite(new Coord(100,100),1000,4,45,10,100,200,50);
-    ArrayList cloud = new ArrayList();
+
+    
     int red = 60;
     int green = 60;
     int blue = 60;
@@ -28,6 +30,11 @@ public class Game extends JPanel implements Runnable {
     int greenx = 160;
     int greeny = 400;
             
+
+    Cloud cloud = new Cloud();
+    
+    
+
     boolean
         bool_right = false, //If right arrow is pressed (can be overwritten by other keys)
         bool_left = false, //If left arrow is pressed (can be overwritten by other keys)
@@ -59,7 +66,7 @@ public class Game extends JPanel implements Runnable {
     Angle aimupangle = new Angle();
     Angle aimdownangle = new Angle();
     Line aimline;
-    
+    Intersect testint = new Intersect();
     Coord[] pillar2points = {
         new Coord (50,50),
         new Coord (50,60),
@@ -114,7 +121,7 @@ public class Game extends JPanel implements Runnable {
                 gc.fillOval((int)m1.nets[x].coords[y].getX() - 2, (int)m1.nets[x].coords[y].getY() - 2, 4, 4);
             }//*/
         }
-        
+        gc.fillOval((int)testint.getX()-1,(int)testint.getY()-1,2,2);
         gc.setColor(Color.red);
         gc.drawLine(phor.draw()[0],phor.draw()[1],phor.draw()[2],phor.draw()[3]);
         gc.fillOval(redx, redy, (int)((red/5)*2), (int)((red/5)*2));
@@ -304,9 +311,7 @@ public class Game extends JPanel implements Runnable {
     }   
     
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
-    
-        cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
-        
+        cloud.addSprite(new Sprite(location, life, velocity, heading, size, red, blue, green));
     }
     
     public void Move(){
@@ -315,9 +320,9 @@ public class Game extends JPanel implements Runnable {
             y = -y;
         }
         x = x + (1 * y);
-        out.out(x);
+        out.sysout(x);
         ang.setDeg(x);
-        phor.rotateBy(anchor, phor.p1, ang);
+        phor.rotate(ang);
         //*/
         if (bool_collide == false){
             if (bool_left == true){
@@ -339,17 +344,17 @@ public class Game extends JPanel implements Runnable {
                 phor.moveBy(0, -2);
             }
             aimline.moveTo(player);
-            
+            testint.recalc(phor, test.vector);
             
             if(bool_aimdown == true){
-                System.out.println("UP");
-                aimline.rotate(aimupangle);
-                test.vector.rotate(new Angle(-20));
+                System.out.println("DOWN");
+                aimline.rotate(new Angle(-10));
+                test.vector.rotate(new Angle(-10));
             }
             if(bool_aimup == true){
-                System.out.println("DOWN");
-                aimline.rotate(aimdownangle);
-                test.vector.rotate(new Angle(20));
+                System.out.println("UP");
+                aimline.rotate(new Angle(10));
+                test.vector.rotate(new Angle(10));
             }
         }
         

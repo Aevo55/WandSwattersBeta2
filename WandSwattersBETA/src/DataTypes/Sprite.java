@@ -40,7 +40,9 @@ public class Sprite {
         loc.setX(vector.getX2());
         loc.setY(vector.getY2());
         vector.moveTo(vector.p2);
-        life --;
+        if(life != Integer.MAX_VALUE){
+            life --;
+        }
     }
     
 //<editor-fold defaultstate="collapsed" desc="Getters and Setters">

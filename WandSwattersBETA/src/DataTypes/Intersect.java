@@ -37,8 +37,8 @@ public class Intersect extends Coord{
         exists = false;
         l1 = _l1;
         l2 = _l2;        
-        System.out.println(l1.getSlope());
-        System.out.println(l2.getSlope());   
+        //System.out.println(l1.getSlope());
+        //System.out.println(l2.getSlope());   
         if (l1.getSlope() == l2.getSlope()){
             exists = false;
             setX(0);

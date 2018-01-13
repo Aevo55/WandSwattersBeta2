@@ -20,7 +20,7 @@ public class Sprite {
     
     //heading should be in degrees
     public Coord loc = new Coord();
-    public Line vector = new Line(loc, new Angle(heading), (double)velocity);
+    public Line vector;
     
     public Sprite(Coord _loc,int _life, double _velocity, int _heading, int _size, int _red, int _blue, int _green){
         loc.setX(_loc.getX());
@@ -32,12 +32,23 @@ public class Sprite {
         red = _red;
         blue = _blue;
         green = _green;
-        
-        
+        vector = new Line(loc,new Angle(heading),velocity);
     }
-    
+    public Sprite(Line _line,int _life,  int _size, int _red, int _blue, int _green){
+        loc.setX(_line.getX1());
+        loc.setY(_line.getY1());
+        life = _life;
+        velocity = _line.getMag();
+        heading = _line.getAngle().getDeg();
+        size = _size;
+        red = _red;
+        blue = _blue;
+        green = _green;
+        vector = _line;
+    }
     public void live(){
         vector.recalc(loc, vector.getAngle(), velocity);
+        
         loc.setX(vector.getX2());
         loc.setY(vector.getY2());
         vector.moveTo(vector.getP2());

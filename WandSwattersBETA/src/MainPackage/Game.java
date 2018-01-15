@@ -313,8 +313,8 @@ public class Game extends JPanel implements Runnable {
     
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
         cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
-        
-        
+        player1.getVec().recalc(new Coord(0,0),new Angle(heading-180), velocity);
+        //player1.getVec().Accel(cloud.get(cloud.size()).getVec());
     }
     public void Move(){
         /*
@@ -326,8 +326,9 @@ public class Game extends JPanel implements Runnable {
         ang.setDeg(x);
         phor.rotate(ang);
         //*/
+        player1.live();
         if(bool_SPACE == true){
-            createSprite(player1,100,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
+            createSprite(player1,25,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
         }
         if (bool_collide == false){
             if (bool_A == true){

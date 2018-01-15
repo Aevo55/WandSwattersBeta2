@@ -266,6 +266,10 @@ public class Line{
         angle.setDeg(angle.getDeg() + a.getDeg());
         recalc(p1,angle,mag);
     }
+    public void Accel(Line l1){
+        Coord newp2 = new Coord(this.getX1() + this.getRun() + l1.getRun(),this.getY1() + this.getRise() + l1.getRise());
+        recalc(this.getP1(),newp2);
+    }
     //<editor-fold defaultstate="collapsed" desc="Setters">
     public boolean isVert() {
         return vert;

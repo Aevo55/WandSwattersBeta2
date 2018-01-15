@@ -18,11 +18,10 @@ public class Game extends JPanel implements Runnable {
     ArrayList<Sprite> cloud = new ArrayList();
     double x = 1;
     int y = 1;
-    Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,45,10,100,200,50);
+    Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,0,10,100,200,50);
     int red = 100;
     int green = 100;
     int blue = 100;
-    
     
     int redx = 50;
     int redy = 400;
@@ -40,12 +39,12 @@ public class Game extends JPanel implements Runnable {
         bool_W2 = false,
         bool_S = false,
         bool_S2 = false,
-        bool_space = false,
+        bool_SPACE = false,
         bool_collide = false,
-        bool_aimup = false,
-        bool_aimdown = false,
-        bool_upPressed = false,
-        bool_downPressed = false
+        bool_UP = false,
+        bool_DOWN = false,
+        bool_UP2 = false,
+        bool_DOWN2 = false
     ;
     double 
         xcol,
@@ -136,6 +135,8 @@ public class Game extends JPanel implements Runnable {
         for(int i = 0; i < cloud.size();i++){
             gc.setColor(new Color(cloud.get(i).red,cloud.get(i).green,cloud.get(i).blue));         
             gc.fillOval((int)cloud.get(i).getLoc().getX(),(int)cloud.get(i).getLoc().getY(),cloud.get(i).size,cloud.get(i).size);
+            gc.setColor(Color.BLACK);
+            gc.drawOval((int)cloud.get(i).getLoc().getX(),(int)cloud.get(i).getLoc().getY(),cloud.get(i).size,cloud.get(i).size);
         }
         
         
@@ -230,15 +231,15 @@ public class Game extends JPanel implements Runnable {
                 bool_A = false;
             break;
             case KeyEvent.VK_UP:   
-                bool_upPressed = true;
-                bool_aimup = true;
-                bool_aimdown = false;
+                bool_UP2 = true;
+                bool_UP = true;
+                bool_DOWN = false;
                 
             break;
             case KeyEvent.VK_DOWN:
-                bool_downPressed = true;
-                bool_aimup = false;
-                bool_aimdown = true;
+                bool_DOWN2 = true;
+                bool_UP = false;
+                bool_DOWN = true;
                 
                 
             break;
@@ -246,7 +247,7 @@ public class Game extends JPanel implements Runnable {
                 System.exit(0);
             break;
             case KeyEvent.VK_SPACE:
-                bool_space = true;
+                bool_SPACE = true;
                 //func.sysout(aimline.getAngle().getDeg());
             break;
         }
@@ -292,17 +293,17 @@ public class Game extends JPanel implements Runnable {
                 phor.compRotate(anchor, prevplayer, new Angle(10));
             break;
             case KeyEvent.VK_UP:   
-                bool_upPressed = false;
-                bool_aimup = false;
-                if(bool_downPressed == true){bool_aimdown = true;}
+                bool_UP2 = false;
+                bool_UP = false;
+                if(bool_DOWN2 == true){bool_DOWN = true;}
             break;
             case KeyEvent.VK_DOWN:
-                bool_downPressed = false;
-                bool_aimdown = false;
-                if(bool_upPressed == true){bool_aimup = true;}
+                bool_DOWN2 = false;
+                bool_DOWN = false;
+                if(bool_UP2 == true){bool_UP = true;}
             break;
             case KeyEvent.VK_SPACE:
-                bool_space = false;
+                bool_SPACE = false;
             break;
         }
     }   
@@ -320,8 +321,8 @@ public class Game extends JPanel implements Runnable {
         ang.setDeg(x);
         phor.rotate(ang);
         //*/
-        if(bool_space == true){
-            createSprite(player,25,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
+        if(bool_SPACE == true){
+            createSprite(player,100,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
         }
         if (bool_collide == false){
             if (bool_A == true){
@@ -345,32 +346,36 @@ public class Game extends JPanel implements Runnable {
             aimline.moveTo(player);
             testint.recalc(phor, test.vector);
             
-            if(bool_aimdown == true){
+            if(bool_DOWN == true){
                 //System.out.println("DOWN");
                 aimline.rotate(new Angle(-10));
                 test.vector.rotate(new Angle(-10));
+                for(int x =0;x<cloud.size();x++){
+                    cloud.get(x).vector.rotate(new Angle(-10));
+                }
             }
-            if(bool_aimup == true){
+            if(bool_UP == true){
                 //System.out.println("UP");
                 aimline.rotate(new Angle(10));
                 test.vector.rotate(new Angle(10));
+                for(int x =0;x<cloud.size();x++){
+                    cloud.get(x).vector.rotate(new Angle(10));
+                }
             }
         }
-        
     }
     public void run() {
         aimangle.setDeg(0);
         aimupangle.setDeg(5);
         aimdownangle.setDeg(-5);
         aimline = new Line(player,aimangle,50.0);
-        
         while(true){
             Move();
             test.live();
-            
+            //test.vector.recalc(test.getLoc(), test.vector.getAngle().getDeg(), test.vector.getMag());
             for(int x = 0;x<cloud.size();x++){
                 cloud.get(x).live();
-                cloud.get(x).vector.recalc(cloud.get(x).getLoc(),new Angle(cloud.get(x).getHeading()) , cloud.get(x).vector.getMag());
+                
                 if(cloud.get(x).getLife()<=0){
                     cloud.remove(x);
                 }

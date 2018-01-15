@@ -138,21 +138,21 @@ public class Line{
         angle = _angle;
         mag = _mag;
         if((int)angle.getDeg() == 90){
-            slope = Double.POSITIVE_INFINITY;
+            slope = -Double.POSITIVE_INFINITY;
             x2 = x1;
             rise = mag;
             vert = true;
             y2 = y1 - mag;
             run = 0;
         }else if((int)angle.getDeg() == 270){
-            slope = Double.NEGATIVE_INFINITY;
+            slope = -Double.NEGATIVE_INFINITY;
             x2 = x1;
             rise = -mag;
             vert = true;
             y2 = y1 + mag;
             run = 0;
         }else{
-            slope = Math.tan(angle.getRad());
+            slope = -Math.tan(angle.getRad());
             run = (Math.cos(angle.getRad())*mag);
             rise = (Math.sin(angle.getRad())*mag);
             x2 = x1 + run;
@@ -265,6 +265,10 @@ public class Line{
     public void rotate(Angle a){
         angle.setDeg(angle.getDeg() + a.getDeg());
         recalc(p1,angle,mag);
+    }
+    public void Accel(Line l1){
+        Coord newp2 = new Coord(this.getX1() + this.getRun() + l1.getRun(),this.getY1() + this.getRise() + l1.getRise());
+        recalc(this.getP1(),newp2);
     }
     //<editor-fold defaultstate="collapsed" desc="Setters">
     public boolean isVert() {

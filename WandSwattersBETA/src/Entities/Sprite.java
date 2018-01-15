@@ -11,12 +11,12 @@ import java.awt.*;
 public class Sprite extends Entity{
     
     public int life;
-    public double velocity;
+    //public double velocity;
     public int size;
     public int red;
     public int green;
     public int blue;
-    public double heading;
+    //public double heading;
     
     //heading should be in degrees
     
@@ -24,20 +24,17 @@ public class Sprite extends Entity{
         setX(_loc.getX());
         setY(_loc.getY());
         life = _life;
-        velocity = _velocity;
-        heading = _heading;
+        
         size = _size;
         red = _red;
         blue = _blue;
         green = _green;
-        vector = new Line(getLoc(),new Angle(heading),velocity);
+        vector = new Line(getLoc(),new Angle(_heading),_velocity);
     }
     public Sprite(Line _line,int _life,  int _size, int _red, int _blue, int _green){
         setX(_line.getX1());
         setY(_line.getY1());
         life = _life;
-        velocity = _line.getMag();
-        heading = _line.getAngle().getDeg();
         size = _size;
         red = _red;
         blue = _blue;
@@ -45,7 +42,7 @@ public class Sprite extends Entity{
         vector = _line;
     }
     public void live(){
-        vector.recalc(getLoc(), vector.getAngle(), velocity);
+        vector.recalc(getLoc(), vector.getAngle(), vector.getMag());
         
         setX(vector.getX2());
         setY(vector.getY2());
@@ -62,14 +59,6 @@ public class Sprite extends Entity{
 
     public void setLife(int life) {
         this.life = life;
-    }
-
-    public double getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(int velocity) {
-        this.velocity = velocity;
     }
 
     public int getRed() {
@@ -94,14 +83,6 @@ public class Sprite extends Entity{
 
     public void setBlue(int blue) {
         this.blue = blue;
-    }
-
-    public double getHeading() {
-        return heading;
-    }
-
-    public void setHeading(double heading) {
-        this.heading = heading;
     }
     //</editor-fold>
     

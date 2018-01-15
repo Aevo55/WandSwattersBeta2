@@ -11,6 +11,7 @@ package Functions;
 public class Functions {
     public Functions(){}
     public boolean range(double a, double b, double c){
+        
         if(a < b && b < c){
             return true;
         }else{

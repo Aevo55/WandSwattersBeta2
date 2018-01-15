@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game extends JPanel implements Runnable { 
-    Functions out = new Functions();
+    Functions func = new Functions();
     double x = 1;
     int y = 1;
-    Sprite test = new Sprite(new Coord(100,100),1000,4,45,10,100,200,50);
+    Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,45,10,100,200,50);
     Cloud cloud = new Cloud();
     int red = 100;
     int green = 100;
@@ -291,7 +291,7 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_Q:
                 for(int x = 0; x<m1.nets[1].lines.length;x++){
-                    out.sysout(m1.nets[1].lines[x].getAngle().getDeg());
+                    func.sysout(m1.nets[1].lines[x].getAngle().getDeg());
                 }
             break;
             case KeyEvent.VK_V:
@@ -348,12 +348,12 @@ public class Game extends JPanel implements Runnable {
             testint.recalc(phor, test.vector);
             
             if(bool_aimdown == true){
-                System.out.println("DOWN");
+                func.sysout("DOWN");
                 aimline.rotate(new Angle(-10));
                 test.vector.rotate(new Angle(-10));
             }
             if(bool_aimup == true){
-                System.out.println("UP");
+                func.sysout("UP");
                 aimline.rotate(new Angle(10));
                 test.vector.rotate(new Angle(10));
             }

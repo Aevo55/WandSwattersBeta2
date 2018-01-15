@@ -93,6 +93,8 @@ public class Game extends JPanel implements Runnable {
     Line[] rays = new Line[m1.totalpoints()];
     
     Player player1 = new Player(new Coord(50,50));
+    
+    
     Line phor = new Line(player1,0.0,20);
     Line aiml = new Line(player1, aim);
     String 

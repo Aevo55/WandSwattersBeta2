@@ -45,16 +45,16 @@ public class Line{
         if (run == 0){
             vert = true;
             if(rise > 0){
-                slope = Double.POSITIVE_INFINITY;
+                slope = -Double.POSITIVE_INFINITY;
                 angle.setDeg(90);
             }else{
-                slope = Double.NEGATIVE_INFINITY;
+                slope = -Double.NEGATIVE_INFINITY;
                 angle.setDeg(270);
             }
             mag = rise;
         }else{
             vert = false;
-            slope = rise / run;
+            slope = -rise / run;
             if (run < 0){
                 angle.setRad(Math.PI + Math.atan(slope));
             }else{
@@ -70,14 +70,14 @@ public class Line{
         y1 = p1.y;
         slope = _slope;
         mag = _mag;
-        if(slope == Double.POSITIVE_INFINITY){
+        if(slope == -Double.POSITIVE_INFINITY){
             run = 0;
             x2 = x1;
             y2 = y1 - mag;
             rise = mag;
             angle.setDeg(90);
             vert = true;
-        }else if(slope == Double.NEGATIVE_INFINITY){
+        }else if(slope == -Double.NEGATIVE_INFINITY){
             run = 0;
             x2 = x1;
             y2 = y1 + mag;
@@ -106,21 +106,21 @@ public class Line{
         angle = _angle;
         mag = _mag;
         if((int)angle.getDeg() == 90){
-            slope = Double.POSITIVE_INFINITY;
+            slope = -Double.POSITIVE_INFINITY;
             x2 = x1;
             rise = mag;
             vert = true;
             y2 = y1 - mag;
             run = 0;
         }else if((int)angle.getDeg() == 270){
-            slope = Double.NEGATIVE_INFINITY;
+            slope = -Double.NEGATIVE_INFINITY;
             x2 = x1;
             rise = -mag;
             vert = true;
             y2 = y1 + mag;
             run = 0;
         }else{
-            slope = Math.tan(angle.getRad());
+            slope = -Math.tan(angle.getRad());
             run = (Math.cos(angle.getRad())*mag);
             rise = (Math.sin(angle.getRad())*mag);
             x2 = x1 + run;
@@ -138,21 +138,21 @@ public class Line{
         angle = _angle;
         mag = _mag;
         if((int)angle.getDeg() == 90){
-            slope = Double.POSITIVE_INFINITY;
+            slope = -Double.POSITIVE_INFINITY;
             x2 = x1;
             rise = mag;
             vert = true;
             y2 = y1 - mag;
             run = 0;
         }else if((int)angle.getDeg() == 270){
-            slope = Double.NEGATIVE_INFINITY;
+            slope = -Double.NEGATIVE_INFINITY;
             x2 = x1;
             rise = -mag;
             vert = true;
             y2 = y1 + mag;
             run = 0;
         }else{
-            slope = Math.tan(angle.getRad());
+            slope = -Math.tan(angle.getRad());
             run = (Math.cos(angle.getRad())*mag);
             rise = (Math.sin(angle.getRad())*mag);
             x2 = x1 + run;
@@ -174,16 +174,16 @@ public class Line{
         if (run == 0){
             vert = true;
             if(rise > 0){
-                slope = Double.POSITIVE_INFINITY;
+                slope = -Double.POSITIVE_INFINITY;
                 angle.setDeg(90);
             }else{
-                slope = Double.NEGATIVE_INFINITY;
+                slope = -Double.NEGATIVE_INFINITY;
                 angle.setDeg(270);
             }
             mag = rise;
         }else{
             vert = false;
-            slope = rise / run;
+            slope = -rise / run;
             if (run < 0){
                 angle.setRad(Math.PI + Math.atan(slope));
             }else{
@@ -199,14 +199,14 @@ public class Line{
         y1 = p1.y;
         slope = _slope;
         mag = _mag;
-        if(slope == Double.POSITIVE_INFINITY){
+        if(slope == -Double.POSITIVE_INFINITY){
             run = 0;
             x2 = x1;
             y2 = y1 - mag;
             rise = mag;
             angle.setDeg(90);
             vert = true;
-        }else if(slope == Double.NEGATIVE_INFINITY){
+        }else if(slope == -Double.NEGATIVE_INFINITY){
             run = 0;
             x2 = x1;
             y2 = y1 + mag;
@@ -266,10 +266,15 @@ public class Line{
         angle.setDeg(angle.getDeg() + a.getDeg());
         recalc(p1,angle,mag);
     }
-    public void Accel(Line l1){
+    /*public void Accel(Line l1){
         Coord newp2 = new Coord(this.getX2() + l1.getRun(),this.getY2() + l1.getRise());
         recalc(this.getP1(),newp2);
+    }*/
+    public void Accel(Line vector){
+        //Coord newp2 = new Coord(this.getX2() + amount,this.getY2() + amount);
+        recalc(this.getP1(), new Coord(this.getX1() + 1,this.getY1()+1));
     }
+    
     public void merge(Line l1){
         this.rise += l1.rise;
         this.run += l1.run;

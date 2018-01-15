@@ -313,19 +313,12 @@ public class Game extends JPanel implements Runnable {
     
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
         cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
-        player1.getVec().recalc(new Coord(0,0),new Angle(heading-180), velocity);
-        //player1.getVec().Accel(cloud.get(cloud.size()).getVec());
+        player1.getVec().Accel(new Line(new Coord(10,10),new Angle(heading-180), velocity));
+        //player1.getVec().recalc(new Coord(0,0),new Angle(heading-180), velocity);
+        func.sysout(player1.getX(),player1.getY());
     }
     public void Move(){
-        /*
-        if (x > 50 || x < -50){
-            y = -y;
-        }
-        x = x + (1 * y);
-        out.sysout(x);
-        ang.setDeg(x);
-        phor.rotate(ang);
-        //*/
+        
         player1.live();
         if(bool_SPACE == true){
             createSprite(player1,25,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);

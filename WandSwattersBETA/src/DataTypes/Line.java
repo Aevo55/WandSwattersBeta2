@@ -267,8 +267,13 @@ public class Line{
         recalc(p1,angle,mag);
     }
     public void Accel(Line l1){
-        Coord newp2 = new Coord(this.getX1() + this.getRun() + l1.getRun(),this.getY1() + this.getRise() + l1.getRise());
+        Coord newp2 = new Coord(this.getX2() + l1.getRun(),this.getY2() + l1.getRise());
         recalc(this.getP1(),newp2);
+    }
+    public void merge(Line l1){
+        this.rise += l1.rise;
+        this.run += l1.run;
+        recalc(this.p1,this.p2);
     }
     //<editor-fold defaultstate="collapsed" desc="Setters">
     public boolean isVert() {

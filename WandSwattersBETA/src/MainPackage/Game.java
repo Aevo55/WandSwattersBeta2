@@ -31,11 +31,6 @@ public class Game extends JPanel implements Runnable {
     int greenx = 160;
     int greeny = 400;
             
-
-    
-    
-    
-
     boolean
         bool_D = false, //If right arrow is pressed (can be overwritten by other keys)
         bool_A = false, //If left arrow is pressed (can be overwritten by other keys)

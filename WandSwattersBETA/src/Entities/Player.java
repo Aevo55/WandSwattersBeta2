@@ -12,4 +12,5 @@ import DataTypes.*;
  */
 public class Player {
     Coord loc;
+    Line veloticy;
 }

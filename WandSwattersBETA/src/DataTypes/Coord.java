@@ -45,5 +45,7 @@ public class Coord{
     public double getY(){
         return y;
     }
-    
+    public Coord getLoc(){
+        return this;
+    }
 }

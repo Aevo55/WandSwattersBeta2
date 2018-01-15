@@ -8,7 +8,7 @@ import java.awt.*;
  * @param heading direction of sprite in degrees
  * @param life the number of frames before sprite expires
  */
-public class Sprite {
+public class Sprite extends Entity{
     
     public int life;
     public double velocity;
@@ -19,12 +19,10 @@ public class Sprite {
     public double heading;
     
     //heading should be in degrees
-    public Coord loc = new Coord();
-    public Line vector = new Line(loc, new Angle(heading), (double)velocity);
     
     public Sprite(Coord _loc,int _life, double _velocity, int _heading, int _size, int _red, int _blue, int _green){
-        loc.setX(_loc.getX());
-        loc.setY(_loc.getY());
+        setX(_loc.getX());
+        setY(_loc.getY());
         life = _life;
         velocity = _velocity;
         heading = _heading;
@@ -32,14 +30,25 @@ public class Sprite {
         red = _red;
         blue = _blue;
         green = _green;
-        
-        
+        vector = new Line(getLoc(),new Angle(heading),velocity);
     }
-    
+    public Sprite(Line _line,int _life,  int _size, int _red, int _blue, int _green){
+        setX(_line.getX1());
+        setY(_line.getY1());
+        life = _life;
+        velocity = _line.getMag();
+        heading = _line.getAngle().getDeg();
+        size = _size;
+        red = _red;
+        blue = _blue;
+        green = _green;
+        vector = _line;
+    }
     public void live(){
-        vector.recalc(loc, vector.getAngle(), velocity);
-        loc.setX(vector.getX2());
-        loc.setY(vector.getY2());
+        vector.recalc(getLoc(), vector.getAngle(), velocity);
+        
+        setX(vector.getX2());
+        setY(vector.getY2());
         vector.moveTo(vector.getP2());
         if(life != Integer.MAX_VALUE){
             life --;
@@ -93,14 +102,6 @@ public class Sprite {
 
     public void setHeading(double heading) {
         this.heading = heading;
-    }
-
-    public Coord getLoc() {
-        return loc;
-    }
-
-    public void setLoc(Coord loc) {
-        this.loc = loc;
     }
     //</editor-fold>
     

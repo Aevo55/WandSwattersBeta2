@@ -108,21 +108,21 @@ public class Line{
         if((int)angle.getDeg() == 90){
             slope = Double.POSITIVE_INFINITY;
             x2 = x1;
-            rise = mag;
+            rise = -mag;
             vert = true;
             y2 = y1 - mag;
             run = 0;
         }else if((int)angle.getDeg() == 270){
             slope = Double.NEGATIVE_INFINITY;
             x2 = x1;
-            rise = -mag;
+            rise = mag;
             vert = true;
             y2 = y1 + mag;
             run = 0;
         }else{
             slope = Math.tan(angle.getRad());
             run = (Math.cos(angle.getRad())*mag);
-            rise = (Math.sin(angle.getRad())*mag);
+            rise = -(Math.sin(angle.getRad())*mag);
             x2 = x1 + run;
             y2 = y1 - rise;
             b = y1 - (slope*x1);

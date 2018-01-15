@@ -11,15 +11,9 @@ import DataTypes.*;
  * @author dawsg
  */
 
-public class Player extends Entity{
-    Line velocity;
-    
-    
+public class Player extends Entity{ 
     public Player(Coord _loc){
          this.setX(_loc.getX());
          this.setY(_loc.getY());
-         
-         
-        
     }
 }

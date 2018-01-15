@@ -11,7 +11,7 @@ import DataTypes.*;
  * @author dawsg
  */
 
-public class Player extends Coord{
+public class Player extends Entity{
     Line velocity;
     
     

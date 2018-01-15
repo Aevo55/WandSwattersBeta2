@@ -16,12 +16,17 @@ import java.util.ArrayList;
 public class Game extends JPanel implements Runnable { 
     Functions func = new Functions();
     ArrayList<Sprite> cloud = new ArrayList();
-    double x = 1;
-    int y = 1;
+    
     Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,0,10,100,200,50);
     int red = 100;
     int green = 100;
     int blue = 100;
+    
+    
+        
+        
+    
+    
     
     int redx = 50;
     int redy = 400;
@@ -30,11 +35,6 @@ public class Game extends JPanel implements Runnable {
     int greenx = 160;
     int greeny = 400;
             
-
-    
-    
-    
-
     boolean
         bool_D = false, //If right arrow is pressed (can be overwritten by other keys)
         bool_A = false, //If left arrow is pressed (can be overwritten by other keys)
@@ -60,9 +60,7 @@ public class Game extends JPanel implements Runnable {
     int gamewidth = 400;
     Angle ang = new Angle();
     Coord aim = new Coord(10,10);
-    Coord player = new Coord(50,50);
     Coord prevplayer = new Coord(50,50);
-    Line anchor = new Line(player, prevplayer);
     Angle aimangle = new Angle();
     Angle aimupangle = new Angle();
     Angle aimdownangle = new Angle();
@@ -93,8 +91,12 @@ public class Game extends JPanel implements Runnable {
     //Net edge = new Net(edgepoints);
     Map m1 = new Map(pillar, pillar2);
     Line[] rays = new Line[m1.totalpoints()];
-    Line phor = new Line(player,0.0,20);
-    Line aiml = new Line(player, aim);
+    
+    Player player1 = new Player(new Coord(50,50));
+    
+    
+    Line phor = new Line(player1,0.0,20);
+    Line aiml = new Line(player1, aim);
     String 
         str_appath = (System.getProperty("user.dir"))
     ;
@@ -130,7 +132,7 @@ public class Game extends JPanel implements Runnable {
         gc.fillOval(greenx,greeny,(int)((green/5)*2),(int)((green/5)*2));
         gc.setColor(Color.BLUE);
         gc.fillOval(bluex,bluey,(int)((blue/5)*2),(int)((blue/5)*2));
-        gc.fillOval((int)player.getX()-1,(int)player.getY()-1,2,2);
+        gc.fillOval((int)player1.getX()-1,(int)player1.getY()-1,2,2);
         //gc.drawLine((int)anchor.getX1(),(int)anchor.getY1(),(int)anchor.getX2(),(int)anchor.getY2());
         gc.drawLine(aimline.draw()[0],aimline.draw()[1],aimline.draw()[2],aimline.draw()[3]);
         Color spritecol = new Color(test.red,test.blue,test.green);
@@ -293,10 +295,6 @@ public class Game extends JPanel implements Runnable {
                     //out.sysout(m1.nets[1].lines[x].getAngle().getDeg());
                 }
             break;
-            case KeyEvent.VK_V:
-                prevplayer = player.offset(10, 10);
-                phor.compRotate(anchor, prevplayer, new Angle(10));
-            break;
             case KeyEvent.VK_UP:   
                 bool_UP2 = false;
                 bool_UP = false;
@@ -315,6 +313,8 @@ public class Game extends JPanel implements Runnable {
     
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
         cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
+        
+        
     }
     public void Move(){
         /*
@@ -327,28 +327,24 @@ public class Game extends JPanel implements Runnable {
         phor.rotate(ang);
         //*/
         if(bool_SPACE == true){
-            createSprite(player,100,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
+            createSprite(player1,100,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
         }
         if (bool_collide == false){
             if (bool_A == true){
-                prevplayer.setX(player.getX());
-                player.setX(player.getX() - 2);
+                player1.setX(player1.getX() - 2);
                 phor.moveBy(-2, 0);
             }else if(bool_D == true){
-                prevplayer.setX(player.getX());
-                player.setX(player.getX() + 2);
+                player1.setX(player1.getX() + 2);
                 phor.moveBy(2, 0);
             }
             if (bool_W == true){
-                prevplayer.setY(player.getY());
-                player.setY(player.getY() - 2);
+                player1.setY(player1.getY() - 2);
                 phor.moveBy(0, 2);
             }else if(bool_S == true){
-                prevplayer.setY(player.getY());
-                player.setY(player.getY() + 2);
+                player1.setY(player1.getY() + 2);
                 phor.moveBy(0, -2);
             }
-            aimline.moveTo(player);
+            aimline.moveTo(player1);
             testint.recalc(phor, test.getVec());
             
             if(bool_DOWN == true){
@@ -356,7 +352,7 @@ public class Game extends JPanel implements Runnable {
                 aimline.rotate(new Angle(-10));
                 test.getVec().rotate(new Angle(-10));
                 for(int x =0;x<cloud.size();x++){
-                    cloud.get(x).getVec().rotate(new Angle(-10));
+                    //cloud.get(x).getVec().rotate(new Angle(-10));
                 }
             }
             if(bool_UP == true){
@@ -364,7 +360,7 @@ public class Game extends JPanel implements Runnable {
                 aimline.rotate(new Angle(10));
                 test.getVec().rotate(new Angle(10));
                 for(int x =0;x<cloud.size();x++){
-                    cloud.get(x).getVec().rotate(new Angle(10));
+                    //cloud.get(x).getVec().rotate(new Angle(10));
                 }
             }
         }
@@ -373,7 +369,7 @@ public class Game extends JPanel implements Runnable {
         aimangle.setDeg(0);
         aimupangle.setDeg(5);
         aimdownangle.setDeg(-5);
-        aimline = new Line(player,aimangle,50.0);
+        aimline = new Line(player1,aimangle,50.0);
         testint = new Intersect(aimline, new Line(new Coord(10,10),0,999));
         while(true){
             Move();

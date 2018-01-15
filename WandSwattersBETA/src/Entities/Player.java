@@ -10,7 +10,16 @@ import DataTypes.*;
  *
  * @author dawsg
  */
-public class Player {
-    Coord loc;
-    Line veloticy;
+
+public class Player extends Coord{
+    Line velocity;
+    
+    
+    public Player(Coord _loc){
+         this.setX(_loc.getX());
+         this.setY(_loc.getY());
+         
+         
+        
+    }
 }

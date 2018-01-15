@@ -308,18 +308,20 @@ public class Game extends JPanel implements Runnable {
     }   
     
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
-        cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
+        //cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
+        cloud.add(new Sprite(location, life, velocity, heading+(int)(Math.random()*10), size, red, blue, green));
+        cloud.add(new Sprite(location, life, velocity, heading-(int)(Math.random()*10), size, red, blue, green));
         //player1.getVec().Accel(aimline);
         //aimline.Accel(aimline);
         //new Line(new Coord(10,10),new Angle(heading-180), velocity)
-        player1.getVec().recalc(new Coord(0,0),new Angle(heading-180), velocity);
+        //player1.getVec().recalc(new Coord(0,0),new Angle(heading-180), velocity+player1.getVec().getMag()/1.8);
         //func.sysout(player1.getX(),player1.getY());
     }
     public void Move(){
         
         player1.live();
         if(bool_SPACE == true){
-            createSprite(player1,25,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
+            createSprite(player1,35,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
         }
         if (bool_collide == false){
             if (bool_A == true){
@@ -341,16 +343,16 @@ public class Game extends JPanel implements Runnable {
             
             if(bool_DOWN == true){
                 //System.out.println("DOWN");
-                aimline.rotate(new Angle(-10));
-                test.getVec().rotate(new Angle(-10));
+                aimline.rotate(new Angle(-15));
+                test.getVec().rotate(new Angle(-15));
                 for(int x =0;x<cloud.size();x++){
                     //cloud.get(x).getVec().rotate(new Angle(-10));
                 }
             }
             if(bool_UP == true){
                 //System.out.println("UP");
-                aimline.rotate(new Angle(10));
-                test.getVec().rotate(new Angle(10));
+                aimline.rotate(new Angle(15));
+                test.getVec().rotate(new Angle(15));
                 for(int x =0;x<cloud.size();x++){
                     //cloud.get(x).getVec().rotate(new Angle(10));
                 }

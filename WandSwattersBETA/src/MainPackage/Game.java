@@ -143,7 +143,7 @@ public class Game extends JPanel implements Runnable {
             gc.drawOval((int)cloud.get(i).getLoc().getX(),(int)cloud.get(i).getLoc().getY(),cloud.get(i).size,cloud.get(i).size);
         }
         
-        
+        veloline.recalc(player1.getVec().getP1(), player1.getVec().getAngle(), player1.getVec().getMag() * 28);
         gc.drawLine(veloline.draw()[0],veloline.draw()[1],veloline.draw()[2],veloline.draw()[3]);
         
         
@@ -332,15 +332,17 @@ public class Game extends JPanel implements Runnable {
             b-=25;
         }
         cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
-        
+        func.sysout("Add one");
         Line temp = new Line(location,new Angle(heading), velocity);
-        func.sysout("RUN: ",temp.getRun(),"RISE: " ,temp.getRise());
+        func.sysout("Complete");
+        //func.sysout("RUN: ",temp.getRun(),"RISE: " ,temp.getRise());
         //temp.rotate(new Angle(180));
+        player1.getVec().merge(temp);
         
-        player1.getVec().recalc(player1.getLoc(), new Coord(player1.getVec().getX2() - temp.getRun(),player1.getVec().getY2() - temp.getRise()));
-        
-        
+        //player1.getVec().recalc(player1.getLoc(), new Coord(player1.getVec().getX2() - temp.getRun(),player1.getVec().getY2() - temp.getRise()));///
+    
     }
+    
     public void Move(){
         
         player1.live();

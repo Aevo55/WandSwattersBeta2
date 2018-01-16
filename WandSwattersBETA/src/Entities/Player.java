@@ -25,7 +25,7 @@ public class Player extends Entity{
     
     
     public void live(){
-        vector.recalc(getLoc(), vector.getAngle(), vector.getMag()*0.98);
+        vector.recalc(getLoc(), vector.getAngle(), vector.getMag()*0.97);
         
         setX(vector.getX2());
         setY(vector.getY2());

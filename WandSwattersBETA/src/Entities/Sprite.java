@@ -49,6 +49,8 @@ public class Sprite extends Entity{
         vector.moveTo(vector.getP2());
         if(life != Integer.MAX_VALUE){
             life --;
+             
+            
         }
     }
     

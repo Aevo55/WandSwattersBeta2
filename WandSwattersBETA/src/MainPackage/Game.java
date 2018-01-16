@@ -21,7 +21,9 @@ public class Game extends JPanel implements Runnable {
     int red = 100;
     int green = 100;
     int blue = 100;
-            
+    int r = 5;
+    int g = 5;
+    int b = 255;
     
     int redx = 50;
     int redy = 400;
@@ -309,19 +311,45 @@ public class Game extends JPanel implements Runnable {
     
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
         //cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
-        cloud.add(new Sprite(location, life, velocity, heading+(int)(Math.random()*10), size, red, blue, green));
-        cloud.add(new Sprite(location, life, velocity, heading-(int)(Math.random()*10), size, red, blue, green));
+        if(b == 255 && g == 5){
+            r+=25;
+        }
+        if(b == 5 && g == 255){
+            r-=25;
+        }
+        if(r == 255 && b == 5){
+            g+=25;
+        }
+        if(r == 5 && b == 255){
+            g-=25;
+        }
+        if(g == 255 && r == 5){
+            b+=25;
+        }
+        if(g == 5 && r == 255){
+            b-=25;
+        }
+        cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
+        
+        //cloud.add(new Sprite(location, life, velocity, heading-(int)(Math.random()*10), size, red, blue, green));
+        
+        Line temp = new Line(location,new Angle(heading), velocity);
+        func.sysout("RUN: ",temp.getRun(),"RISE: " ,temp.getRise());
+        //temp.rotate(new Angle(180));
+        player1.getVec().recalc(player1.getLoc(), new Coord(player1.getVec().getX2() - temp.getRun(),player1.getVec().getY2() - temp.getRise()));
+        
+        
         //player1.getVec().Accel(aimline);
         //aimline.Accel(aimline);
         //new Line(new Coord(10,10),new Angle(heading-180), velocity)
-        //player1.getVec().recalc(new Coord(0,0),new Angle(heading-180), velocity+player1.getVec().getMag()/1.8);
+        //player1.getVec().recalc(new Coord(player1.getX(),player1.getY()),new Coord(aimline.getRun()+,aimline.getRise()));
         //func.sysout(player1.getX(),player1.getY());
     }
     public void Move(){
         
         player1.live();
         if(bool_SPACE == true){
-            createSprite(player1,35,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
+            createSprite(player1,55,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
         }
         if (bool_collide == false){
             if (bool_A == true){

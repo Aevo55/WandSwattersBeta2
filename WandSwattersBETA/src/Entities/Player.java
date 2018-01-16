@@ -29,7 +29,7 @@ public class Player extends Entity{
         
         setX(vector.getX2());
         setY(vector.getY2());
-        vector.moveTo(vector.getP2());
+        vector.moveTo(vector.getP1());
         
     }
 }

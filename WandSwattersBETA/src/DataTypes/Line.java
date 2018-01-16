@@ -106,14 +106,14 @@ public class Line{
         angle = _angle;
         mag = _mag;
         if((int)angle.getDeg() == 90){
-            slope = -Double.POSITIVE_INFINITY;
+            slope = Double.POSITIVE_INFINITY;
             x2 = x1;
             rise = mag;
             vert = true;
             y2 = y1 - mag;
             run = 0;
         }else if((int)angle.getDeg() == 270){
-            slope = -Double.NEGATIVE_INFINITY;
+            slope = Double.NEGATIVE_INFINITY;
             x2 = x1;
             rise = -mag;
             vert = true;
@@ -138,7 +138,7 @@ public class Line{
         angle = _angle;
         mag = _mag;
         if((int)angle.getDeg() == 90){
-            slope = -Double.POSITIVE_INFINITY;
+            slope =-Double.POSITIVE_INFINITY;
             x2 = x1;
             rise = mag;
             vert = true;
@@ -175,7 +175,7 @@ public class Line{
             vert = true;
             if(rise > 0){
                 slope = -Double.POSITIVE_INFINITY;
-                angle.setDeg(90);
+                angle.setDeg(270);
             }else{
                 slope = -Double.NEGATIVE_INFINITY;
                 angle.setDeg(270);

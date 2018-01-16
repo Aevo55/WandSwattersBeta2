@@ -241,7 +241,7 @@ public class Line{
         y1 = y;
         y2 = y - rise;
     }
-    public void moveTo(Coord c){
+    public void moveTo (Coord c){
         x1 = c.getX();
         y1 = c.getY();
         x2 = c.getX() + run;

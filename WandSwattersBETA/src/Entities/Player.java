@@ -31,5 +31,6 @@ public class Player extends Entity{
         setY(vector.getY2());
         vector.moveTo(vector.getP1());
         
+        
     }
 }

@@ -90,7 +90,7 @@ public class Game extends JPanel implements Runnable {
     Line[] rays = new Line[m1.totalpoints()];
     
     Player player1 = new Player(new Coord(50,50));
-    
+    Line veloline = new Line(player1.getVec().getP1(), player1.getVec().getP2());
     
     Line phor = new Line(player1,0.0,20);
     Line aiml = new Line(player1, aim);
@@ -142,7 +142,9 @@ public class Game extends JPanel implements Runnable {
             gc.setColor(Color.BLACK);
             gc.drawOval((int)cloud.get(i).getLoc().getX(),(int)cloud.get(i).getLoc().getY(),cloud.get(i).size,cloud.get(i).size);
         }
-        gc.drawLine(player1.getVec().draw()[0],player1.getVec().draw()[1],player1.getVec().draw()[2],player1.getVec().draw()[3]);
+        
+        
+        gc.drawLine(veloline.draw()[0],veloline.draw()[1],veloline.draw()[2],veloline.draw()[3]);
         
         
         
@@ -331,19 +333,13 @@ public class Game extends JPanel implements Runnable {
         }
         cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
         
-        //cloud.add(new Sprite(location, life, velocity, heading-(int)(Math.random()*10), size, red, blue, green));
-        
         Line temp = new Line(location,new Angle(heading), velocity);
         func.sysout("RUN: ",temp.getRun(),"RISE: " ,temp.getRise());
         //temp.rotate(new Angle(180));
+        
         player1.getVec().recalc(player1.getLoc(), new Coord(player1.getVec().getX2() - temp.getRun(),player1.getVec().getY2() - temp.getRise()));
         
         
-        //player1.getVec().Accel(aimline);
-        //aimline.Accel(aimline);
-        //new Line(new Coord(10,10),new Angle(heading-180), velocity)
-        //player1.getVec().recalc(new Coord(player1.getX(),player1.getY()),new Coord(aimline.getRun()+,aimline.getRise()));
-        //func.sysout(player1.getX(),player1.getY());
     }
     public void Move(){
         

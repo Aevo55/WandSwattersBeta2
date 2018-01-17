@@ -15,6 +15,10 @@ public class Coord{
         x = 0;
         y = 0;
     }
+    public void setTo(Coord c){
+        x = c.getX();
+        y = c.getY();
+    }
     public Coord(double _x, double _y){
         x = _x;
         y = _y;

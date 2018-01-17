@@ -10,6 +10,6 @@ import DataTypes.*;
  *
  * @author dawsg
  */
-public class Enemy {
-    Coord loc;
+public class Enemy extends Entity{
+    
 }

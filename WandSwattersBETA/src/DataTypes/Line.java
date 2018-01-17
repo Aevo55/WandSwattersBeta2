@@ -270,9 +270,11 @@ public class Line{
         Coord newp2 = new Coord(this.getX2() + l1.getRun(),this.getY2() + l1.getRise());
         recalc(this.getP1(),newp2);
     }*/
-    public void Accel(Line vector){
+    public void Accel(Line l1){
         //Coord newp2 = new Coord(this.getX2() + amount,this.getY2() + amount);
         //recalc(this.getP1(), new Coord(this.getX1() + 1,this.getY1()+1));
+        l1.moveTo(this.p2);
+        this.recalc(p1, l1.getP2());
     }
     
     public void merge(Line l1){

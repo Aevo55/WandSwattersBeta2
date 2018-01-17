@@ -321,6 +321,7 @@ public class Game extends JPanel implements Runnable {
     
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
         //cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
+        //<editor-fold defaultstate="collapsed" desc="RGB cycle">
         if(b == 255 && g == 5){
             r+=25;
         }
@@ -339,10 +340,11 @@ public class Game extends JPanel implements Runnable {
         if(g == 5 && r == 255){
             b-=25;
         }
+        //</editor-fold>
         cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
         //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
-
-        player1.getVec().merge(new Line(player1,new Angle(heading), velocity/3));
+        player1.getVec().Accel(new Line(player1.getLoc(), new Angle(-heading),-velocity));
+        //player1.getVec().merge(new Line(player1,new Angle(heading), velocity/3));
         //func.sysout("RISE:",new Line(player1,new Angle(heading), velocity/5).getRise(),"RUN:",new Line(player1,new Angle(heading), velocity/5).getRun());
         func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
 
@@ -412,7 +414,7 @@ public class Game extends JPanel implements Runnable {
             //cloud.kill();
             repaint();
             try{
-                Thread.sleep(66);
+                Thread.sleep(33);
             }catch(InterruptedException ex){
             } 
         }

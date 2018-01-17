@@ -277,9 +277,11 @@ public class Line{
     
     public void merge(Line l1){
         Coord newp2 = new Coord(this.p2.x, this.p2.y);
-        newp2.x = newp2.x - l1.getRun();
-        newp2.y = newp2.y - l1.getRise();
-        recalc(this.p1,this.p2);
+        newp2.x = this.x2 - l1.getRun();
+        newp2.y = this.y2 - l1.getRise();
+        
+        recalc(this.p1,newp2);
+        
     }
     
     //player1.getVec().recalc(player1.getLoc(), new Coord(player1.getVec().getX2() - temp.getRun(),player1.getVec().getY2() - temp.getRise()));///

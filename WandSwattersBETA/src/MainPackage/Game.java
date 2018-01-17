@@ -172,6 +172,14 @@ public class Game extends JPanel implements Runnable {
                 if(red>255){red = 255;}
                 
             break;
+            case KeyEvent.VK_N:
+                aimline.getAngle().setDeg(90);
+                
+            break;
+            case KeyEvent.VK_M:
+                aimline.getAngle().setDeg(180);
+                
+            break;
             case KeyEvent.VK_I:
                 if(green<255){
                 green +=15;
@@ -291,7 +299,7 @@ public class Game extends JPanel implements Runnable {
                 }
             break;
             case KeyEvent.VK_Q:
-                for(int x = 0; x<m1.nets[1].lines.length;x++){
+                   for(int x = 0; x<m1.nets[1].lines.length;x++){
                     //out.sysout(m1.nets[1].lines[x].getAngle().getDeg());
                 }
             break;
@@ -332,15 +340,12 @@ public class Game extends JPanel implements Runnable {
             b-=25;
         }
         cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
-        func.sysout("Add one");
-        Line temp = new Line(location,new Angle(heading), velocity);
-        func.sysout("Complete");
-        //func.sysout("RUN: ",temp.getRun(),"RISE: " ,temp.getRise());
-        //temp.rotate(new Angle(180));
-        player1.getVec().merge(temp);
-        
-        //player1.getVec().recalc(player1.getLoc(), new Coord(player1.getVec().getX2() - temp.getRun(),player1.getVec().getY2() - temp.getRise()));///
-    
+        //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
+
+        player1.getVec().merge(new Line(player1,new Angle(heading), velocity/3));
+        //func.sysout("RISE:",new Line(player1,new Angle(heading), velocity/5).getRise(),"RUN:",new Line(player1,new Angle(heading), velocity/5).getRun());
+        func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
+
     }
     
     public void Move(){
@@ -407,7 +412,7 @@ public class Game extends JPanel implements Runnable {
             //cloud.kill();
             repaint();
             try{
-                Thread.sleep(33);
+                Thread.sleep(66);
             }catch(InterruptedException ex){
             } 
         }

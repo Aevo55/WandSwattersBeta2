@@ -19,7 +19,6 @@ import java.awt.*;
  * @param angle angle (deg between 0 and 360 or rad between 0 2pi) of the line
  * @param temp Temporary coordinate used for colission detection
  */
-//@killYourSelf
 public class Line{
     boolean vert;
     double x1,x2;
@@ -341,4 +340,4 @@ public class Line{
     }
     //</editor-fold>
 }
-@interface killYourSelf{}
+

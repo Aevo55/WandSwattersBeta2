@@ -20,7 +20,7 @@ public class Sprite extends Entity{
     
     //heading should be in degrees
     
-    public Sprite(Coord _loc,int _life, double _velocity, int _heading, int _size, int _red, int _blue, int _green){
+    public Sprite(Coord _loc,int _life, double _velocity, double _heading, int _size, int _red, int _blue, int _green){
         setX(_loc.getX());
         setY(_loc.getY());
         life = _life;
@@ -29,7 +29,7 @@ public class Sprite extends Entity{
         red = _red;
         blue = _blue;
         green = _green;
-        vector = new Line(getLoc(),new Angle(_heading),_velocity);
+        vector = new Line(this.getLoc(),new Angle(_heading),_velocity);
     }
     public Sprite(Line _line,int _life,  int _size, int _red, int _blue, int _green){
         setX(_line.getX1());

@@ -24,7 +24,6 @@ public class Game extends JPanel implements Runnable {
     int r = 5;
     int g = 5;
     int b = 255;
-    
     int redx = 50;
     int redy = 400;
     int bluex = 270;
@@ -88,7 +87,9 @@ public class Game extends JPanel implements Runnable {
     //Net edge = new Net(edgepoints);
     Map m1 = new Map(pillar, pillar2);
     Line[] rays = new Line[m1.totalpoints()];
-    
+    Line add1 = new Line(new Coord(100,100),new Coord(150,150));
+    Line add2 = new Line(new Coord(150,150),new Coord(300,200));
+    Line add3 = new Line(new Coord(100,100),new Coord(150,150));
     Player player1 = new Player(new Coord(50,50));
     Line veloline = new Line(player1.getVec().getP1(), player1.getVec().getP2());
     
@@ -143,6 +144,10 @@ public class Game extends JPanel implements Runnable {
             gc.drawOval((int)cloud.get(i).getLoc().getX(),(int)cloud.get(i).getLoc().getY(),cloud.get(i).size,cloud.get(i).size);
         }
         
+        gc.drawLine(add1.draw()[0],add1.draw()[1],add1.draw()[2],add1.draw()[3]);
+        gc.drawLine(add2.draw()[0],add2.draw()[1],add2.draw()[2],add2.draw()[3]);
+        gc.setColor(Color.RED);
+        gc.drawLine(add3.draw()[0],add3.draw()[1],add3.draw()[2],add3.draw()[3]);
         veloline.recalc(player1.getVec().getP1(), player1.getVec().getAngle(), player1.getVec().getMag() * 28);
         gc.drawLine(veloline.draw()[0],veloline.draw()[1],veloline.draw()[2],veloline.draw()[3]);
         
@@ -343,7 +348,7 @@ public class Game extends JPanel implements Runnable {
         //</editor-fold>
         cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
         //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
-        player1.getVec().Accel(new Line(player1.getLoc(), new Angle(-heading),-velocity));
+        player1.getVec().recalc(player1.getLoc(), new Angle(heading - 180),velocity*0.5);
         //player1.getVec().merge(new Line(player1,new Angle(heading), velocity/3));
         //func.sysout("RISE:",new Line(player1,new Angle(heading), velocity/5).getRise(),"RUN:",new Line(player1,new Angle(heading), velocity/5).getRun());
         func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
@@ -399,6 +404,7 @@ public class Game extends JPanel implements Runnable {
         aimdownangle.setDeg(-5);
         aimline = new Line(player1,aimangle,50.0);
         testint = new Intersect(aimline, new Line(new Coord(10,10),0,999));
+        add3.Accel(add2);
         while(true){
             Move();
             test.live();

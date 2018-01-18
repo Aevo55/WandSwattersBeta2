@@ -323,7 +323,7 @@ public class Game extends JPanel implements Runnable {
             break;
         }
     }   
-    
+    Angle a = new Angle();
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
         //cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
         //<editor-fold defaultstate="collapsed" desc="RGB cycle">

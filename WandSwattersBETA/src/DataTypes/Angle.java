@@ -34,11 +34,11 @@ public class Angle {
     }
     public double fix(double _deg){
         boolean fixed = false;
-        fixed = (_deg >= 0 && _deg <= 360);
+        fixed = (_deg >= 0 && _deg < 360);
         while(fixed == false){
             if(_deg < 0){
                 _deg = 360 + _deg;
-            }else if(_deg > 360){
+            }else if(_deg >= 360){
                 _deg = _deg - 360;
             }else{
                 fixed = true;

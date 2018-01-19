@@ -38,7 +38,7 @@ public class Player extends Entity{
         
     if(new Line(new Coord(getLoc().getX(),getLoc().getY()), new Coord(getLoc().getX() + xadd + xvelo,getLoc().getY() - yadd - yvelo)).getMag() <10){    
      xvelo += xadd;
-     yvelo -= yadd;
+     yvelo += yadd;
      }
     }
     public double getxVelo(){

@@ -356,9 +356,17 @@ public class Game extends JPanel implements Runnable {
             b-=25;
         }
         //</editor-fold>
-        cloud.add(new Sprite(location, life, velocity, heading+((Math.random()*10)-5), size, r, b, 0));
-        cloud.add(new Sprite(location,life,velocity,heading+10+(Math.random()*10),size,0,b,g));
-        cloud.add(new Sprite(location,life,velocity,heading-10-(Math.random()*10),size,r,0,g));
+        ///*
+        cloud.add(new Sprite(location, life+(int)(Math.random()*10), velocity, heading+((Math.random()*10)-5), size, r, b, 0));
+        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity,heading+10+(Math.random()*10),size,0,b,g));
+        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity,heading-10-(Math.random()*10),size,r,0,g));
+        //*/
+        /*
+        cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
+        cloud.add(new Sprite(location,life,velocity/3,heading+90,size,r,b,g));
+        cloud.add(new Sprite(location,life,velocity/3,heading-90,size,r,b,g));
+        //*/
+        
         //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
         
         Line temp = new Line(player1.getLoc(), new Angle(heading - 180), velocity);
@@ -374,7 +382,10 @@ public class Game extends JPanel implements Runnable {
     }
     
     public void Move(){
-        
+        //for(int x = 0;x<m1.nets.length;x++){
+            
+        //}
+        //testint.recalc(phor, aimline);
         player1.live();
         if(bool_SPACE == true){
             createSprite(player1,55,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
@@ -382,20 +393,16 @@ public class Game extends JPanel implements Runnable {
         if (bool_collide == false){
             if (bool_A == true){
                 player1.setX(player1.getX() - 2);
-                phor.moveBy(-2, 0);
             }else if(bool_D == true){
                 player1.setX(player1.getX() + 2);
-                phor.moveBy(2, 0);
             }
             if (bool_W == true){
                 player1.setY(player1.getY() - 2);
-                phor.moveBy(0, 2);
             }else if(bool_S == true){
                 player1.setY(player1.getY() + 2);
-                phor.moveBy(0, -2);
             }
             aimline.moveTo(player1);
-            testint.recalc(phor, aimline);
+
             
             if(bool_DOWN == true){
                 //System.out.println("DOWN");

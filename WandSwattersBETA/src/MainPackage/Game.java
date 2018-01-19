@@ -21,10 +21,9 @@ public class Game extends JPanel implements Runnable {
     int red = 100;
     int green = 100;
     int blue = 100;
-    int r = 0;
-    int g = 0;
+    int r = 5;
+    int g = 5;
     int b = 255;
-    
     int redx = 50;
     int redy = 400;
     int bluex = 270;
@@ -88,9 +87,11 @@ public class Game extends JPanel implements Runnable {
     //Net edge = new Net(edgepoints);
     Map m1 = new Map(pillar, pillar2);
     Line[] rays = new Line[m1.totalpoints()];
-    
+    Line add1 = new Line(new Coord(100,100),new Coord(150,150));
+    Line add2 = new Line(new Coord(150,150),new Coord(300,200));
+    Line add3 = new Line(new Coord(100,100),new Coord(150,150));
     Player player1 = new Player(new Coord(50,50));
-    
+    Line veloline = new Line(player1.getVec().getP1(), player1.getVec().getP2());
     
     Line phor = new Line(player1,0.0,20);
     Line aiml = new Line(player1, aim);
@@ -142,7 +143,13 @@ public class Game extends JPanel implements Runnable {
             gc.setColor(Color.BLACK);
             gc.drawOval((int)cloud.get(i).getLoc().getX(),(int)cloud.get(i).getLoc().getY(),cloud.get(i).size,cloud.get(i).size);
         }
-        gc.drawLine(player1.getVec().draw()[0],player1.getVec().draw()[1],player1.getVec().draw()[2],player1.getVec().draw()[3]);
+        
+        gc.drawLine(add1.draw()[0],add1.draw()[1],add1.draw()[2],add1.draw()[3]);
+        gc.drawLine(add2.draw()[0],add2.draw()[1],add2.draw()[2],add2.draw()[3]);
+        gc.setColor(Color.RED);
+        gc.drawLine(add3.draw()[0],add3.draw()[1],add3.draw()[2],add3.draw()[3]);
+        veloline.recalc(player1.getVec().getP1(), player1.getVec().getAngle(), player1.getVec().getMag() * 28);
+        gc.drawLine(veloline.draw()[0],veloline.draw()[1],veloline.draw()[2],veloline.draw()[3]);
         
         
         
@@ -168,6 +175,14 @@ public class Game extends JPanel implements Runnable {
                 redy -= 3;}
                 
                 if(red>255){red = 255;}
+                
+            break;
+            case KeyEvent.VK_N:
+                aimline.getAngle().setDeg(90);
+                
+            break;
+            case KeyEvent.VK_M:
+                aimline.getAngle().setDeg(180);
                 
             break;
             case KeyEvent.VK_I:
@@ -289,7 +304,7 @@ public class Game extends JPanel implements Runnable {
                 }
             break;
             case KeyEvent.VK_Q:
-                for(int x = 0; x<m1.nets[1].lines.length;x++){
+                   for(int x = 0; x<m1.nets[1].lines.length;x++){
                     //out.sysout(m1.nets[1].lines[x].getAngle().getDeg());
                 }
             break;
@@ -311,42 +326,40 @@ public class Game extends JPanel implements Runnable {
     
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
         //cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
-        /*cloud.add(new Sprite(location, life, velocity, heading+(int)((Math.random()*10)*(Math.random()-.5)), size, red, blue, green));
-        cloud.add(new Sprite(location, life, velocity, heading+(int)((Math.random()*5)+10), size, red, blue, green));
-        cloud.add(new Sprite(location, life, velocity, heading-(int)((Math.random()*5)+10), size, red, blue, green));
-        cloud.add(new Sprite(location, life, velocity, heading+(int)((Math.random()*5)+20), size, red, blue, green));
-        cloud.add(new Sprite(location, life, velocity, heading-(int)((Math.random()*5)+20), size, red, blue, green));
-        */
-        if(b == 255 && g == 0){
-            r+=5;
+        //<editor-fold defaultstate="collapsed" desc="RGB cycle">
+        if(b == 255 && g == 5){
+            r+=25;
         }
-        if(g == 255 && b == 0){
-            r-=5;
+        if(b == 5 && g == 255){
+            r-=25;
         }
-        if(r == 255 && b == 0){
-            g+=5;
+        if(r == 255 && b == 5){
+            g+=25;
         }
-        if(b == 255 && r == 0){
-            g-=5;
+        if(r == 5 && b == 255){
+            g-=25;
         }
-        if(g == 255 && r == 0){
-            b+=5;
+        if(g == 255 && r == 5){
+            b+=25;
         }
-        if(r == 255 && g == 0){
-            b-=5;
+        if(g == 5 && r == 255){
+            b-=25;
         }
-        cloud.add(new Sprite(location, life, velocity, heading, size, r, g, b));
-        //player1.getVec().Accel(aimline);
-        //aimline.Accel(aimline);
-        //new Line(new Coord(10,10),new Angle(heading-180), velocity)
-        //player1.getVec().recalc(new Coord(0,0),new Angle(heading-180), velocity+player1.getVec().getMag()/1.8);
-        //func.sysout(player1.getX(),player1.getY());
+        //</editor-fold>
+        cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
+        //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
+        player1.getVec().recalc(player1.getLoc(), new Angle(heading - 180),velocity*0.5);
+        //player1.getVec().merge(new Line(player1,new Angle(heading), velocity/3));
+        //func.sysout("RISE:",new Line(player1,new Angle(heading), velocity/5).getRise(),"RUN:",new Line(player1,new Angle(heading), velocity/5).getRun());
+        func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
+
     }
+    
     public void Move(){
         
         player1.live();
         if(bool_SPACE == true){
-            createSprite(player1,35,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
+            createSprite(player1,55,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
         }
         if (bool_collide == false){
             if (bool_A == true){
@@ -391,6 +404,7 @@ public class Game extends JPanel implements Runnable {
         aimdownangle.setDeg(-5);
         aimline = new Line(player1,aimangle,50.0);
         testint = new Intersect(aimline, new Line(new Coord(10,10),0,999));
+        add3.Accel(add2);
         while(true){
             Move();
             test.live();

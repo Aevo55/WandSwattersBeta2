@@ -19,7 +19,6 @@ import java.awt.*;
  * @param angle angle (deg between 0 and 360 or rad between 0 2pi) of the line
  * @param temp Temporary coordinate used for colission detection
  */
-//@killYourSelf
 public class Line{
     boolean vert;
     double x1,x2;
@@ -138,7 +137,7 @@ public class Line{
         angle = _angle;
         mag = _mag;
         if((int)angle.getDeg() == 90){
-            slope = -Double.POSITIVE_INFINITY;
+            slope =-Double.POSITIVE_INFINITY;
             x2 = x1;
             rise = mag;
             vert = true;
@@ -175,7 +174,7 @@ public class Line{
             vert = true;
             if(rise > 0){
                 slope = -Double.POSITIVE_INFINITY;
-                angle.setDeg(90);
+                angle.setDeg(270);
             }else{
                 slope = -Double.NEGATIVE_INFINITY;
                 angle.setDeg(270);
@@ -241,7 +240,7 @@ public class Line{
         y1 = y;
         y2 = y - rise;
     }
-    public void moveTo(Coord c){
+    public void moveTo (Coord c){
         x1 = c.getX();
         y1 = c.getY();
         x2 = c.getX() + run;
@@ -266,21 +265,27 @@ public class Line{
         angle.setDeg(angle.getDeg() + a.getDeg());
         recalc(p1,angle,mag);
     }
-
     /*public void Accel(Line l1){
         Coord newp2 = new Coord(this.getX2() + l1.getRun(),this.getY2() + l1.getRise());
         recalc(this.getP1(),newp2);
     }*/
-    public void Accel(Line vector){
+    public void Accel(Line l1){
         //Coord newp2 = new Coord(this.getX2() + amount,this.getY2() + amount);
-        recalc(this.getP1(), new Coord(this.getX1() + 1,this.getY1()+1));
+        //recalc(this.getP1(), new Coord(this.getX1() + 1,this.getY1()+1));
+        l1.moveTo(this.p2);
+        this.recalc(p1, l1.getP2());
     }
     
     public void merge(Line l1){
-        this.rise += l1.rise;
-        this.run += l1.run;
-        recalc(this.p1,this.p2);
+        Coord newp2 = new Coord(this.p2.x, this.p2.y);
+        newp2.x = this.x2 - l1.getRun();
+        newp2.y = this.y2 - l1.getRise();
+        
+        recalc(this.p1,newp2);
+        
     }
+    
+    //player1.getVec().recalc(player1.getLoc(), new Coord(player1.getVec().getX2() - temp.getRun(),player1.getVec().getY2() - temp.getRise()));///
     //<editor-fold defaultstate="collapsed" desc="Setters">
     public boolean isVert() {
         return vert;
@@ -335,4 +340,4 @@ public class Line{
     }
     //</editor-fold>
 }
-@interface killYourSelf{}
+

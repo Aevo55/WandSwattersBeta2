@@ -12,9 +12,7 @@ import DataTypes.*;
  */
 
 public class Player extends Entity{
-    
-    
-    
+    int weapon = 0;
     public Player(Coord _loc){
          this.setX(_loc.getX());
          this.setY(_loc.getY());
@@ -25,7 +23,8 @@ public class Player extends Entity{
     
     
     public void live(){
-        vector.recalc(getLoc(), vector.getAngle(), vector.getMag()*0.98);
+        vector.recalc(getLoc(), vector.getAngle(), vector.getMag()*0.97);
+        
         setX(vector.getX2());
         setY(vector.getY2());
         vector.moveTo(vector.getP2());

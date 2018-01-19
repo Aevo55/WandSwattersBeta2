@@ -24,8 +24,10 @@ public class Intersect extends Coord{
         l2 = _l2;
         if (l1.getSlope() == l2.getSlope()){
             exists = false;
-        }else{
-            setX((l2.getB()-l1.getB())/(l1.getSlope()+l2.getSlope()));
+        }else if(l1.vert == true){
+            
+        }{
+            setX((l2.getB()-l1.getB())/(l1.getSlope()-l2.getSlope()));
             setY((getX() * l1.getSlope()) + l1.getB());
             if(func.range(l1.getX1(), getX(), l1.getX2()) && func.range(l2.getX1(), getX(), l2.getX2())){
                 exists = true;

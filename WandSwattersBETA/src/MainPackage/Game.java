@@ -70,9 +70,19 @@ public class Game extends JPanel implements Runnable {
     };
     Coord[] edgepoints = {
         new Coord(0,0), 
-        new Coord(0,100),
-        new Coord(100,100),
-        new Coord(100,0)
+        new Coord(0,470),
+        new Coord(495,470),
+        new Coord(495,0),
+        new Coord(0,0),
+        new Coord(10,100),
+        new Coord(10,360),
+        new Coord(110,460),
+        new Coord(385,460),
+        new Coord(485,360),
+        new Coord(485,110),
+        new Coord(385,10),
+        new Coord(110,10),
+        new Coord(10,110)
     };
     Coord[] pillarpoints = {
         new Coord(20,20), 
@@ -84,8 +94,8 @@ public class Game extends JPanel implements Runnable {
     };
     Net pillar = new Net(pillarpoints);
     Net pillar2 = new Net(pillar2points);
-    //Net edge = new Net(edgepoints);
-    Map m1 = new Map(pillar, pillar2);
+    Net edge = new Net(edgepoints);
+    Map m1 = new Map(edge);
     Line[] rays = new Line[m1.totalpoints()];
     Line add1 = new Line(new Coord(100,100),new Coord(150,150));
     Line add2 = new Line(new Coord(150,150),new Coord(300,200));
@@ -110,10 +120,6 @@ public class Game extends JPanel implements Runnable {
         gc.setColor(Color.WHITE);
         gc.fillRect(0, 0, 505, 505);
         gc.setColor(Color.BLACK);
-        gc.fillRect(0, 0, 505, 5);
-        gc.fillRect(0, 0, 5, 505);
-        gc.fillRect(0, 495, 505, 5);
-        gc.fillRect(495, 0, 5, 505);
         for (int x = 0; x<m1.nets.length;x++){
             gc.drawPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
             gc.fillPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());

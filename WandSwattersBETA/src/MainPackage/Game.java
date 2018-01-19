@@ -356,13 +356,16 @@ public class Game extends JPanel implements Runnable {
             b-=25;
         }
         //</editor-fold>
-        cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
+        cloud.add(new Sprite(location, life, velocity, heading+((Math.random()*10)-5), size, r, b, 255-g));
+        cloud.add(new Sprite(location,life,velocity,heading+10+(Math.random()*10),size,255-r,b,g));
+        cloud.add(new Sprite(location,life,velocity,heading-10-(Math.random()*10),size,r,255-b,g));
         //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
         
         Line temp = new Line(player1.getLoc(), new Angle(heading - 180), velocity);
         player1.addVelo(temp.getRun()*0.1, temp.getRise()*0.1);
         func.sysout(player1.getxVelo(), player1.getyVelo());
         player1.getVec().recalc(player1.getLoc(), new Angle(heading - 180),velocity);
+        
         //player1.getVec().Accel(new Line(location, new Angle(heading),velocity));
         //player1.getVec().merge(new Line(player1,new Angle(heading), velocity/3));
         //func.sysout("RISE:",new Line(player1,new Angle(heading), velocity/5).getRise(),"RUN:",new Line(player1,new Angle(heading), velocity/5).getRun());

@@ -26,7 +26,9 @@ public class Intersect extends Coord{
             exists = false;
         }else if(l1.vert == true){
             
-        }{
+        }else if(l2.vert == true){
+            
+        }else{
             setX((l2.getB()-l1.getB())/(l1.getSlope()-l2.getSlope()));
             setY((getX() * l1.getSlope()) + l1.getB());
             if(func.range(l1.getX1(), getX(), l1.getX2()) && func.range(l2.getX1(), getX(), l2.getX2())){

@@ -269,6 +269,10 @@ public class Game extends JPanel implements Runnable {
                 
                 
             break;
+            case KeyEvent.VK_E:
+                player1.setTo(new Coord(200,200));
+                player1.getVec().recalc(new Coord(200,200), new Angle(0),0.0);
+            break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
             break;
@@ -328,8 +332,8 @@ public class Game extends JPanel implements Runnable {
                 bool_SPACE = false;
             break;
         }
-    }   
-    
+    }
+    Angle a = new Angle();
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
         //cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
         //<editor-fold defaultstate="collapsed" desc="RGB cycle">
@@ -354,10 +358,15 @@ public class Game extends JPanel implements Runnable {
         //</editor-fold>
         cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
         //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
-        player1.getVec().recalc(player1.getLoc(), new Angle(heading - 180),velocity*0.5);
+        
+        Line temp = new Line(player1.getLoc(), new Angle(heading - 180), velocity);
+        player1.addVelo(temp.getRun()*0.1, temp.getRise()*0.1);
+        func.sysout(player1.getxVelo(), player1.getyVelo());
+        player1.getVec().recalc(player1.getLoc(), new Angle(heading - 180),velocity);
+        //player1.getVec().Accel(new Line(location, new Angle(heading),velocity));
         //player1.getVec().merge(new Line(player1,new Angle(heading), velocity/3));
         //func.sysout("RISE:",new Line(player1,new Angle(heading), velocity/5).getRise(),"RUN:",new Line(player1,new Angle(heading), velocity/5).getRun());
-        func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
+        //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
 
     }
     

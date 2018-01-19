@@ -14,4 +14,5 @@ public class Entity extends Coord{
     public Line getVec(){
         return vector;
     }
+    
 }

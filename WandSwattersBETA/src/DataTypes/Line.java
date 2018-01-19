@@ -127,8 +127,8 @@ public class Line{
             b = y1 - (slope*x1);
             vert = false;
         }
-        p2.x = (int)x2;
-        p2.y = (int)y2;
+        p2.setX(x2);
+        p2.setY(y2);
     }
     public void recalc(Coord _p1, Angle _angle, double _mag){
         p1 = _p1;
@@ -159,7 +159,7 @@ public class Line{
             b = y1 - (slope*x1);
             vert = false;
         }
-        Point p2 = new Point((int)x2,(int)y2);
+        p2.setTo(new Coord(x2,y2));
     }
     public void recalc(Coord _p1, Coord _p2){
         p1 = _p1;

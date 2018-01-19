@@ -23,11 +23,26 @@ public class Intersect extends Coord{
         l1 = _l1;
         l2 = _l2;
         if (l1.getSlope() == l2.getSlope()){
+            func.sysout("They the same");
             exists = false;
         }else if(l1.vert == true){
-            
+            func.sysout("hey line 1 is vertical");
+            setX(l1.getX1());
+            setY((l2.getSlope()*l1.getX1())+l2.getB());
+            if(func.range(l2.getX1(), getX(), l2.getX2())){
+                exists = true;
+            }else{
+                exists = false;
+            }
         }else if(l2.vert == true){
-            
+            func.sysout("hey line 2 is vertical");
+            setX(l2.getX1());
+            setY((l1.getSlope()*l2.getX1())+l1.getB());
+            if(func.range(l1.getX1(), getX(), l1.getX2())){
+                exists = true;
+            }else{
+                exists = false;
+            }
         }else{
             setX((l2.getB()-l1.getB())/(l1.getSlope()-l2.getSlope()));
             setY((getX() * l1.getSlope()) + l1.getB());

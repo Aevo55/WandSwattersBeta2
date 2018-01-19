@@ -362,7 +362,7 @@ public class Game extends JPanel implements Runnable {
         //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
         
         Line temp = new Line(player1.getLoc(), new Angle(heading - 180), velocity);
-        //player1.addVelo(temp.getRun()*0.1, temp.getRise()*0.1);
+        player1.addVelo(temp.getRun()*0.05, temp.getRise()*0.05);
         func.sysout(player1.getxVelo(), player1.getyVelo());
         player1.getVec().recalc(player1.getLoc(), new Angle(heading - 180),velocity);
         

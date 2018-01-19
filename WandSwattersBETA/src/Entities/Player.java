@@ -32,13 +32,16 @@ public class Player extends Entity{
         setX(vector.getX2());
         setY(vector.getY2());
         vector.moveTo(vector.getP2());
+        if(xvelo !=0){xvelo *=0.99;}
+        
+        if(yvelo !=0){yvelo*=0.99;}
         
     }
     public void addVelo(double xadd, double yadd){
         
-    if(new Line(new Coord(getLoc().getX(),getLoc().getY()), new Coord(getLoc().getX() + xadd + xvelo,getLoc().getY() - yadd - yvelo)).getMag() <10){    
+    if(new Line(new Coord(getLoc().getX(),getLoc().getY()), new Coord(getLoc().getX() + xadd + xvelo,getLoc().getY() - yadd - yvelo)).getMag() <12){    
      xvelo += xadd;
-     yvelo -= yadd;
+     yvelo += yadd;
      }
     }
     public double getxVelo(){

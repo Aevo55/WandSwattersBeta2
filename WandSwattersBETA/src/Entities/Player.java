@@ -20,14 +20,14 @@ public class Player extends Entity{
          this.setX(_loc.getX());
          this.setY(_loc.getY());
          this.vector = new Line(this.getLoc(), 0, 0);
-        
+         
     }
     
     
     public void live(){
         
         vector.recalc(getLoc(),new Coord(getLoc().getX() + xvelo,getLoc().getY() + yvelo));
-        vector.recalc(getLoc(), vector.getAngle(), vector.getMag()*0.90);
+        // vector.recalc(getLoc(), vector.getAngle(), vector.getMag()*0.90);
         
         setX(vector.getX2());
         setY(vector.getY2());
@@ -35,8 +35,11 @@ public class Player extends Entity{
         
     }
     public void addVelo(double xadd, double yadd){
+        
+    if(new Line(new Coord(getLoc().getX(),getLoc().getY()), new Coord(getLoc().getX() + xadd + xvelo,getLoc().getY() - yadd - yvelo)).getMag() <10){    
      xvelo += xadd;
      yvelo -= yadd;
+     }
     }
     public double getxVelo(){
     return xvelo;}

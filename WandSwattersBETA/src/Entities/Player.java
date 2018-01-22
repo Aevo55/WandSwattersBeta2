@@ -15,6 +15,7 @@ public class Player extends Entity{
     int weapon = 0;
     double xvelo=0;
     double yvelo=0;
+    Intersect intersect = new Intersect();
     public Player(Coord _loc){
         
          this.setX(_loc.getX());
@@ -29,6 +30,7 @@ public class Player extends Entity{
         vector.recalc(getLoc(),new Coord(getLoc().getX() + xvelo,getLoc().getY() + yvelo));
         // vector.recalc(getLoc(), vector.getAngle(), vector.getMag()*0.90);
         
+       
         setX(vector.getX2());
         setY(vector.getY2());
         vector.moveTo(vector.getP2());
@@ -43,6 +45,9 @@ public class Player extends Entity{
      xvelo += xadd;
      yvelo += yadd;
      }
+    }
+    public Intersect getInt(){
+        return intersect;
     }
     public double getxVelo(){
     return xvelo;}

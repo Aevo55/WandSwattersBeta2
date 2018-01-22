@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class Game extends JPanel implements Runnable { 
     Functions func = new Functions();
     ArrayList<Sprite> cloud = new ArrayList();
-    //ArrayList<Line> trail = new ArrayList();
     Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,0,10,100,200,50);
     int red = 100;
     int green = 100;
@@ -123,25 +122,18 @@ public class Game extends JPanel implements Runnable {
         for (int x = 0; x<m1.nets.length;x++){
             gc.drawPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
             gc.fillPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
-            /*
-            for (int y = 0; y<m1.nets[x].coords.length;y++){
-                gc.fillOval((int)m1.nets[x].coords[y].getX() - 2, (int)m1.nets[x].coords[y].getY() - 2, 4, 4);
-            }//*/
         }
         gc.fillOval((int)testint.getX()-1,(int)testint.getY()-1,2,2);
         gc.setColor(Color.red);
-        //gc.drawLine(phor.draw()[0],phor.draw()[1],phor.draw()[2],phor.draw()[3]);
         gc.fillOval(redx, redy, (int)((red/5)*2), (int)((red/5)*2));
         gc.setColor(Color.green);
         gc.fillOval(greenx,greeny,(int)((green/5)*2),(int)((green/5)*2));
         gc.setColor(Color.BLUE);
         gc.fillOval(bluex,bluey,(int)((blue/5)*2),(int)((blue/5)*2));
         gc.fillOval((int)player1.getX()-4,(int)player1.getY()-4,8,8);
-        //gc.drawLine((int)anchor.getX1(),(int)anchor.getY1(),(int)anchor.getX2(),(int)anchor.getY2());
         gc.drawLine(aimline.draw()[0],aimline.draw()[1],aimline.draw()[2],aimline.draw()[3]);
         Color spritecol = new Color(test.red,test.blue,test.green);
         gc.setColor(spritecol);
-        //if(test.getLife()>0);
         gc.fillOval((int)test.getLoc().getX() - (test.size / 2), (int)test.getLoc().getY() - (test.size / 2), test.size, test.size);
         for(int i = 0; i < cloud.size();i++){
             gc.setColor(new Color(cloud.get(i).red,cloud.get(i).green,cloud.get(i).blue));         
@@ -278,7 +270,6 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_SPACE:
                 bool_SPACE = true;
-                //func.sysout(aimline.getAngle().getDeg());
             break;
         }
     }
@@ -315,7 +306,7 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_Q:
                    for(int x = 0; x<m1.nets[1].lines.length;x++){
-                    //out.sysout(m1.nets[1].lines[x].getAngle().getDeg());
+
                 }
             break;
             case KeyEvent.VK_UP:   
@@ -335,7 +326,6 @@ public class Game extends JPanel implements Runnable {
     }
     Angle a = new Angle();
     public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
-        //cloud.add(new Sprite(location, life, velocity, heading, size, red, blue, green));
         //<editor-fold defaultstate="collapsed" desc="RGB cycle">
         if(b == 255 && g == 5){
             r+=25;
@@ -357,9 +347,9 @@ public class Game extends JPanel implements Runnable {
         }
         //</editor-fold>
         ///*
-        cloud.add(new Sprite(location, life+(int)(Math.random()*10), velocity, heading+((Math.random()*10)-5), size, r, b, 0));
-        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity,heading+10+(Math.random()*10),size,0,b,g));
-        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity,heading-10-(Math.random()*10),size,r,0,g));
+        cloud.add(new Sprite(location, life+(int)(Math.random()*10), velocity+(Math.random()*3), heading+((Math.random()*10)-5), size, r, b, 0));
+        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity+(Math.random()*3),heading+5+(Math.random()*10),size,0,b,g));
+        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity+(Math.random()*3),heading-5-(Math.random()*10),size,r,0,g));
         //*/
         /*
         cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
@@ -367,25 +357,19 @@ public class Game extends JPanel implements Runnable {
         cloud.add(new Sprite(location,life,velocity/3,heading-90,size,r,b,g));
         //*/
         
-        //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
-        
         Line temp = new Line(player1.getLoc(), new Angle(heading - 180), velocity);
         player1.addVelo(temp.getRun()*0.05, temp.getRise()*0.05);
-        func.sysout(player1.getxVelo(), player1.getyVelo());
         player1.getVec().recalc(player1.getLoc(), new Angle(heading - 180),velocity);
         
-        //player1.getVec().Accel(new Line(location, new Angle(heading),velocity));
-        //player1.getVec().merge(new Line(player1,new Angle(heading), velocity/3));
-        //func.sysout("RISE:",new Line(player1,new Angle(heading), velocity/5).getRise(),"RUN:",new Line(player1,new Angle(heading), velocity/5).getRun());
-        //func.sysout("RUN: ",player1.getVec().getRun(),"RISE: " ,player1.getVec().getRise(), "VELOCITY: ", player1.getVec().getMag());
-
     }
     
     public void Move(){
-        //for(int x = 0;x<m1.nets.length;x++){
-            
-        //}
-        //testint.recalc(phor, aimline);
+        for(int x = 0;x<edge.length();x++){
+            testint.recalc(aimline, edge.lines[x]);
+            if (testint.exists){
+                func.sysout("Collided");
+            }
+        }
         player1.live();
         if(bool_SPACE == true){
             createSprite(player1,55,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
@@ -405,22 +389,13 @@ public class Game extends JPanel implements Runnable {
 
             
             if(bool_DOWN == true){
-                //System.out.println("DOWN");
                 aimline.rotate(new Angle(-15));
                 test.getVec().rotate(new Angle(-15));
-                for(int x =0;x<cloud.size();x++){
-                    //cloud.get(x).getVec().rotate(new Angle(-10));
-                }
             }
             if(bool_UP == true){
-                //System.out.println("UP");
                 aimline.rotate(new Angle(15));
                 test.getVec().rotate(new Angle(15));
-                for(int x =0;x<cloud.size();x++){
-                    //cloud.get(x).getVec().rotate(new Angle(10));
-                }
             }
-            //trail.add(new Line(test.getLoc(), test.getVec().getAngle(),test.getVec().getMag()));
         }
     }
     public void run() {
@@ -428,21 +403,17 @@ public class Game extends JPanel implements Runnable {
         aimupangle.setDeg(5);
         aimdownangle.setDeg(-5);
         aimline = new Line(player1,aimangle,50.0);
-        testint = new Intersect(aimline, new Line(new Coord(10,10),0,999));
+        testint = new Intersect(aimline, edge.lines[0]);
         add3.Accel(add2);
         while(true){
             Move();
             test.live();
-            //test.vector.recalc(test.getLoc(), test.vector.getAngle().getDeg(), test.vector.getMag());
             for(int x = 0;x<cloud.size();x++){
                 cloud.get(x).live();
-                
                 if(cloud.get(x).getLife()<=0){
                     cloud.remove(x);
                 }
-                //func.sysout(cloud2.size());
             }
-            //cloud.kill();
             repaint();
             try{
                 Thread.sleep(33);

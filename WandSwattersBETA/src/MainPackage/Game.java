@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
+ 
 public class Game extends JPanel implements Runnable { 
     Functions func = new Functions();
     ArrayList<Sprite> cloud = new ArrayList();
@@ -357,9 +357,9 @@ public class Game extends JPanel implements Runnable {
         }
         //</editor-fold>
         ///*
-        cloud.add(new Sprite(location, life+(int)(Math.random()*10), velocity, heading+((Math.random()*10)-5), size, r, b, 0));
-        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity,heading+10+(Math.random()*10),size,0,b,g));
-        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity,heading-10-(Math.random()*10),size,r,0,g));
+        cloud.add(new Sprite(location, life+(int)(Math.random()*10), velocity + Math.random()*5, heading+((Math.random()*10)-5), size, r, b, 0));
+        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity + Math.random()*5,heading+10+(Math.random()*10),size,0,b,g));
+        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity + Math.random()*5,heading-10-(Math.random()*10),size,r,0,g));
         //*/
         /*
         cloud.add(new Sprite(location, life, velocity, heading, size, r, b, g));
@@ -382,10 +382,17 @@ public class Game extends JPanel implements Runnable {
     }
     
     public void Move(){
-        //for(int x = 0;x<m1.nets.length;x++){
-            
-        //}
-        //testint.recalc(phor, aimline);
+        boolean testmove = false;
+        func.sysout(aimline.getRise());
+        for(int x = 0;x<m1.nets[0].length();x++){
+            testint.recalc(m1.nets[0].lines[x], player1.getVec());
+            if (testint.exists){
+                testmove = true;
+            }
+        }
+        if(!testmove){
+            test.live();
+        }
         player1.live();
         if(bool_SPACE == true){
             createSprite(player1,55,5,(int)aimline.getAngle().getDeg(),5,red,blue,green);
@@ -432,7 +439,7 @@ public class Game extends JPanel implements Runnable {
         add3.Accel(add2);
         while(true){
             Move();
-            test.live();
+
             //test.vector.recalc(test.getLoc(), test.vector.getAngle().getDeg(), test.vector.getMag());
             for(int x = 0;x<cloud.size();x++){
                 cloud.get(x).live();

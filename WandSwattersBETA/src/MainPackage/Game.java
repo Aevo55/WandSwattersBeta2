@@ -113,9 +113,14 @@ public class Game extends JPanel implements Runnable {
             gc.fillPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
         }
         gc.fillOval((int)players[0].getInt().getX()-1,(int)players[0].getInt().getY()-1,2,2);
+        for(int x = 0;x<2;x++){
+            
+            gc.fillOval((int)players[x].getX()-4,(int)players[x].getY()-4,8,8);
+        }
+        
         gc.setColor(Color.red);
         
-        gc.fillOval((int)players[0].getX()-4,(int)players[0].getY()-4,8,8);
+        
         Color spritecol = new Color(test.red,test.blue,test.green);
         gc.setColor(spritecol);
         gc.fillOval((int)test.getLoc().getX() - (test.size / 2), (int)test.getLoc().getY() - (test.size / 2), test.size, test.size);
@@ -248,11 +253,9 @@ public class Game extends JPanel implements Runnable {
     
     
     public void Move(){
-        for(int x = 0;x<edge.length();x++){
-            players[0].getInt().recalc(players[0].getAim(), edge.lines[x]);
-            if (players[0].getInt().exists){
-                func.sysout("Collided");
-            }
+        players[0].getInt().recalc(players[0].getAim(), players[1].getAim());
+        if (players[0].getInt().exists){
+            func.sysout("Collided");
         }
         players[0].live();
         if(bool_SPACE == true){
@@ -269,7 +272,7 @@ public class Game extends JPanel implements Runnable {
             }else if(bool_S == true){
                 players[0].setY(players[0].getY() + 2);
             }
-            players[0].getAim().moveTo(players[0]);
+            players[0].getAim().recalc(players[0],players[0].getAim().getAngle(),players[0].getAim().getMag());
 
             
             if(bool_DOWN == true){
@@ -284,7 +287,8 @@ public class Game extends JPanel implements Runnable {
     }
     public void run() {
         players[0] = new Player(new Coord(50,50));
-        players[0].getInt().recalc(players[0].getAim(), edge.lines[0]);
+        players[1] = new Player(new Coord(100,200));
+        
         while(true){
             Move();
             test.live();

@@ -87,6 +87,9 @@ public class Player extends Entity{
                     knockback = 200;
                     reload = 30;
                 break;
+                case "":
+                    
+                break;
                 default:  
                     weapon = "pistol";
                 break;
@@ -95,19 +98,13 @@ public class Player extends Entity{
             addVelo(temp.getRun()*0.05, temp.getRise()*0.05);
             getVec().recalc(getLoc(), new Angle(heading - 180),knockback); 
         }
-        /*
-        cloud.add(new Sprite(location, life+(int)(Math.random()*10), velocity+(Math.random()*3), heading+((Math.random()*10)-5), size, r, b, 0));
-        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity+(Math.random()*3),heading+5+(Math.random()*10),size,0,b,g));
-        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity+(Math.random()*3),heading-5-(Math.random()*10),size,r,0,g));
-        //*/
-        
+
     }
     public void addVelo(double xadd, double yadd){
         if(new Line(new Coord(getLoc().getX(),getLoc().getY()), new Coord(getLoc().getX() + xadd + xvelo,getLoc().getY() - yadd - yvelo)).getMag() <12){    
             xvelo += xadd;
-            yvelo += yadd;
+            yvelo -= yadd;
         }
-        
     }
     public double getxVelo(){
     return xvelo;}

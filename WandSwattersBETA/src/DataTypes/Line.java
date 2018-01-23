@@ -5,10 +5,10 @@ import java.awt.*;
  *
  * @author Dawson
  * @param vert Boolean for if line has infinite slope
- * @param x1 x Coordinate of first point
- * @param y1 y Coordinate of first point
- * @param x2 x Coordinate of first point
- * @param y2 y Coordinate of first point
+ * @param p1.getX() x Coordinate of first point
+ * @param p1.getY() y Coordinate of first point
+ * @param p2.getX() x Coordinate of first point
+ * @param p2.getY() y Coordinate of first point
  * @param p1 Coordinate for second point
  * @param p2 Coordinate for second point
  * @param rise Vertical distance between p1 and p2
@@ -21,8 +21,6 @@ import java.awt.*;
  */
 public class Line{
     boolean vert;
-    double x1,x2;
-    double y1,y2;
     Coord p2 = new Coord();
     Coord p1 = new Coord();
     double rise, run, slope, b;
@@ -35,12 +33,8 @@ public class Line{
     public Line(Coord _p1, Coord _p2){
         p1 = _p1;
         p2 = _p2;
-        x1 = p1.x;
-        x2 = p2.x;
-        y1 = p1.y;
-        y2 = p2.y;
-        rise = y1 - y2;
-        run = x2 - x1;
+        rise = p1.getY() - p2.getY();
+        run = p2.getX() - p1.getX();
         if (run == 0){
             vert = true;
             if(rise > 0){
@@ -65,21 +59,19 @@ public class Line{
     }
     public Line(Coord _p1, double _slope, double _mag){
         p1 = _p1;
-        x1 = p1.x;
-        y1 = p1.y;
         slope = _slope;
         mag = _mag;
         if(slope == -Double.POSITIVE_INFINITY){
             run = 0;
-            x2 = x1;
-            y2 = y1 - mag;
+            p2.setX(p1.getX());
+            p2.setY(p1.getY() - mag);
             rise = mag;
             angle.setDeg(90);
             vert = true;
         }else if(slope == -Double.NEGATIVE_INFINITY){
             run = 0;
-            x2 = x1;
-            y2 = y1 + mag;
+            p2.setX(p1.getX());
+            p2.setY(p1.getY() + mag);
             rise = -mag;
             angle.setDeg(270);
             vert = true;
@@ -92,89 +84,53 @@ public class Line{
             }
             run = (Math.cos(angle.getRad())*mag);
             rise = (Math.sin(angle.getRad())*mag);
-            x2 = x1 + run;
-            y2 = y1 - rise;
+            p2.setX(p1.getX() + run);
+            p2.setY(p1.getY() - rise);
             
-            b = y1 - (slope*x1);
+            b = p1.getY() - (slope*p1.getX());
         }
     }
     public Line(Coord _p1, Angle _angle, double _mag){
         p1 = _p1;
-        x1 = p1.x;
-        y1 = p1.y;
+
         angle = _angle;
         mag = _mag;
         if((int)angle.getDeg() == 90){
             slope = -Double.POSITIVE_INFINITY;
-            x2 = x1;
+            p2.setX(p1.getX());
             rise = -mag;
             vert = true;
-            y2 = y1 - mag;
+            p2.setY(p1.getY() - mag);
             run = 0;
         }else if((int)angle.getDeg() == 270){
             slope = -Double.NEGATIVE_INFINITY;
-            x2 = x1;
+            p2.setX(p1.getX());
             rise = mag;
             vert = true;
-            y2 = y1 + mag;
+            p2.setY(p1.getY() + mag);
             run = 0;
         }else{
             slope = -Math.tan(angle.getRad());
             run = (Math.cos(angle.getRad())*mag);
             rise = -(Math.sin(angle.getRad())*mag);
-            x2 = x1 + run;
-            y2 = y1 - rise;
-            b = y1 - (slope*x1);
+            p2.setX(p1.getX() + run);
+            p2.setY(p1.getY() - rise);
+            b = p1.getY() - (slope*p1.getX());
             vert = false;
         }
-        p2.setX(x2);
-        p2.setY(y2);
-    }
-    public void recalc(Coord _p1, Angle _angle, double _mag){
-        p1 = _p1;
-        x1 = p1.x;
-        y1 = p1.y;
-        angle = _angle;
-        mag = _mag;
-        if((int)angle.getDeg() == 90){
-            slope =-Double.POSITIVE_INFINITY;
-            x2 = x1;
-            rise = mag;
-            vert = true;
-            y2 = y1 - mag;
-            run = 0;
-        }else if((int)angle.getDeg() == 270){
-            slope = -Double.NEGATIVE_INFINITY;
-            x2 = x1;
-            rise = -mag;
-            vert = true;
-            y2 = y1 + mag;
-            run = 0;
-        }else{
-            slope = -Math.tan(angle.getRad());
-            run = (Math.cos(angle.getRad())*mag);
-            rise = (Math.sin(angle.getRad())*mag);
-            x2 = x1 + run;
-            y2 = y1 - rise;
-            b = y1 - (slope*x1);
-            vert = false;
-        }
-        p2.setTo(new Coord(x2,y2));
+        p2.setX(p2.getX());
+        p2.setY(p2.getY());
     }
     public void recalc(Coord _p1, Coord _p2){
         p1 = _p1;
         p2 = _p2;
-        x1 = p1.x;
-        x2 = p2.x;
-        y1 = p1.y;
-        y2 = p2.y;
-        rise = y1 - y2;
-        run = x2 - x1;
+        rise = p1.getY() - p2.getY();
+        run = p2.getX() - p1.getX();
         if (run == 0){
             vert = true;
             if(rise > 0){
                 slope = -Double.POSITIVE_INFINITY;
-                angle.setDeg(270);
+                angle.setDeg(90);
             }else{
                 slope = -Double.NEGATIVE_INFINITY;
                 angle.setDeg(270);
@@ -194,21 +150,19 @@ public class Line{
     }
     public void recalc(Coord _p1, double _slope, double _mag){
         p1 = _p1;
-        x1 = p1.x;
-        y1 = p1.y;
         slope = _slope;
         mag = _mag;
         if(slope == -Double.POSITIVE_INFINITY){
             run = 0;
-            x2 = x1;
-            y2 = y1 - mag;
+            p2.setX(p1.getX());
+            p2.setY(p1.getY() - mag);
             rise = mag;
             angle.setDeg(90);
             vert = true;
         }else if(slope == -Double.NEGATIVE_INFINITY){
             run = 0;
-            x2 = x1;
-            y2 = y1 + mag;
+            p2.setX(p1.getX());
+            p2.setY(p1.getY() + mag);
             rise = -mag;
             angle.setDeg(270);
             vert = true;
@@ -221,33 +175,57 @@ public class Line{
             }
             run = (Math.cos(angle.getRad())*mag);
             rise = (Math.sin(angle.getRad())*mag);
-            x2 = x1 + run;
-            y2 = y1 - rise;
+            p2.setX(p1.getX() + run);
+            p2.setY(p1.getY() - rise);
             
-            b = y1 - (slope*x1);
+            b = p1.getY() - (slope*p1.getX());
         }
     }
+    public void recalc(Coord _p1, Angle _angle, double _mag){
+        p1 = _p1;
+        angle = _angle;
+        mag = _mag;
+        if((int)angle.getDeg() == 90){
+            slope = -Double.POSITIVE_INFINITY;
+            p2.setX(p1.getX());
+            rise = -mag;
+            vert = true;
+            p2.setY(p1.getY() + mag);
+            run = 0;
+        }else if((int)angle.getDeg() == 270){
+            slope = -Double.NEGATIVE_INFINITY;
+            p2.setX(p1.getX());
+            rise = mag;
+            vert = true;
+            p2.setY(p1.getY() - mag);
+            run = 0;
+        }else{
+            slope = -Math.tan(angle.getRad());
+            run = (Math.cos(angle.getRad())*mag);
+            rise = -(Math.sin(angle.getRad())*mag);
+            p2.setX(p1.getX() + run);
+            p2.setY(p1.getY() - rise);
+            b = p1.getY() - (slope*p1.getX());
+            vert = false;
+        }
+        p2.setX(p2.getX());
+        p2.setY(p2.getY());
+    }
     public void moveBy(double x, double y){
-        x1 += x;
-        x2 += x;
-        y1 -= y;
-        y2 -= y;
+        p1.moveBy(x,-y);
+        p2.moveBy(x,-y);
     }
     
     public void moveTo(double x, double y){
-        x1 = x;
-        x2 = x + run;
-        y1 = y;
-        y2 = y - rise;
+        p1.setTo(x,y);
+        p2.setTo(x+run,y-rise);
     }
     public void moveTo (Coord c){
-        x1 = c.getX();
-        y1 = c.getY();
-        x2 = c.getX() + run;
-        y2 = c.getY() - rise;
+        p1.setTo(c);
+        p2.setTo(c.offset(run,-rise));
     }
     public int[] draw(){
-        int[] pts = {(int)x1,(int)y1,(int)x2,(int)y2};
+        int[] pts = {(int)p1.getX(),(int)p1.getY(),(int)p2.getX(),(int)p2.getY()};
         return pts;
     }
     public void compRotate(Line anchor,Coord p, Angle a){
@@ -262,7 +240,7 @@ public class Line{
         
     }
     public void rotate(Angle a){
-        angle.setDeg(angle.getDeg() + a.getDeg());
+        angle.setDeg(angle.getDeg() - a.getDeg());
         recalc(p1,angle,mag);
     }
     /*public void Accel(Line l1){
@@ -278,8 +256,8 @@ public class Line{
     
     public void merge(Line l1){
         Coord newp2 = new Coord(this.p2.x, this.p2.y);
-        newp2.x = this.x2 - l1.getRun();
-        newp2.y = this.y2 - l1.getRise();
+        newp2.x = this.p2.getX() - l1.getRun();
+        newp2.y = this.p2.getY() - l1.getRise();
         
         recalc(this.p1,newp2);
         
@@ -292,19 +270,19 @@ public class Line{
     }
 
     public double getX1() {
-        return x1;
+        return p1.getX();
     }
 
     public double getX2() {
-        return x2;
+        return p2.getX();
     }
 
     public double getY1() {
-        return y1;
+        return p1.getY();
     }
 
     public double getY2() {
-        return y2;
+        return p2.getY();
     }
 
     public Coord getP2() {

@@ -14,7 +14,7 @@ public class Intersect extends Coord{
     public Functions func = new Functions();
     public boolean exists;
     Line l1,l2;
-    ///*
+    
     public Intersect(){
         exists = false;
     }//*/

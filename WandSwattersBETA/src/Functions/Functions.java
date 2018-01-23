@@ -4,15 +4,31 @@
  * and open the template in the editor.
  */
 package Functions;
+import DataTypes.*;
+
 /**
  *
  * @author G
  */
 public class Functions {
     public Functions(){}
+    public boolean squarecollide(Coord point, Line line){
+        boolean withinx = false;
+        boolean withiny = false;
+       
+        if(range(line.getX1(),point.getX(),line.getX2()))withinx=true;
+        if(range(line.getY1(),point.getX(),line.getY2()))withiny=true;
+           
+        if (withiny == true && withinx == true){
+            return true;
+        }else{return false;}
+    
+    }
     public boolean range(double a, double b, double c){
         
-        if(a < b && b < c){
+        if(a <= b && b <= c){
+            return true;
+        }else if(c <= b && b <= a){
             return true;
         }else{
             return false;

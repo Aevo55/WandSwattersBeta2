@@ -106,13 +106,14 @@ public class Player extends Entity{
             yvelo -= yadd;
         }
     }
+    public Intersect getInt(){
+        return intersect;
+    }
     public double getxVelo(){
     return xvelo;}
     public double getyVelo(){
     return yvelo;}
-    public Intersect getInt(){
-        return intersect;
-    }
+    
     public Line getAim(){
         return aimline;
     }

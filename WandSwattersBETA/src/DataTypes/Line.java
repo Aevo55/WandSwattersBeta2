@@ -186,21 +186,21 @@ public class Line{
         angle = _angle;
         mag = _mag;
         if((int)angle.getDeg() == 90){
-            slope = -Double.POSITIVE_INFINITY;
+            slope = Double.POSITIVE_INFINITY;
             p2.setX(p1.getX());
             rise = -mag;
             vert = true;
             p2.setY(p1.getY() + mag);
             run = 0;
         }else if((int)angle.getDeg() == 270){
-            slope = -Double.NEGATIVE_INFINITY;
+            slope = Double.NEGATIVE_INFINITY;
             p2.setX(p1.getX());
             rise = mag;
             vert = true;
             p2.setY(p1.getY() - mag);
             run = 0;
         }else{
-            slope = -Math.tan(angle.getRad());
+            slope = Math.tan(angle.getRad());
             run = (Math.cos(angle.getRad())*mag);
             rise = -(Math.sin(angle.getRad())*mag);
             p2.setX(p1.getX() + run);

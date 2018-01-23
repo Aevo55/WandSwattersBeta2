@@ -17,8 +17,10 @@ public class Player extends Entity{
     int g = 5;
     int b = 255;
     int life = 100;
+    int level = 0;
+    double spray = 1;
     int reload = 0;
-    int knockback = 5;
+    double knockback = 5;
     String weapon = "shotgun";
     double xvelo=0;
     double yvelo=0;
@@ -73,7 +75,12 @@ public class Player extends Entity{
             b-=25;
         }
         //</editor-fold>
+        
+        if(spray <= 40){
+            spray += 2;
+        }
         if(reload <= 0){
+            
             switch(weapon){
                 case "pistol":
                     cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*10)-5), 5, r, b, g));        
@@ -90,8 +97,10 @@ public class Player extends Entity{
                     knockback = 200;
                     reload = 25;
                 break;
-                case "":
-                    
+                case "rifle":
+                    cloud.add(new Sprite(this, 30, 6, aimline.getAngle().getDeg()+((Math.random()*spray)-(spray/2)), 5, r, b, g)); 
+                    reload = 2;
+                    knockback = 30;
                 break;
                 default:  
                     weapon = "pistol";
@@ -128,5 +137,8 @@ public class Player extends Entity{
     }
     public void setWeap(String weap){
         weapon = weap;
+    }
+    public void setSpray(double s){
+        spray = s;
     }
 }

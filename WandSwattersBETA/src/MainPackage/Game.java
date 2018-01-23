@@ -186,7 +186,9 @@ public class Game extends JPanel implements Runnable {
             case KeyEvent.VK_2:
                 players[0].setWeap("shotgun");
             break;
-            
+            case KeyEvent.VK_3:
+                players[0].setWeap("rifle");
+            break;
             case KeyEvent.VK_E:
                 players[0].setTo(new Coord(200,200));
                 players[0].getVec().recalc(new Coord(200,200), new Angle(0),0.0);
@@ -247,6 +249,7 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_SPACE:
                 bool_SPACE = false;
+                players[0].setSpray(0);
             break;
         }
     }

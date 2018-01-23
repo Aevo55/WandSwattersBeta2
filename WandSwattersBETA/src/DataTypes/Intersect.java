@@ -7,7 +7,6 @@ package DataTypes;
 import java.awt.*;
 import Functions.*;
 /**
- *
  * @author G
  */
 public class Intersect extends Coord{

@@ -98,7 +98,9 @@ public class Player extends Entity{
                     reload = 25;
                 break;
                 case "rifle":
-                    cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg()+((Math.random()*spray)-(spray/2)), 5, r, b, g)); 
+                    //cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg()+((Math.random()*spray)-(spray/2)), 5, r, b, g)); 
+                    cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg(), 5, r, b, g)); 
+                    
                     reload = 2;
                     knockback = 15;
                 break;
@@ -107,7 +109,7 @@ public class Player extends Entity{
                 break;
             }
             Line temp = new Line(getLoc(), new Angle(aimline.getAngle().getDeg() - 180), knockback);
-            addVelo(temp.getRun()*0.05, temp.getRise()*0.05);
+            //addVelo(temp.getRun()*0.05, temp.getRise()*0.05); //remove this to disable recoil
             getVec().recalc(getLoc(), new Angle(aimline.getAngle().getDeg() - 180),knockback); 
         }
 

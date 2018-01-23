@@ -259,10 +259,9 @@ public class Game extends JPanel implements Runnable {
     
     public void Move(){
         players[0].getInt().recalc(players[0].getAim(), players[1].getAim());
-        if (players[0].getInt().exists){
-            //func.sysout("Collided");
+        for(int x = 0;x<2;x++){
+            players[x].live();
         }
-        players[0].live();
         if(bool_SPACE == true){
             players[0].createSprite();
         }
@@ -278,8 +277,6 @@ public class Game extends JPanel implements Runnable {
                 players[0].setY(players[0].getY() + 2);
             }
             players[0].getAim().recalc(players[0],players[0].getAim().getAngle(),players[0].getAim().getMag());
-
-            
             if(bool_DOWN == true){
                 players[0].getAim().rotate(new Angle(-15));
                 test.getVec().rotate(new Angle(-15));
@@ -290,14 +287,26 @@ public class Game extends JPanel implements Runnable {
             }
         }
     }
-    public void run() {
+    public void collideSprites(Sprite s,ArrayList<Sprite> _s){
+        Line norm = new Line();
+        Intersect minpoint = new Intersect();
+        for(int x = 0;x<_s.size();x++){
+            norm.recalc(s, -1/_s.get(x).getVec().getSlope(),999);
+            minpoint.recalc(norm,_s.get(x).getVec());
+            norm.recalc(norm.getP1(), minpoint);
+            if(norm.getMag()<(s.size + _s.get(x).size)){
+                func.sysout("U shot my shit");
+            }
+        }
+    }
+    public void run(){
         players[0] = new Player(new Coord(200,200));
         players[1] = new Player(new Coord(100,200));
         
         while(true){
             Move();
-            test.live();
-            
+            //test.live();
+            collideSprites(test,players[0].cloud);
             repaint();
             try{
                 Thread.sleep(33);

@@ -30,7 +30,7 @@ public class Intersect extends Coord{
             setY((l2.getSlope()*l1.getX1())+l2.getB());
             if(func.range(l1.getY1(), getY(), l1.getY2()) && func.range(l2.getX1(),getX(),l2.getX2())){
                 exists = true;
-                func.sysout(i);
+                //func.sysout(i);
                 i++;
             }
         }else if(l2.vert == true){
@@ -39,7 +39,7 @@ public class Intersect extends Coord{
             setY((l1.getSlope()*l2.getX1())+l1.getB());
             if(func.range(l1.getX1(), getX(), l1.getX2()) && func.range(l2.getY1(),getY(),l2.getY2())){
                 exists = true;
-                func.sysout(i);
+                //func.sysout(i);
                 i++;
             }
         }else{
@@ -47,7 +47,7 @@ public class Intersect extends Coord{
             setY((getX() * l1.getSlope()) + l1.getB());
             if(func.range(l1.getX1(), getX(), l1.getX2()) && func.range(l2.getX1(),getX(),l2.getX2())){
                 exists = true;
-                func.sysout(i);
+                //func.sysout(i);
                 i++;
             }
         }

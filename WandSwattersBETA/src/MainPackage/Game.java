@@ -252,7 +252,7 @@ public class Game extends JPanel implements Runnable {
         for(int x = 0;x<edge.length();x++){
             players[0].getInt().recalc(players[0].getAim(), edge.lines[x]);
             if (players[0].getInt().exists){
-                func.sysout("Collided");
+                //func.sysout("Collided");
             }
         }
         players[0].live();

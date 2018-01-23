@@ -77,7 +77,7 @@ public class Player extends Entity{
             switch(weapon){
                 case "pistol":
                     cloud.add(new Sprite(location, life, velocity, heading+((Math.random()*10)-5), size, r, b, g));        
-                    reload = 15;
+                    reload = 1;
                     knockback = 75;
                 break;
                 case "shotgun":
@@ -85,7 +85,7 @@ public class Player extends Entity{
                     cloud.add(new Sprite(location, life, velocity, heading-(Math.random()*10)-10, size, r, b, g));   
                     cloud.add(new Sprite(location, life, velocity, heading+(Math.random()*10)+10, size, r, b, g));  
                     knockback = 200;
-                    reload = 30;
+                    reload = 1;
                 break;
                 default:  
                     weapon = "pistol";
@@ -103,13 +103,26 @@ public class Player extends Entity{
         
     }
     public void addVelo(double xadd, double yadd){
-        if(new Line(new Coord(getLoc().getX(),getLoc().getY()), new Coord(getLoc().getX() + xadd + xvelo,getLoc().getY() - yadd - yvelo)).getMag() <12){    
+        int MAXVELO = 5;
+        if(new Line(new Coord(getLoc().getX(),getLoc().getY()), new Coord(getLoc().getX() + xadd + xvelo,getLoc().getY() - yadd - yvelo)).getMag() <MAXVELO){    
             xvelo += xadd;
             yvelo += yadd;
         }
+        else{
+            double xover = xvelo + xadd;
+            double yover = yvelo + yadd;
+            func.sysout("XOVER: " + xover + "YOVER: " + yover);
+            Line temp = new Line(new Coord(500,500), new Coord(500+xover,500+yover));
+            temp.recalc(temp.getP1(), temp.getAngle(), MAXVELO);
+            xvelo = temp.getRun();
+            yvelo = temp.getRise();
+            
+            //xvelo = Math.sqrt((Math.pow(xover,2))/(magoversqar)*Math.pow(MAXVELO,2));
+            //yvelo = Math.sqrt((Math.pow(yover,2))/(magoversqar)*Math.pow(MAXVELO,2));
+        }
         
     }
-    public Intersect getInt(){
+    public Intersect getInt(){ 
         return intersect;
     }
     public double getxVelo(){

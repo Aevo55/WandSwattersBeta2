@@ -52,7 +52,7 @@ public class Player extends Entity{
             yvelo*=0.99;
         }
     }
-    public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
+    public void createSprite(){
         //<editor-fold defaultstate="collapsed" desc="RGB cycle">
         if(b == 255 && g == 5){
             r+=25;
@@ -76,16 +76,19 @@ public class Player extends Entity{
         if(reload <= 0){
             switch(weapon){
                 case "pistol":
-                    cloud.add(new Sprite(location, life, velocity, heading+((Math.random()*10)-5), size, r, b, g));        
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*10)-5), 5, r, b, g));        
                     reload = 15;
                     knockback = 75;
                 break;
                 case "shotgun":
-                    cloud.add(new Sprite(location, life, velocity, heading+((Math.random()*20)-10), size, r, b, g));   
-                    cloud.add(new Sprite(location, life, velocity, heading-(Math.random()*10)-10, size, r, b, g));   
-                    cloud.add(new Sprite(location, life, velocity, heading+(Math.random()*10)+10, size, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));
                     knockback = 200;
-                    reload = 30;
+                    reload = 25;
                 break;
                 case "":
                     
@@ -94,9 +97,9 @@ public class Player extends Entity{
                     weapon = "pistol";
                 break;
             }
-            Line temp = new Line(getLoc(), new Angle(heading - 180), knockback);
-            addVelo(temp.getRun()*0.05, temp.getRise()*0.05);
-            getVec().recalc(getLoc(), new Angle(heading - 180),knockback); 
+            Line temp = new Line(getLoc(), new Angle(aimline.getAngle().getDeg() - 180), knockback);
+            //addVelo(temp.getRun()*0.05, temp.getRise()*0.05);
+            getVec().recalc(getLoc(), new Angle(aimline.getAngle().getDeg() - 180),knockback); 
         }
 
     }

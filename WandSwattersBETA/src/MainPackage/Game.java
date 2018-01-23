@@ -259,7 +259,7 @@ public class Game extends JPanel implements Runnable {
         }
         players[0].live();
         if(bool_SPACE == true){
-            players[0].createSprite(players[0],55,5,(int)players[0].getAim().getAngle().getDeg(),5,0,0,0);
+            players[0].createSprite();
         }
         if (bool_collide == false){
             if (bool_A == true){

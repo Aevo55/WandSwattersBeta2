@@ -243,10 +243,6 @@ public class Line{
         angle.setDeg(angle.getDeg() - a.getDeg());
         recalc(p1,angle,mag);
     }
-    /*public void Accel(Line l1){
-        Coord newp2 = new Coord(this.getX2() + l1.getRun(),this.getY2() + l1.getRise());
-        recalc(this.getP1(),newp2);
-    }*/
     public void Accel(Line l1){
         //Coord newp2 = new Coord(this.getX2() + amount,this.getY2() + amount);
         //recalc(this.getP1(), new Coord(this.getX1() + 1,this.getY1()+1));
@@ -263,7 +259,7 @@ public class Line{
         
     }
     
-    //player1.getVec().recalc(player1.getLoc(), new Coord(player1.getVec().getX2() - temp.getRun(),player1.getVec().getY2() - temp.getRise()));///
+   
     //<editor-fold defaultstate="collapsed" desc="Setters">
     public boolean isVert() {
         return vert;

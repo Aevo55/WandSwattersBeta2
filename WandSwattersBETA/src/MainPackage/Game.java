@@ -420,9 +420,9 @@ public class Game extends JPanel implements Runnable {
             repaint();
             try{
                 Thread.sleep(33);
-            }catch(InterruptedException ex){
+            }catch(InterruptedException ex){ 
             } 
         }
     } 
-}
-           
+} 
+        

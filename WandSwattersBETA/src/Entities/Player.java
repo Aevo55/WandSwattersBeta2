@@ -88,26 +88,26 @@ public class Player extends Entity{
                     knockback = 75;
                 break;
                 case "shotgun":
-                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
-                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
-                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));
-                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
-                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
-                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));
+                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));
+                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));
                     knockback = 200;
                     reload = 25;
                 break;
                 case "rifle":
-                    cloud.add(new Sprite(this, 30, 6, aimline.getAngle().getDeg()+((Math.random()*spray)-(spray/2)), 5, r, b, g)); 
+                    cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg()+((Math.random()*spray)-(spray/2)), 5, r, b, g)); 
                     reload = 2;
-                    knockback = 30;
+                    knockback = 15;
                 break;
                 default:  
                     weapon = "pistol";
                 break;
             }
             Line temp = new Line(getLoc(), new Angle(aimline.getAngle().getDeg() - 180), knockback);
-            //addVelo(temp.getRun()*0.05, temp.getRise()*0.05);
+            addVelo(temp.getRun()*0.05, temp.getRise()*0.05);
             getVec().recalc(getLoc(), new Angle(aimline.getAngle().getDeg() - 180),knockback); 
         }
 

@@ -19,6 +19,10 @@ public class Coord{
         x = c.getX();
         y = c.getY();
     }
+    public void setTo(double _x,double _y){
+        x = _x;
+        y = _y;
+    }
     public Coord(double _x, double _y){
         x = _x;
         y = _y;
@@ -27,7 +31,7 @@ public class Coord{
         x = (double)_x;
         y = (double)_y;
     }
-    public void move(double _x, double _y){
+    public void moveBy(double _x, double _y){
         x = x + _x;
         y = y + _y;
     }

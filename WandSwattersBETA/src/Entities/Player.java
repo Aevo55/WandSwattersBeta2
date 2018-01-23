@@ -17,8 +17,10 @@ public class Player extends Entity{
     int g = 5;
     int b = 255;
     int life = 100;
+    int level = 0;
+    double spray = 1;
     int reload = 0;
-    int knockback = 5;
+    double knockback = 5;
     String weapon = "shotgun";
     double xvelo=0;
     double yvelo=0;
@@ -52,7 +54,7 @@ public class Player extends Entity{
             yvelo*=0.99;
         }
     }
-    public void createSprite(Coord location, int life, double velocity, int heading, int size, int red, int blue, int green){
+    public void createSprite(){
         //<editor-fold defaultstate="collapsed" desc="RGB cycle">
         if(b == 255 && g == 5){
             r+=25;
@@ -73,40 +75,48 @@ public class Player extends Entity{
             b-=25;
         }
         //</editor-fold>
+        
+        if(spray <= 40){
+            spray += 2;
+        }
         if(reload <= 0){
+            
             switch(weapon){
                 case "pistol":
-                    cloud.add(new Sprite(location, life, velocity, heading+((Math.random()*10)-5), size, r, b, g));        
-                    reload = 1;
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*10)-5), 5, r, b, g));        
+                    reload = 15;
                     knockback = 75;
                 break;
                 case "shotgun":
-                    cloud.add(new Sprite(location, life, velocity, heading+((Math.random()*20)-10), size, r, b, g));   
-                    cloud.add(new Sprite(location, life, velocity, heading-(Math.random()*10)-10, size, r, b, g));   
-                    cloud.add(new Sprite(location, life, velocity, heading+(Math.random()*10)+10, size, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
+                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));
                     knockback = 200;
-                    reload = 1;
+                    reload = 25;
+                break;
+                case "rifle":
+                    cloud.add(new Sprite(this, 30, 6, aimline.getAngle().getDeg()+((Math.random()*spray)-(spray/2)), 5, r, b, g)); 
+                    reload = 2;
+                    knockback = 30;
                 break;
                 default:  
                     weapon = "pistol";
                 break;
             }
-            Line temp = new Line(getLoc(), new Angle(heading - 180), knockback);
+            Line temp = new Line(getLoc(), new Angle(aimline.getAngle().getDeg() - 180), knockback);
             addVelo(temp.getRun()*0.05, temp.getRise()*0.05);
-            getVec().recalc(getLoc(), new Angle(heading - 180),knockback); 
+            getVec().recalc(getLoc(), new Angle(aimline.getAngle().getDeg() - 180),knockback); 
         }
-        /*
-        cloud.add(new Sprite(location, life+(int)(Math.random()*10), velocity+(Math.random()*3), heading+((Math.random()*10)-5), size, r, b, 0));
-        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity+(Math.random()*3),heading+5+(Math.random()*10),size,0,b,g));
-        cloud.add(new Sprite(location,life+(int)(Math.random()*10),velocity+(Math.random()*3),heading-5-(Math.random()*10),size,r,0,g));
-        //*/
-        
+
     }
     public void addVelo(double xadd, double yadd){
         int MAXVELO = 5;
         if(new Line(new Coord(getLoc().getX(),getLoc().getY()), new Coord(getLoc().getX() + xadd + xvelo,getLoc().getY() - yadd - yvelo)).getMag() <MAXVELO){    
             xvelo += xadd;
-            yvelo += yadd;
+            yvelo -= yadd;
         }
         else{
             double xover = xvelo + xadd;
@@ -141,5 +151,8 @@ public class Player extends Entity{
     }
     public void setWeap(String weap){
         weapon = weap;
+    }
+    public void setSpray(double s){
+        spray = s;
     }
 }

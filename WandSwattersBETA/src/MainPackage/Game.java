@@ -114,11 +114,13 @@ public class Game extends JPanel implements Runnable {
         }
         gc.fillOval((int)players[0].getInt().getX()-1,(int)players[0].getInt().getY()-1,2,2);
         for(int x = 0;x<2;x++){
-            
+            gc.setColor(Color.black);
             gc.fillOval((int)players[x].getX()-4,(int)players[x].getY()-4,8,8);
+            gc.setColor(Color.red);
+            gc.drawLine(players[x].getAim().draw()[0],players[x].getAim().draw()[1],players[x].getAim().draw()[2],players[x].getAim().draw()[3]);
         }
         
-        gc.setColor(Color.red);
+        
         
         
         Color spritecol = new Color(test.red,test.blue,test.green);
@@ -133,7 +135,7 @@ public class Game extends JPanel implements Runnable {
         gc.setColor(Color.RED);
         //veloline.recalc(players[0].getVec().getP1(), players[0].getVec().getAngle(), players[0].getVec().getMag() * 28);
         //gc.drawLine(veloline.draw()[0],veloline.draw()[1],veloline.draw()[2],veloline.draw()[3]);
-        gc.drawLine(players[0].getAim().draw()[0],players[0].getAim().draw()[1],players[0].getAim().draw()[2],players[0].getAim().draw()[3]);
+        
         
     }
     public void keyPressed(KeyEvent evt){
@@ -258,7 +260,7 @@ public class Game extends JPanel implements Runnable {
     public void Move(){
         players[0].getInt().recalc(players[0].getAim(), players[1].getAim());
         if (players[0].getInt().exists){
-            func.sysout("Collided");
+            //func.sysout("Collided");
         }
         players[0].live();
         if(bool_SPACE == true){
@@ -289,7 +291,7 @@ public class Game extends JPanel implements Runnable {
         }
     }
     public void run() {
-        players[0] = new Player(new Coord(50,50));
+        players[0] = new Player(new Coord(200,200));
         players[1] = new Player(new Coord(100,200));
         
         while(true){

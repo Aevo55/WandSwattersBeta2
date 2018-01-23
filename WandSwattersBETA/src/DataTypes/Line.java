@@ -129,10 +129,10 @@ public class Line{
         if (run == 0){
             vert = true;
             if(rise > 0){
-                slope = -Double.POSITIVE_INFINITY;
+                slope = Double.POSITIVE_INFINITY;
                 angle.setDeg(90);
             }else{
-                slope = -Double.NEGATIVE_INFINITY;
+                slope = Double.NEGATIVE_INFINITY;
                 angle.setDeg(270);
             }
             mag = rise;

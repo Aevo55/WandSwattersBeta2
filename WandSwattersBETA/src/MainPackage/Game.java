@@ -246,7 +246,7 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_DOWN:
                 bool_DOWN2 = false;
-                bool_DOWN = false;
+                bool_DOWN = false; 
                 if(bool_UP2 == true){bool_UP = true;}
             break;
             case KeyEvent.VK_SPACE:
@@ -258,9 +258,15 @@ public class Game extends JPanel implements Runnable {
     
     
     public void Move(){
-        players[0].getInt().recalc(players[0].getAim(), players[1].getAim());
+        for(int i = 0; i < m1.nets[0].lines.length;i++){
+        players[0].getInt().recalc(players[0].getVec(), m1.nets[0].lines[i]);
+        if(players[0].getInt().exists){break;}
+        }
         if (players[0].getInt().exists){
-            //func.sysout("Collided");
+            players[0].getVec().recalc(players[0].getLoc(), players[0].getInt());
+            players[0].getVec().recalc(players[0].getVec().getP1(),players[0].getVec().getAngle(),players[0].getVec().getMag());
+            players[0].addVelo(-2*players[0].getxVelo(), +2*players[0].getyVelo());
+            func.sysout("it did it");
         }
         players[0].live();
         if(bool_SPACE == true){

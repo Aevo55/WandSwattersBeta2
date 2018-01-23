@@ -113,12 +113,12 @@ public class Player extends Entity{
 
     }
     public void addVelo(double xadd, double yadd){
-        int MAXVELO = 5;
+        int MAXVELO = 15;
         if(new Line(new Coord(getLoc().getX(),getLoc().getY()), new Coord(getLoc().getX() + xadd + xvelo,getLoc().getY() - yadd - yvelo)).getMag() <MAXVELO){    
             xvelo += xadd;
             yvelo -= yadd;
         }
-        else{
+        else{/*
             double xover = xvelo + xadd;
             double yover = yvelo + yadd;
             func.sysout("XOVER: " + xover + "YOVER: " + yover);
@@ -128,7 +128,7 @@ public class Player extends Entity{
             yvelo = temp.getRise();
             
             //xvelo = Math.sqrt((Math.pow(xover,2))/(magoversqar)*Math.pow(MAXVELO,2));
-            //yvelo = Math.sqrt((Math.pow(yover,2))/(magoversqar)*Math.pow(MAXVELO,2));
+            //yvelo = Math.sqrt((Math.pow(yover,2))/(magoversqar)*Math.pow(MAXVELO,2));*/
         }
         
     }

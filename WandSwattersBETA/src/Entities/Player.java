@@ -37,7 +37,6 @@ public class Player extends Entity{
     }
     public void live(){
         reload--;
-        vector.recalc(getLoc(),new Coord(getLoc().getX() + xvelo,getLoc().getY() + yvelo));
         setX(vector.getX2());
         setY(vector.getY2());
         vector.moveTo(vector.getP2());
@@ -109,8 +108,9 @@ public class Player extends Entity{
                 break;
             }
             Line temp = new Line(getLoc(), new Angle(aimline.getAngle().getDeg() - 180), knockback);
-            //addVelo(temp.getRun()*0.05, temp.getRise()*0.05); //remove this to disable recoil
-            getVec().recalc(getLoc(), new Angle(aimline.getAngle().getDeg() - 180),knockback); 
+            addVelo(temp.getRun()*0.05, temp.getRise()*0.05); //remove this to disable recoil
+            getVec().recalc(getLoc(), new Angle(aimline.getAngle().getDeg() - 180),knockback);
+            vector.recalc(getLoc(),new Coord(getLoc().getX() + xvelo,getLoc().getY() + yvelo));
         }
 
     }
@@ -131,7 +131,7 @@ public class Player extends Entity{
             yvelo = temp.getRise();
             */
             //xvelo = Math.sqrt((Math.pow(xover,2))/(magoversqar)*Math.pow(MAXVELO,2));
-            //yvelo = Math.sqrt((Math.pow(yover,2))/(magoversqar)*Math.pow(MAXVELO,2));
+            //yvelo = Math.sqrt((Math.pow(yover,2))/(magoversqar)*Math.pow(MAXVELO,2));*/
         }
         
     }

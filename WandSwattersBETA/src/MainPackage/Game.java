@@ -246,7 +246,7 @@ public class Game extends JPanel implements Runnable {
             break;
             case KeyEvent.VK_DOWN:
                 bool_DOWN2 = false;
-                bool_DOWN = false;
+                bool_DOWN = false; 
                 if(bool_UP2 == true){bool_UP = true;}
             break;
             case KeyEvent.VK_SPACE:
@@ -258,9 +258,13 @@ public class Game extends JPanel implements Runnable {
     
     
     public void Move(){
-        players[0].getInt().recalc(players[0].getAim(), players[1].getAim());
-        for(int x = 0;x<2;x++){
-            players[x].live();
+        players[0].live();
+        for(int i = 0; i < m1.nets[0].lines.length;i++){
+            players[0].getInt().recalc(players[0].getVec(), m1.nets[0].lines[i]);
+            if(players[0].getInt().exists){
+                players[0].getVec().recalc(players[0].getVec().getP1(),new Angle(m1.nets[0].lines[i].getAngle().getDeg() + (m1.nets[0].lines[i].getAngle().getDeg()- players[0].getVec().getAngle().getDeg())),players[0].getVec().getMag());
+                break;
+            }
         }
         if(bool_SPACE == true){
             players[0].createSprite();
@@ -305,8 +309,8 @@ public class Game extends JPanel implements Runnable {
         
         while(true){
             Move();
-            //test.live();
-            collideSprites(test,players[0].cloud);
+            test.live();
+            //collideSprites(test,players[0].cloud);
             repaint();
             try{
                 Thread.sleep(33);

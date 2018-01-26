@@ -263,6 +263,8 @@ public class Game extends JPanel implements Runnable {
             players[0].getInt().recalc(players[0].getVec(), m1.nets[0].lines[i]);
             if(players[0].getInt().exists){
                 players[0].getVec().recalc(players[0].getVec().getP1(),new Angle(m1.nets[0].lines[i].getAngle().getDeg() + (m1.nets[0].lines[i].getAngle().getDeg()- players[0].getVec().getAngle().getDeg())),players[0].getVec().getMag());
+                players[0].setxVelo(players[0].getVec().getRun());
+                players[0].setyVelo(-players[0].getVec().getRise());
                 break;
             }
         }

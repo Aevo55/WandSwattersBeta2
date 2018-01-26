@@ -142,7 +142,12 @@ public class Player extends Entity{
     return xvelo;}
     public double getyVelo(){
     return yvelo;}
-    
+    public void setxVelo(double x){
+        xvelo = x;
+    }
+    public void setyVelo(double y){
+        yvelo = y;
+    }
     public Line getAim(){
         return aimline;
     }

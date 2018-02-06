@@ -259,15 +259,30 @@ public class Game extends JPanel implements Runnable {
     
     public void Move(){
         players[0].live();
+        players[1].live();
+        ///*
+        Line temp = new Line(players[1].getLoc(), players[0].getLoc());
+        players[1].addVelo((temp.getRun()*0.005), (temp.getRise()*0.005)); //remove this to disable recoil
+        players[1].getVec().recalc(players[1].getLoc(), players[1].getVec().getAngle(),0.05/temp.getMag());
+        players[1].getVec().recalc(players[1].getLoc(),new Coord(players[1].getLoc().getX() + players[1].getxVelo(),players[1].getLoc().getY() + players[1].getyVelo()));
+        //*/
         for(int i = 0; i < m1.nets[0].lines.length;i++){
             players[0].getInt().recalc(players[0].getVec(), m1.nets[0].lines[i]);
+            for(int j = 0;j<players[0].cloud.size();j++){
+                players[0].cloud.get(j).getInt().recalc(players[0].cloud.get(j).getVec(),m1.nets[0].lines[i]);
+                if(players[0].cloud.get(j).getInt().exists){
+                players[0].cloud.get(j).getVec().recalc(players[0].cloud.get(j).getVec().getP1(),new Angle(m1.nets[0].lines[i].getAngle().getDeg() + (m1.nets[0].lines[i].getAngle().getDeg()- players[0].cloud.get(j).getVec().getAngle().getDeg())),players[0].cloud.get(j).getVec().getMag()*.5);
+                break;
+            }
+            }
             if(players[0].getInt().exists){
-                players[0].getVec().recalc(players[0].getVec().getP1(),new Angle(m1.nets[0].lines[i].getAngle().getDeg() + (m1.nets[0].lines[i].getAngle().getDeg()- players[0].getVec().getAngle().getDeg())),players[0].getVec().getMag());
+                players[0].getVec().recalc(players[0].getVec().getP1(),new Angle(m1.nets[0].lines[i].getAngle().getDeg() + (m1.nets[0].lines[i].getAngle().getDeg()- players[0].getVec().getAngle().getDeg())),players[0].getVec().getMag()*.5);
                 players[0].setxVelo(players[0].getVec().getRun());
                 players[0].setyVelo(-players[0].getVec().getRise());
                 break;
             }
         }
+        
         if(bool_SPACE == true){
             players[0].createSprite();
         }

@@ -27,9 +27,7 @@ public class Player extends Entity{
     Functions func = new Functions();
     public ArrayList<Sprite> cloud = new ArrayList();
     Line aimline = new Line();
-    Intersect intersect = new Intersect();
     public Player(Coord _loc){
-        
         this.setX(_loc.getX());
         this.setY(_loc.getY());
         this.vector = new Line(this.getLoc(), 0, 0);
@@ -129,16 +127,16 @@ public class Player extends Entity{
             temp.recalc(temp.getP1(), temp.getAngle(), MAXVELO);
             xvelo = temp.getRun();
             yvelo = temp.getRise();
-            */
+            //*/
             //xvelo = Math.sqrt((Math.pow(xover,2))/(magoversqar)*Math.pow(MAXVELO,2));
             //yvelo = Math.sqrt((Math.pow(yover,2))/(magoversqar)*Math.pow(MAXVELO,2));*/
         }
         
     }
-    public Intersect getInt(){ 
-        return intersect;
-    }
+    
     public double getxVelo(){
+        
+        
     return xvelo;}
     public double getyVelo(){
     return yvelo;}

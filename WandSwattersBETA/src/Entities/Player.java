@@ -17,11 +17,12 @@ public class Player extends Entity{
     int g = 5;
     int b = 255;
     int life = 100;
+    
     int level = 0;
     double spray = 1;
     int reload = 0;
     double knockback = 5;
-    String weapon = "shotgun";
+    String weapon = "pistol";
     double xvelo=0;
     double yvelo=0;
     Functions func = new Functions();
@@ -32,8 +33,9 @@ public class Player extends Entity{
         this.setY(_loc.getY());
         this.vector = new Line(this.getLoc(), 0, 0);
         aimline.recalc(this, this.offset(20, 0));
+        setSize(2);
     }
-    public void live(){
+    public void live(boolean[] input){
         reload--;
         setX(vector.getX2());
         setY(vector.getY2());
@@ -44,12 +46,13 @@ public class Player extends Entity{
                     cloud.remove(x);
                 }
             }
-        if(xvelo !=0){
-            xvelo *=0.99;
+        if(input[1] == true){
+            getAim().rotate(new Angle(-15));
         }
-        if(yvelo !=0){
-            yvelo*=0.99;
+        if(input[0] == true){
+            getAim().rotate(new Angle(15));
         }
+        getAim().recalc(this,getAim().getAngle(),getAim().getMag());
     }
     public void createSprite(){
         //<editor-fold defaultstate="collapsed" desc="RGB cycle">
@@ -98,7 +101,7 @@ public class Player extends Entity{
                     //cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg()+((Math.random()*spray)-(spray/2)), 5, r, b, g)); 
                     cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg(), 5, r, b, g)); 
                     
-                    reload = 2;
+                    reload = 1;
                     knockback = 15;
                 break;
                 default:  
@@ -110,7 +113,6 @@ public class Player extends Entity{
             getVec().recalc(getLoc(), new Angle(aimline.getAngle().getDeg() - 180),knockback);
             vector.recalc(getLoc(),new Coord(getLoc().getX() + xvelo,getLoc().getY() + yvelo));
         }
-
     }
     public void addVelo(double xadd, double yadd){
         int MAXVELO = Integer.MAX_VALUE;
@@ -133,32 +135,40 @@ public class Player extends Entity{
         }
         
     }
-    
+    public void hitNet(Net net){
+        for(int i = 0; i < net.lines.length;i++){
+            getInt().recalc(getVec(), net.lines[i]);
+            for(int j = 0;j<cloud.size();j++){
+                cloud.get(j).getInt().recalc(cloud.get(j).getVec(),net.lines[i]);
+                if(cloud.get(j).getInt().exists){
+                cloud.get(j).getVec().recalc(cloud.get(j).getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- cloud.get(j).getVec().getAngle().getDeg())),cloud.get(j).getVec().getMag()*.5);
+                break;
+            }
+            }
+            if(getInt().exists){
+                getVec().recalc(getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- getVec().getAngle().getDeg())),getVec().getMag()*.5);
+                setxVelo(getVec().getRun());
+                setyVelo(-getVec().getRise());
+                break;
+            }
+        }
+    }
     public double getxVelo(){
-        
-        
     return xvelo;}
     public double getyVelo(){
     return yvelo;}
     public void setxVelo(double x){
-        xvelo = x;
-    }
+        xvelo = x;}
     public void setyVelo(double y){
-        yvelo = y;
-    }
+        yvelo = y;}
     public Line getAim(){
-        return aimline;
-    }
+        return aimline;}
     public ArrayList getCloud(){
-        return cloud;
-    }
+        return cloud;}
     public String getWeap(){
-        return weapon;
-    }
+        return weapon;}
     public void setWeap(String weap){
-        weapon = weap;
-    }
+        weapon = weap;}
     public void setSpray(double s){
-        spray = s;
-    }
+        spray = s;}
 }

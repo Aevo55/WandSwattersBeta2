@@ -12,7 +12,6 @@ public class Sprite extends Entity{
     
     public int life;
     //public double velocity;
-    public int size;
     public int red;
     public int green;
     public int blue;
@@ -25,7 +24,7 @@ public class Sprite extends Entity{
         setY(_loc.getY());
         life = _life;
         
-        size = _size;
+        setSize(_size);
         red = _red;
         blue = _blue;
         green = _green;
@@ -35,7 +34,7 @@ public class Sprite extends Entity{
         setX(_line.getX1());
         setY(_line.getY1());
         life = _life;
-        size = _size;
+        setSize(_size);
         red = _red;
         blue = _blue;
         green = _green;

@@ -25,38 +25,14 @@ public class Game extends JPanel implements Runnable {
     int bluey = 400;
     int greenx = 160;
     int greeny = 400;
-            
+    public ArrayList<Coord> newShape = new ArrayList();
     boolean
-        bool_D = false, //If right arrow is pressed (can be overwritten by other keys)
-        bool_A = false, //If left arrow is pressed (can be overwritten by other keys)
-        bool_D2 = false, //If right arrow is pressed (cannot be overwritten by other keys)
-        bool_A2 = false, //If left arrow is pressed (cannot be overwritten by other keys)
-        bool_W = false,
-        bool_W2 = false,
-        bool_S = false,
-        bool_S2 = false,
-        bool_SPACE = false,
-        bool_collide = false,
-        bool_UP = false,
-        bool_DOWN = false,
-        bool_UP2 = false,
-        bool_DOWN2 = false
+        bool_SPACE = false
     ;
-    double 
-        xcol,
-        ycol,
-        slope,
-        ratio
-    ;
-    int gamewidth = 400;
-    Angle aimangle = new Angle();
-    Angle aimupangle = new Angle();
-    Angle aimdownangle = new Angle();
+    boolean[][] bool_rot = new boolean[4][2]; //focusedKey[player][up/down]
+    boolean[][] bool_rot2 = new boolean[4][2]; //pressedKey[player][up/down]
     Coord[] pillar2points = {
-        new Coord (50,50),
-        new Coord (50,60),
-        new Coord (60,60),
-        new Coord (60,50)
+
     };
     Coord[] edgepoints = {
         new Coord(0,0), 
@@ -85,14 +61,8 @@ public class Game extends JPanel implements Runnable {
     Net pillar = new Net(pillarpoints);
     Net pillar2 = new Net(pillar2points);
     Net edge = new Net(edgepoints);
-    Map m1 = new Map(edge);
-    Line[] rays = new Line[m1.totalpoints()];
+    Map m1 = new Map(edge,pillar2);
     Player[] players = new Player[4];
-    
-    
-    Line veloline = new Line();
-    
-    Line phor = new Line(new Coord(20,20),0.0,20);
     String 
         str_appath = (System.getProperty("user.dir"))
     ;
@@ -112,6 +82,7 @@ public class Game extends JPanel implements Runnable {
             gc.drawPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
             gc.fillPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
         }
+        
         gc.fillOval((int)players[0].getInt().getX()-1,(int)players[0].getInt().getY()-1,2,2);
         for(int x = 0;x<2;x++){
             gc.setColor(Color.black);
@@ -119,18 +90,18 @@ public class Game extends JPanel implements Runnable {
             gc.setColor(Color.red);
             gc.drawLine(players[x].getAim().draw()[0],players[x].getAim().draw()[1],players[x].getAim().draw()[2],players[x].getAim().draw()[3]);
         }
-        
+        gc.fillOval((int)players[1].getX()-10,(int)players[1].getY()-10,20,20);
         
         
         
         Color spritecol = new Color(test.red,test.blue,test.green);
         gc.setColor(spritecol);
-        gc.fillOval((int)test.getLoc().getX() - (test.size / 2), (int)test.getLoc().getY() - (test.size / 2), test.size, test.size);
+        gc.fillOval((int)test.getLoc().getX() - (test.getSize() / 2), (int)test.getLoc().getY() - (test.getSize() / 2), test.getSize(), test.getSize());
         for(int i = 0; i < players[0].cloud.size();i++){
             gc.setColor(new Color(players[0].cloud.get(i).red,players[0].cloud.get(i).green,players[0].cloud.get(i).blue));         
-            gc.fillOval((int)players[0].cloud.get(i).getLoc().getX(),(int)players[0].cloud.get(i).getLoc().getY(),players[0].cloud.get(i).size,players[0].cloud.get(i).size);
+            gc.fillOval((int)players[0].cloud.get(i).getLoc().getX(),(int)players[0].cloud.get(i).getLoc().getY(),players[0].cloud.get(i).getSize(),players[0].cloud.get(i).getSize());
             gc.setColor(Color.BLACK);
-            gc.drawOval((int)players[0].cloud.get(i).getLoc().getX(),(int)players[0].cloud.get(i).getLoc().getY(),players[0].cloud.get(i).size,players[0].cloud.get(i).size);
+            gc.drawOval((int)players[0].cloud.get(i).getLoc().getX(),(int)players[0].cloud.get(i).getLoc().getY(),players[0].cloud.get(i).getSize(),players[0].cloud.get(i).getSize());
         }
         gc.setColor(Color.RED);
         //veloline.recalc(players[0].getVec().getP1(), players[0].getVec().getAngle(), players[0].getVec().getMag() * 28);
@@ -141,46 +112,25 @@ public class Game extends JPanel implements Runnable {
     public void keyPressed(KeyEvent evt){
         switch(evt.getKeyCode()){
             case KeyEvent.VK_W:
-                bool_W2 = true;
-                bool_W = true;
-                bool_S = false;
+                bool_rot2[1][0] = true;
+                bool_rot[1][0] = true;
+                bool_rot[1][1] = false;
             break;
-            
-            case KeyEvent.VK_N:
-                players[0].getAim().getAngle().setDeg(90);
-                
-            break;
-            case KeyEvent.VK_M:
-                players[0].getAim().getAngle().setDeg(180);
-                
-            break;
-            
-            
             case KeyEvent.VK_S:
-                bool_S = true;
-                bool_S2 = true;
-                bool_W = false;
-            break;
-            case KeyEvent.VK_A:
-                bool_A2 = true;
-                bool_A = true;
-                bool_D = false;
-            break;
-            case KeyEvent.VK_D:
-                bool_D = true;
-                bool_D2 = true;
-                bool_A = false;
+                bool_rot[1][1] = true;
+                bool_rot2[1][1] = true;
+                bool_rot[1][0] = false;
             break;
             case KeyEvent.VK_UP:   
-                bool_UP2 = true;
-                bool_UP = true;
-                bool_DOWN = false;
+                bool_rot[0][0] = true;
+                bool_rot2[0][0] = true;
+                bool_rot[0][1] = false;
                 
             break;
             case KeyEvent.VK_DOWN:
-                bool_DOWN2 = true;
-                bool_UP = false;
-                bool_DOWN = true;
+                bool_rot2[0][1] = true;
+                bool_rot[0][0] = false;
+                bool_rot[0][1] = true;
             break;
             case KeyEvent.VK_1:
                 players[0].setWeap("pistol");
@@ -207,47 +157,31 @@ public class Game extends JPanel implements Runnable {
     public void keyReleased(KeyEvent evt){
         switch(evt.getKeyCode()){
             case KeyEvent.VK_W:
-                bool_W = false;
-                bool_W2 = false;
-                if (bool_S2 == true){
-                    bool_S = true;
+                bool_rot[1][0] = false;
+                bool_rot2[1][0] = false;
+                if (bool_rot2[1][1] == true){
+                    bool_rot[1][1] = true;
                 }
             break;
             case KeyEvent.VK_S:
-                bool_S = false;
-                bool_S2 = false;
-                if (bool_W2 == true){
-                    bool_W = true;
+                bool_rot[1][1] = false;
+                bool_rot2[1][1] = false;
+                if (bool_rot2[1][0] == true){
+                    bool_rot[1][0] = true;
                 }
-            break;
-            case KeyEvent.VK_A:
-                bool_A = false;
-                bool_A2 = false;
-                if (bool_D2 == true){
-                    bool_D = true;
-                }
-            break;
-            case KeyEvent.VK_D:
-                bool_D = false;
-                bool_D2 = false;
-                if (bool_A2 == true){
-                    bool_A = true;
-                }
-            break;
-            case KeyEvent.VK_Q:
-                   for(int x = 0; x<m1.nets[1].lines.length;x++){
-
+                for(int x = 0;x<newShape.size();x++){
+                    func.sysout("new Coord(" + newShape.get(x).getX() + "," + newShape.get(x).getY() + "),");
                 }
             break;
             case KeyEvent.VK_UP:   
-                bool_UP2 = false;
-                bool_UP = false;
-                if(bool_DOWN2 == true){bool_DOWN = true;}
+                bool_rot[0][0] = false;
+                bool_rot2[0][0] = false;
+                if(bool_rot2[0][1] == true){bool_rot[0][1] = true;}
             break;
             case KeyEvent.VK_DOWN:
-                bool_DOWN2 = false;
-                bool_DOWN = false; 
-                if(bool_UP2 == true){bool_UP = true;}
+                bool_rot2[0][1] = false;
+                bool_rot[0][1] = false; 
+                if(bool_rot2[0][0] == true){bool_rot[0][0] = true;}
             break;
             case KeyEvent.VK_SPACE:
                 bool_SPACE = false;
@@ -256,57 +190,20 @@ public class Game extends JPanel implements Runnable {
         }
     }
     
-    
     public void Move(){
-        players[0].live();
-        players[1].live();
-        ///*
-        Line temp = new Line(players[1].getLoc(), players[0].getLoc());
-        players[1].addVelo((temp.getRun()*0.005), (temp.getRise()*0.005)); //remove this to disable recoil
-        players[1].getVec().recalc(players[1].getLoc(), players[1].getVec().getAngle(),0.05/temp.getMag());
-        players[1].getVec().recalc(players[1].getLoc(),new Coord(players[1].getLoc().getX() + players[1].getxVelo(),players[1].getLoc().getY() + players[1].getyVelo()));
-        //*/
-        for(int i = 0; i < m1.nets[0].lines.length;i++){
-            players[0].getInt().recalc(players[0].getVec(), m1.nets[0].lines[i]);
-            for(int j = 0;j<players[0].cloud.size();j++){
-                players[0].cloud.get(j).getInt().recalc(players[0].cloud.get(j).getVec(),m1.nets[0].lines[i]);
-                if(players[0].cloud.get(j).getInt().exists){
-                players[0].cloud.get(j).getVec().recalc(players[0].cloud.get(j).getVec().getP1(),new Angle(m1.nets[0].lines[i].getAngle().getDeg() + (m1.nets[0].lines[i].getAngle().getDeg()- players[0].cloud.get(j).getVec().getAngle().getDeg())),players[0].cloud.get(j).getVec().getMag()*.5);
-                break;
+        for(int x = 0;x<2;x++){
+            for(int y = 0;y<m1.nets.length;y++){
+                players[x].hitNet(m1.nets[y]);
             }
-            }
-            if(players[0].getInt().exists){
-                players[0].getVec().recalc(players[0].getVec().getP1(),new Angle(m1.nets[0].lines[i].getAngle().getDeg() + (m1.nets[0].lines[i].getAngle().getDeg()- players[0].getVec().getAngle().getDeg())),players[0].getVec().getMag()*.5);
-                players[0].setxVelo(players[0].getVec().getRun());
-                players[0].setyVelo(-players[0].getVec().getRise());
-                break;
-            }
+            players[x].live(bool_rot[x]);
         }
-        
         if(bool_SPACE == true){
             players[0].createSprite();
         }
-        if (bool_collide == false){
-            if (bool_A == true){
-                players[0].setX(players[0].getX() - 2);
-            }else if(bool_D == true){
-                players[0].setX(players[0].getX() + 2);
-            }
-            if (bool_W == true){
-                players[0].setY(players[0].getY() - 2);
-            }else if(bool_S == true){
-                players[0].setY(players[0].getY() + 2);
-            }
-            players[0].getAim().recalc(players[0],players[0].getAim().getAngle(),players[0].getAim().getMag());
-            if(bool_DOWN == true){
-                players[0].getAim().rotate(new Angle(-15));
-                test.getVec().rotate(new Angle(-15));
-            }
-            if(bool_UP == true){
-                players[0].getAim().rotate(new Angle(15));
-                test.getVec().rotate(new Angle(15));
-            }
+        if(!bool_rot[1][0] == false){
+            newShape.add(new Coord(players[0].getLoc()));
         }
+
     }
     public void collideSprites(Sprite s,ArrayList<Sprite> _s){
         Line norm = new Line();
@@ -315,7 +212,7 @@ public class Game extends JPanel implements Runnable {
             norm.recalc(s, -1/_s.get(x).getVec().getSlope(),999);
             minpoint.recalc(norm,_s.get(x).getVec());
             norm.recalc(norm.getP1(), minpoint);
-            if(norm.getMag()<(s.size + _s.get(x).size)){
+            if(norm.getMag()<(s.getSize() + _s.get(x).getSize())){
                 func.sysout("U shot my shit");
             }
         }
@@ -323,7 +220,7 @@ public class Game extends JPanel implements Runnable {
     public void run(){
         players[0] = new Player(new Coord(200,200));
         players[1] = new Player(new Coord(100,200));
-        
+        func.sysout(str_appath);
         while(true){
             Move();
             test.live();

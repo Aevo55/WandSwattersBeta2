@@ -26,7 +26,7 @@ public class Player extends Entity{
     double xvelo=0;
     double yvelo=0;
     Functions func = new Functions();
-    public ArrayList<Sprite> cloud = new ArrayList();
+    ArrayList<Sprite> cloud = new ArrayList();
     Line aimline = new Line();
     public Player(Coord _loc){
         this.setX(_loc.getX());
@@ -141,9 +141,9 @@ public class Player extends Entity{
             for(int j = 0;j<cloud.size();j++){
                 cloud.get(j).getInt().recalc(cloud.get(j).getVec(),net.lines[i]);
                 if(cloud.get(j).getInt().exists){
-                cloud.get(j).getVec().recalc(cloud.get(j).getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- cloud.get(j).getVec().getAngle().getDeg())),cloud.get(j).getVec().getMag()*.5);
-                break;
-            }
+                    cloud.get(j).getVec().recalc(cloud.get(j).getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- cloud.get(j).getVec().getAngle().getDeg())),cloud.get(j).getVec().getMag()*.5);
+                    break;
+                }
             }
             if(getInt().exists){
                 getVec().recalc(getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- getVec().getAngle().getDeg())),getVec().getMag()*.5);
@@ -163,8 +163,13 @@ public class Player extends Entity{
         yvelo = y;}
     public Line getAim(){
         return aimline;}
-    public ArrayList getCloud(){
-        return cloud;}
+    public Sprite[] getCloud(){
+        Sprite[] _cloud = new Sprite[cloud.size()];
+        for(int x = 0;x<cloud.size();x++){
+            _cloud[x] = cloud.get(x);
+        }
+        return _cloud;
+    }
     public String getWeap(){
         return weapon;}
     public void setWeap(String weap){

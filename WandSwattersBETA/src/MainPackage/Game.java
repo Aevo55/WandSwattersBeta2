@@ -16,23 +16,25 @@ import java.util.ArrayList;
 public class Game extends JPanel implements Runnable { 
     Functions func = new Functions();
     Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,0,10,100,200,50);
-    int r = 5;
-    int g = 5;
-    int b = 255;
-    int redx = 50;
-    int redy = 400;
-    int bluex = 270;
-    int bluey = 400;
-    int greenx = 160;
-    int greeny = 400;
     public ArrayList<Coord> newShape = new ArrayList();
     boolean
-        bool_SPACE = false
+        bool_SPACE = false,
+        bool_frame = false
     ;
-    boolean[][] bool_rot = new boolean[4][2]; //focusedKey[player][up/down]
-    boolean[][] bool_rot2 = new boolean[4][2]; //pressedKey[player][up/down]
+    boolean[][] bool_rot = new boolean[4][2]; //focusedKey[player][CW/CCW]
+    boolean[][] bool_rot2 = new boolean[4][2]; //pressedKey[player][CW/CCW]
     Coord[] pillar2points = {
-
+        new Coord(125.223457889522,274.7765421104783),
+new Coord(123.63246763185225,276.3675323681481),
+new Coord(237.44854168445298,388.8727513099821),
+new Coord(244.1762572789925,390.9799415808636),
+new Coord(250.903972873532,393.08713185174514),
+new Coord(432.41498651291744,334.4639001892295),
+new Coord(437.00744498536113,328.60220239322615),
+new Coord(441.5999034578048,322.7405045972228),
+new Coord(243.8204018682883,320.9220394426559),
+new Coord(236.22087177316735,323.2944914035533),
+new Coord(228.6213416780464,325.66694336445073),
     };
     Coord[] edgepoints = {
         new Coord(0,0), 
@@ -78,9 +80,9 @@ public class Game extends JPanel implements Runnable {
         gc.setColor(Color.WHITE);
         gc.fillRect(0, 0, 505, 505);
         gc.setColor(Color.BLACK);
-        for (int x = 0; x<m1.nets.length;x++){
-            gc.drawPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
-            gc.fillPolygon(m1.nets[x].getXs(), m1.nets[x].getYs(), m1.nets[x].length());
+        for (int x = 0; x<m1.getNets().length;x++){
+            gc.drawPolygon(m1.getNet(x).getXs(), m1.getNet(x).getYs(), m1.getNet(x).length());
+            gc.fillPolygon(m1.getNet(x).getXs(), m1.getNet(x).getYs(), m1.getNet(x).length());
         }
         
         gc.fillOval((int)players[0].getInt().getX()-1,(int)players[0].getInt().getY()-1,2,2);
@@ -91,23 +93,16 @@ public class Game extends JPanel implements Runnable {
             gc.drawLine(players[x].getAim().draw()[0],players[x].getAim().draw()[1],players[x].getAim().draw()[2],players[x].getAim().draw()[3]);
         }
         gc.fillOval((int)players[1].getX()-10,(int)players[1].getY()-10,20,20);
-        
-        
-        
         Color spritecol = new Color(test.red,test.blue,test.green);
         gc.setColor(spritecol);
         gc.fillOval((int)test.getLoc().getX() - (test.getSize() / 2), (int)test.getLoc().getY() - (test.getSize() / 2), test.getSize(), test.getSize());
-        for(int i = 0; i < players[0].cloud.size();i++){
-            gc.setColor(new Color(players[0].cloud.get(i).red,players[0].cloud.get(i).green,players[0].cloud.get(i).blue));         
-            gc.fillOval((int)players[0].cloud.get(i).getLoc().getX(),(int)players[0].cloud.get(i).getLoc().getY(),players[0].cloud.get(i).getSize(),players[0].cloud.get(i).getSize());
+        for(int i = 0; i < players[0].getCloud().length;i++){
+            gc.setColor(new Color(players[0].getCloud()[i].red,players[0].getCloud()[i].green,players[0].getCloud()[i].blue));         
+            gc.fillOval((int)players[0].getCloud()[i].getLoc().getX(),(int)players[0].getCloud()[i].getLoc().getY(),players[0].getCloud()[i].getSize(),players[0].getCloud()[i].getSize());
             gc.setColor(Color.BLACK);
-            gc.drawOval((int)players[0].cloud.get(i).getLoc().getX(),(int)players[0].cloud.get(i).getLoc().getY(),players[0].cloud.get(i).getSize(),players[0].cloud.get(i).getSize());
+            gc.drawOval((int)players[0].getCloud()[i].getLoc().getX(),(int)players[0].getCloud()[i].getLoc().getY(),players[0].getCloud()[i].getSize(),players[0].getCloud()[i].getSize());
         }
         gc.setColor(Color.RED);
-        //veloline.recalc(players[0].getVec().getP1(), players[0].getVec().getAngle(), players[0].getVec().getMag() * 28);
-        //gc.drawLine(veloline.draw()[0],veloline.draw()[1],veloline.draw()[2],veloline.draw()[3]);
-        
-        
     }
     public void keyPressed(KeyEvent evt){
         switch(evt.getKeyCode()){
@@ -192,14 +187,15 @@ public class Game extends JPanel implements Runnable {
     
     public void Move(){
         for(int x = 0;x<2;x++){
-            for(int y = 0;y<m1.nets.length;y++){
-                players[x].hitNet(m1.nets[y]);
+            for(int y = 0;y<m1.getNets().length;y++){
+                players[x].hitNet(m1.getNet(y));
             }
             players[x].live(bool_rot[x]);
         }
         if(bool_SPACE == true){
             players[0].createSprite();
         }
+        bool_frame = !bool_frame;
         if(!bool_rot[1][0] == false){
             newShape.add(new Coord(players[0].getLoc()));
         }
@@ -227,7 +223,8 @@ public class Game extends JPanel implements Runnable {
             //collideSprites(test,players[0].cloud);
             repaint();
             try{
-                Thread.sleep(33);
+                /**/Thread.sleep(30);/* (Add a second "/" in front of this line to toggle to 60 fps)
+                Thread.sleep(16,500000);//*/
             }catch(InterruptedException ex){ 
             } 
         }

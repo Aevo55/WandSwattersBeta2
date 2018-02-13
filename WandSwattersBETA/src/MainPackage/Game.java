@@ -80,13 +80,6 @@ new Coord(228.6213416780464,325.66694336445073),
         super.paintComponent(gc); //creates the class for painting indavidual objects in the frame
         gc.setColor(Color.WHITE);
         gc.fillRect(0, 0, 505, 505);
-        gc.setColor(Color.BLACK);
-        for (int x = 0; x<m1.getNets().length;x++){
-            gc.drawPolygon(m1.getNet(x).getXs(), m1.getNet(x).getYs(), m1.getNet(x).length());
-            gc.fillPolygon(m1.getNet(x).getXs(), m1.getNet(x).getYs(), m1.getNet(x).length());
-        }
-        
-        gc.fillOval((int)players[0].getInt().getX()-1,(int)players[0].getInt().getY()-1,2,2);
         for(int x = 0;x<2;x++){
             gc.setColor(Color.black);
             gc.fillOval((int)players[x].getX()-4,(int)players[x].getY()-4,8,8);
@@ -99,9 +92,14 @@ new Coord(228.6213416780464,325.66694336445073),
         gc.fillOval((int)test.getLoc().getX() - (test.getSize() / 2), (int)test.getLoc().getY() - (test.getSize() / 2), test.getSize(), test.getSize());
         for(int i = 0; i < players[0].getCloud().length;i++){
             gc.setColor(new Color(players[0].getCloud()[i].red,players[0].getCloud()[i].green,players[0].getCloud()[i].blue));         
-            gc.fillOval((int)players[0].getCloud()[i].getLoc().getX(),(int)players[0].getCloud()[i].getLoc().getY(),players[0].getCloud()[i].getSize(),players[0].getCloud()[i].getSize());
+            gc.fillOval((int)players[0].getCloud()[i].getLoc().getX()-(players[0].getCloud()[i].getSize()/2),(int)players[0].getCloud()[i].getLoc().getY()-(players[0].getCloud()[i].getSize()/2),players[0].getCloud()[i].getSize(),players[0].getCloud()[i].getSize());
             gc.setColor(Color.BLACK);
-            gc.drawOval((int)players[0].getCloud()[i].getLoc().getX(),(int)players[0].getCloud()[i].getLoc().getY(),players[0].getCloud()[i].getSize(),players[0].getCloud()[i].getSize());
+            gc.drawOval((int)players[0].getCloud()[i].getLoc().getX()-(players[0].getCloud()[i].getSize()/2),(int)players[0].getCloud()[i].getLoc().getY()-(players[0].getCloud()[i].getSize()/2),players[0].getCloud()[i].getSize(),players[0].getCloud()[i].getSize());
+        }
+        gc.setColor(Color.BLACK);
+        for (int x = 0; x<m1.getNets().length;x++){
+            gc.drawPolygon(m1.getNet(x).getXs(), m1.getNet(x).getYs(), m1.getNet(x).length());
+            gc.fillPolygon(m1.getNet(x).getXs(), m1.getNet(x).getYs(), m1.getNet(x).length());
         }
         gc.setColor(Color.RED);
     }

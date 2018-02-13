@@ -1,6 +1,7 @@
 package MainPackage;
 import Entities.*;
 import DataTypes.*;
+import Entities.Player.weapon;
 import Functions.*;
 import java.awt.*;
 import javax.sound.sampled.AudioInputStream;
@@ -128,13 +129,13 @@ new Coord(228.6213416780464,325.66694336445073),
                 bool_rot[0][1] = true;
             break;
             case KeyEvent.VK_1:
-                players[0].setWeap("pistol");
+                players[0].setWeap(weapon.PISTOL);
             break;
             case KeyEvent.VK_2:
-                players[0].setWeap("shotgun");
+                players[0].setWeap(weapon.SHOTGUN);
             break;
             case KeyEvent.VK_3:
-                players[0].setWeap("rifle");
+                players[0].setWeap(weapon.RIFLE);
             break;
             case KeyEvent.VK_E:
                 players[0].setTo(new Coord(200,200));
@@ -157,6 +158,9 @@ new Coord(228.6213416780464,325.66694336445073),
                 if (bool_rot2[1][1] == true){
                     bool_rot[1][1] = true;
                 }
+            break;
+            case KeyEvent.VK_J:
+                func.sysout(players[0].getVec().getAngle().getDeg());
             break;
             case KeyEvent.VK_S:
                 bool_rot[1][1] = false;

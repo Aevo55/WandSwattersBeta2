@@ -28,11 +28,7 @@ public class Functions {
         
         if(a <= b && b <= c){
             return true;
-        }else if(c <= b && b <= a){
-            return true;
-        }else{
-            return false;
-        }
+        }else return (c <= b && b <= a);
     }
     public void sysout(Object... in){
         for(int x = 0;x<in.length;x++){

@@ -47,9 +47,11 @@ public class Line{
             if(rise > 0){
                 slope = Double.POSITIVE_INFINITY;
                 angle.setDeg(90);
+                rise*=-1;
             }else{
                 slope = Double.NEGATIVE_INFINITY;
                 angle.setDeg(270);
+                
             }
             mag = rise;
         }else{

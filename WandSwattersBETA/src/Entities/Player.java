@@ -17,18 +17,19 @@ public class Player extends Entity{
     int g = 5;
     int b = 255;
     int life = 100;
-    
+    public enum weapon {PISTOL,SHOTGUN,RIFLE,SNIPER}
+    weapon weap = weapon.PISTOL;
     int level = 0;
     double spray = 1;
     int reload = 0;
     double knockback = 5;
-    String weapon = "pistol";
     double xvelo=0;
     double yvelo=0;
     Functions func = new Functions();
     ArrayList<Sprite> cloud = new ArrayList();
     Line aimline = new Line();
     public Player(Coord _loc){
+        
         this.setX(_loc.getX());
         this.setY(_loc.getY());
         this.vector = new Line(this.getLoc(), 0, 0);
@@ -81,13 +82,13 @@ public class Player extends Entity{
         }
         if(reload <= 0){
             
-            switch(weapon){
-                case "pistol":
+            switch(weap){
+                case PISTOL:
                     cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*10)-5), 5, r, b, g));        
                     reload = 15;
                     knockback = 75;
                 break;
-                case "shotgun":
+                case SHOTGUN:
                     cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
                     cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));  
                     cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g));
@@ -97,7 +98,7 @@ public class Player extends Entity{
                     knockback = 200;
                     reload = 25;
                 break;
-                case "rifle":
+                case RIFLE:
                     //cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg()+((Math.random()*spray)-(spray/2)), 5, r, b, g)); 
                     cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg(), 5, r, b, g)); 
                     
@@ -105,7 +106,7 @@ public class Player extends Entity{
                     knockback = 15;
                 break;
                 default:  
-                    weapon = "pistol";
+                    weap = weapon.PISTOL;
                 break;
             }
             Line temp = new Line(getLoc(), new Angle(aimline.getAngle().getDeg() - 180), knockback);
@@ -170,10 +171,10 @@ public class Player extends Entity{
         }
         return _cloud;
     }
-    public String getWeap(){
-        return weapon;}
-    public void setWeap(String weap){
-        weapon = weap;}
+    public weapon getWeap(){
+        return weap;}
+    public void setWeap(weapon _weap){
+        weap = _weap;}
     public void setSpray(double s){
         spray = s;}
 }

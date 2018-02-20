@@ -1,19 +1,18 @@
 package DataTypes;
-import Functions.*;
+import Util.Util;
 import java.awt.*;
 public class Angle {
-    double deg,rad;
-    Functions out = new Functions();
+    private double deg,rad;
     public Angle(){
         deg = 0;
         rad = 0;
-        out.sysout();
+        Util.sysout();
     }
     public Angle(double _deg){
         deg = _deg;
         deg = fix(deg);
         rad = deg/360*(2*Math.PI);
-        out.sysout();
+        Util.sysout();
     }
     public double getDeg(){
         return deg;
@@ -21,29 +20,18 @@ public class Angle {
     public double getRad(){
         return rad;
     }
+     /**There are Math.toDegrees and Math.toRadians methods*/
     public void setDeg(double _val){
         deg = _val;
         deg = fix(deg);
         rad = deg/360*(2*Math.PI);
     }
+    /**There are Math.toDegrees and Math.toRadians methods*/
     public void setRad(double _val){
-        rad = _val;
-        deg = rad/(2*Math.PI)*360;
-        deg = fix(deg);
+        deg = fix(_val/(2*Math.PI)*360);
         rad = deg/360*(2*Math.PI);
     }
     public double fix(double _deg){
-        boolean fixed = false;
-        fixed = (_deg >= 0 && _deg < 360);
-        while(fixed == false){
-            if(_deg < 0){
-                _deg = 360 + _deg;
-            }else if(_deg >= 360){
-                _deg = _deg - 360;
-            }else{
-                fixed = true;
-            }
-        }
-        return _deg;
+        return _deg<0?_deg%360+360:_deg%360;
     }
 }

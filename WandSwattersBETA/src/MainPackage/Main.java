@@ -9,14 +9,13 @@ import java.awt.event.*;
 public class Main extends JFrame {
     static Main theMain;
     private Game playarea = null;
-
     public Main() {
         super(); //This calls the constructor of the parent class JFrame
         this.setResizable(false);
         //this.setUndecorated(true);
-        this.setBounds(new Rectangle(312, 184, 500, 500));
-        this.setMinimumSize(new Dimension(500, 500));
-        this.setMaximumSize(new Dimension(500, 500));
+        this.setBounds(new Rectangle(100, 10, 1000, 750));
+        this.setMinimumSize(new Dimension(1000, 750));
+        this.setMaximumSize(new Dimension(1000, 750));
         
         this.setContentPane(getJContentPane());
         this.setTitle("Wand Swatters BETA");

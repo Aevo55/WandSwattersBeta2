@@ -17,6 +17,7 @@ public class Player extends Entity{
     private int g = 15;
     private int b = 255;
     private int life = 100;
+    private int mana = 100;
     public enum weapon {PISTOL,SHOTGUN,RIFLE}
     weapon weap = weapon.PISTOL;
     int level = 0;
@@ -34,7 +35,7 @@ public class Player extends Entity{
         this.setY(_loc.getY());
         vector = new Line(_loc,0,0);
         aimline.recalc(this, this.offset(20, 0));
-        setSize(2);
+        setSize(8);
     }
     public void live(boolean[] input){
         reload--;
@@ -118,7 +119,7 @@ public class Player extends Entity{
             for(int j = 0;j<cloud.size();j++){
                 cloud.get(j).getInt().recalc(cloud.get(j).getVec(),net.lines[i]);
                 if(cloud.get(j).getInt().exists){
-                    cloud.get(j).getVec().recalc(cloud.get(j).getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- cloud.get(j).getVec().getAngle().getDeg())),cloud.get(j).getVec().getMag()*.5);
+                    cloud.get(j).hitWall(net.lines[i]);
                     break;
                 }
             }

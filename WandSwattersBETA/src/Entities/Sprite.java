@@ -57,7 +57,15 @@ public class Sprite extends Entity{
             life --;
         }
     }
-    
+    public void hitWall(Line l){
+        switch(weap){
+            case PISTOL:
+            case SHOTGUN:
+            case RIFLE:
+                getVec().recalc(getVec().getP1(),new Angle(l.getAngle().getDeg() + (l.getAngle().getDeg()- getVec().getAngle().getDeg())),getVec().getMag()*.5);
+            break;
+        }
+    }
 //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public int getLife() {
         return life;

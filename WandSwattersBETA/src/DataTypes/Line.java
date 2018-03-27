@@ -20,15 +20,18 @@ import java.awt.*;
  * @param temp Temporary coordinate used for colission detection
  */
 public class Line{
-    boolean vert;
-    Coord p2 = new Coord();
-    Coord p1 = new Coord();
-    double rise, run, slope, b;
-    double mag;
-    Angle angle = new Angle();
+    private boolean vert;
+    private Coord p2 = new Coord();
+    private Coord p1 = new Coord();
+    private double rise, run, slope, b;
+    private double mag;
+    private Angle angle = new Angle();
     public Line(){}
     public Line(Coord _p1, Coord _p2){
         recalc(_p1,_p2);
+    }
+    public Line(Line l){
+        recalc(new Coord(l.getP1()),new Coord(l.getP2()));
     }
     public Line(Coord _p1, double _slope, double _mag){
         recalc(_p1,_slope,_mag);
@@ -36,24 +39,13 @@ public class Line{
     public Line(Coord _p1, Angle _angle, double _mag){
         recalc(_p1,_angle,_mag);
     }
-    
     public void recalc(Coord _p1, Coord _p2){
         p1 = _p1;
         p2 = _p2;
         rise = p1.getY() - p2.getY();
         run = p2.getX() - p1.getX();
         if (run == 0){
-            vert = true;
-            if(rise > 0){
-                slope = Double.POSITIVE_INFINITY;
-                angle.setDeg(90);
-                rise*=-1;
-            }else{
-                slope = Double.NEGATIVE_INFINITY;
-                angle.setDeg(270);
-                
-            }
-            mag = rise;
+            recalc(p1,p2.offset(0.0001,0));
         }else{
             vert = false;
             slope = -rise / run;
@@ -133,7 +125,6 @@ public class Line{
         p1.moveBy(x,-y);
         p2.moveBy(x,-y);
     }
-    
     public void moveTo(double x, double y){
         p1.setTo(x,y);
         p2.setTo(x+run,y-rise);
@@ -146,38 +137,67 @@ public class Line{
         int[] pts = {(int)p1.getX(),(int)p1.getY(),(int)p2.getX(),(int)p2.getY()};
         return pts;
     }
-    public void compRotate(Line anchor,Coord p, Angle a){
-        if(!p.equals(p1)){
-            anchor.recalc(p,p1);
-            anchor.rotate(a);
-            rotate(a);
-            moveTo(anchor.p2);
-        }else{
-            rotate(a);
-        }
-        
-    }
     public void rotate(Angle a){
         angle.setDeg(angle.getDeg() - a.getDeg());
         recalc(p1,angle,mag);
     }
+    public void setAng(Angle a){
+        recalc(p1,a,mag);
+    }
+    public void setSlope(double s){
+        recalc(p1,s,mag);
+    }
+    public void incMag(double m){
+        recalc(p1,angle,mag + m);
+    }
+    public void setMag(double m){
+        recalc(p1,angle,m);
+    }
     public void Accel(Line l1){
-        //Coord newp2 = new Coord(this.getX2() + amount,this.getY2() + amount);
-        //recalc(this.getP1(), new Coord(this.getX1() + 1,this.getY1()+1));
-        l1.moveTo(this.p2);
-        this.recalc(p1, l1.getP2());
+        incRise(l1.getRise());
+        incRun(l1.getRun());
+    }
+    public void Accel(Line l,Double d){
+        Accel(new Line(l.getP1(),l.getAngle(),d));
+    }
+    public void Accel(double r, double _r){
+        incRise(r);
+        incRun(_r);
+    }
+    public void setX1(double x){
+        recalc(new Coord(x,p1.getY()),p2);
+    }
+    public void setX2(double x){
+        recalc(p1,new Coord(x,p2.getY()));
+    }
+    public void setY1(double y){
+        recalc(new Coord(p1.getX(),y),p2);
+    }
+    public void setY2(double y){
+        recalc(p1,new Coord(p1.getX(),y));
+    }
+    public void setP1(Coord p){
+        recalc(p,p2);
+    }
+    public void setP2(Coord p){
+        recalc(p1,p);
+    }
+    public void setRise(double r){
+        recalc(p1,p1.offset(run,r));
+    }
+    public void setRun(double r){
+        recalc(p1,p1.offset(r,rise));
+    }
+    public void incRise(double r){
+        recalc(p1,p2.offset(0,-r));
+    }
+    public void incRun(double r){
+        recalc(p1,p2.offset(r,0));
+    }
+    public Line copy(){
+        return new Line(this);
     }
     
-    public void merge(Line l1){
-        Coord newp2 = new Coord(this.p2.x, this.p2.y);
-        newp2.x = this.p2.getX() - l1.getRun();
-        newp2.y = this.p2.getY() - l1.getRise();
-        
-        recalc(this.p1,newp2);
-        
-    }
-    
-   
     //<editor-fold defaultstate="collapsed" desc="Setters">
     public boolean isVert() {
         return vert;
@@ -232,4 +252,3 @@ public class Line{
     }
     //</editor-fold>
 }
-

@@ -1,12 +1,12 @@
 package Entities;
 import DataTypes.*;
 /**
- *
- * @author G
- */
+ * @param vector Movement line of entity
+ * @param intersect Intersect for the movement vector
+*/
 public class Entity extends Coord{
     Line vector;
-    Intersect intersect = new Intersect();
+    private Intersect intersect = new Intersect();
     public Line getVec(){
         return vector;
     }

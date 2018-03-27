@@ -7,19 +7,16 @@ import java.awt.*;
  * @author Sean
  * @param heading direction of sprite in degrees
  * @param life the number of frames before sprite expires
+ * 
  */
 public class Sprite extends Entity{
     
     public int life;
-    //public double velocity;
     public int red;
     public int green;
     public int blue;
-    //public double heading;
-    
-    //heading should be in degrees
-    
-    public Sprite(Coord _loc,int _life, double _velocity, double _heading, int _size, int _red, int _blue, int _green){
+    Player.weapon weap;
+    public Sprite(Coord _loc,int _life, double _velocity, double _heading, int _size, int _red, int _blue, int _green,Player.weapon _weap){
         setX(_loc.getX());
         setY(_loc.getY());
         life = _life;
@@ -28,9 +25,11 @@ public class Sprite extends Entity{
         red = _red;
         blue = _blue;
         green = _green;
-        vector = new Line(this.getLoc(),new Angle(_heading),_velocity);
+        vector = new Line(_loc,new Angle(_heading),_velocity);
+        
+        weap = _weap;
     }
-    public Sprite(Line _line,int _life,  int _size, int _red, int _blue, int _green){
+    public Sprite(Line _line,int _life,  int _size, int _red, int _blue, int _green,Player.weapon _weap){
         setX(_line.getX1());
         setY(_line.getY1());
         life = _life;
@@ -38,18 +37,24 @@ public class Sprite extends Entity{
         red = _red;
         blue = _blue;
         green = _green;
-        vector = _line;
+        getVec().recalc(_line.getP1(),_line.getP2());
+        weap = _weap;
     }
     public void live(){
-        vector.recalc(getLoc(), vector.getAngle(), vector.getMag());
-        
-        setX(vector.getX2());
-        setY(vector.getY2());
-        vector.moveTo(vector.getP2());
+        switch (weap){
+            case PISTOL:
+            case SHOTGUN:
+            case RIFLE:
+                
+            break;
+            
+        }
+        getVec().recalc(getLoc(), getVec().getAngle(), getVec().getMag());
+        setX(getVec().getX2());
+        setY(getVec().getY2());
+        getVec().moveTo(getVec().getP2());
         if(life != Integer.MAX_VALUE){
             life --;
-             
-            
         }
     }
     

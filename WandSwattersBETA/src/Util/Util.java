@@ -7,7 +7,7 @@ import DataTypes.*;
  */
 public final class Util {
     private Util(){}
-    static public boolean squarecollide(Coord point, Line line){
+    static public boolean squareCollide(Coord point, Line line){
         return range(line.getX1(),point.getX(),line.getX2()) &&
                range(line.getY1(),point.getX(),line.getY2());
     }

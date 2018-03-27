@@ -20,6 +20,9 @@ public class Angle {
     public double getRad(){
         return rad;
     }
+    public void rotateByDeg(double a){
+        setDeg(getDeg() + a);
+    }
      /**There are Math.toDegrees and Math.toRadians methods*/
     public void setDeg(double _val){
         deg = _val;

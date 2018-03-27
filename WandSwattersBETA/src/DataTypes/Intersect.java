@@ -23,14 +23,14 @@ public class Intersect extends Coord{
         if (l1.getAngle().getDeg() == l2.getAngle().getDeg()){
             //func.sysout("they the same");
             exists = false;
-        }else if(l1.vert == true){
+        }else if(l1.isVert() == true){
             //func.sysout("hey line 1 is vertical");
             setX(l1.getX1());
             setY(((l2.getSlope()*l1.getX1())+l2.getB()));
             if(func.range(l1.getY1(), getY(), l1.getY2()) && func.range(l2.getX1(),getX(),l2.getX2())){
                 exists = true;
             }
-        }else if(l2.vert == true){
+        }else if(l2.isVert() == true){
             //func.sysout("hey line 2 is vertical");
             setX(l2.getX1());
             setY((l1.getSlope()*l2.getX1())+l1.getB());

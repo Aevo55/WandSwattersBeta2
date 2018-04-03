@@ -5,12 +5,9 @@ import DataTypes.*;
  * @param intersect Intersect for the movement vector
 */
 public class Entity extends Coord{
-    Line vector;
-    private Intersect intersect = new Intersect();
+    Line vector = new Line(new Coord(0,0),0,0);
     public Line getVec(){
         return vector;
     }
-    public Intersect getInt(){ 
-        return intersect;
-    }
+    
 }

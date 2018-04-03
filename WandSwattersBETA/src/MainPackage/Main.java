@@ -13,9 +13,9 @@ public class Main extends JFrame {
         super(); //This calls the constructor of the parent class JFrame
         this.setResizable(false);
         //this.setUndecorated(true);
-        this.setBounds(new Rectangle(100, 10, 1000, 750));
-        this.setMinimumSize(new Dimension(1000, 750));
-        this.setMaximumSize(new Dimension(1000, 750));
+        this.setBounds(new Rectangle(100, 10, 925, 750));
+        this.setMinimumSize(new Dimension(925, 750));
+        this.setMaximumSize(new Dimension(925, 750));
         
         this.setContentPane(getJContentPane());
         this.setTitle("Wand Swatters BETA");

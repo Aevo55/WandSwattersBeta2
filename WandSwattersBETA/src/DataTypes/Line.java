@@ -39,6 +39,9 @@ public class Line{
     public Line(Coord _p1, Angle _angle, double _mag){
         recalc(_p1,_angle,_mag);
     }
+    public void recalc(Line l){
+        recalc(l.getP1(),l.getP2());
+    }
     public void recalc(Coord _p1, Coord _p2){
         p1 = _p1;
         p2 = _p2;

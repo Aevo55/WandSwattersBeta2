@@ -15,21 +15,10 @@ public class Sprite extends Entity{
     public int red;
     public int green;
     public int blue;
+    public boolean exhaust;
+    public int damage;
     Player.weapon weap;
-    public Sprite(Coord _loc,int _life, double _velocity, double _heading, int _size, int _red, int _blue, int _green,Player.weapon _weap){
-        setX(_loc.getX());
-        setY(_loc.getY());
-        life = _life;
-        
-        setSize(_size);
-        red = _red;
-        blue = _blue;
-        green = _green;
-        vector = new Line(_loc,new Angle(_heading),_velocity);
-        
-        weap = _weap;
-    }
-    public Sprite(Line _line,int _life,  int _size, int _red, int _blue, int _green,Player.weapon _weap){
+    public Sprite(Line _line, int _life, double angchange,double speed, int _size, int _red, int _blue, int _green,boolean _exhaust,Player.weapon _weap){
         setX(_line.getX1());
         setY(_line.getY1());
         life = _life;
@@ -37,14 +26,17 @@ public class Sprite extends Entity{
         red = _red;
         blue = _blue;
         green = _green;
-        getVec().recalc(_line.getP1(),_line.getP2());
+        getVec().recalc(_line.copy());
+        getVec().setMag(speed);
+        getVec().rotate(new Angle(angchange));
         weap = _weap;
+        exhaust = _exhaust;
     }
     public void live(){
         switch (weap){
-            case PISTOL:
-            case SHOTGUN:
-            case RIFLE:
+            case EXHAUST:
+            case FLAME:
+            case MISSILE:
                 
             break;
             
@@ -59,9 +51,11 @@ public class Sprite extends Entity{
     }
     public void hitWall(Line l){
         switch(weap){
-            case PISTOL:
-            case SHOTGUN:
-            case RIFLE:
+            case EXHAUST:
+                System.out.println("Man you really fucked up how did you manage to call this");
+            break;
+            case FLAME:
+            case MISSILE:
                 getVec().recalc(getVec().getP1(),new Angle(l.getAngle().getDeg() + (l.getAngle().getDeg()- getVec().getAngle().getDeg())),getVec().getMag()*.5);
             break;
         }
@@ -74,7 +68,12 @@ public class Sprite extends Entity{
     public void setLife(int life) {
         this.life = life;
     }
-
+    public Player.weapon getWeap(){
+        return weap;
+    }
+    public void setWeap(Player.weapon w){
+        weap = w;
+    }
     public int getRed() {
         return red;
     }

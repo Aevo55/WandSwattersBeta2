@@ -5,6 +5,7 @@
  */
 package DataTypes;
 import java.awt.*;
+import Entities.*;
 /**
  *
  * @author G

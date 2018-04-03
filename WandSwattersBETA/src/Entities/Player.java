@@ -17,15 +17,18 @@ public class Player extends Entity{
     private int g = 15;
     private int b = 255;
     private int life = 100;
-    private int mana = 100;
-    public enum weapon {PISTOL,SHOTGUN,RIFLE}
-    weapon weap = weapon.PISTOL;
+    private int mana = 0;
+    private int stamina = 100;
+    private int cd = 0;
+    public enum weapon {EXHAUST,FLAME,MISSILE}
+    weapon weap = weapon.EXHAUST;
     int level = 0;
     double spray = 1;
     int reload = 0;
     double knockback = 5;
     double xvelo=0;
     double yvelo=0;
+    private Intersect intersect = new Intersect();
     Functions func = new Functions();
     ArrayList<Sprite> cloud = new ArrayList();
     Line aimline = new Line();
@@ -55,6 +58,14 @@ public class Player extends Entity{
             getAim().rotate(new Angle(15));
         }
         getAim().recalc(this,getAim().getAngle(),getAim().getMag());
+        if(stamina <= 0 && cd <= 0){
+            stamina = 0;
+            cd = 30;
+        }
+        cd --;
+        if(cd <= 0 && stamina < 100){
+            stamina+=1;
+        }
     }
     public void createSprite(){
         //<editor-fold defaultstate="collapsed" desc="RGB cycle">
@@ -77,60 +88,52 @@ public class Player extends Entity{
             b-=20;
         }
         //</editor-fold>
-        
+        int _life = 50;
         if(spray <= 20){
             spray += 2;
         }
         if(reload <= 0){
             switch(weap){
-                case PISTOL:
-                    cloud.add(new Sprite(this, 55, 5, aimline.getAngle().getDeg()+((Math.random()*10)-5), 5, r, b, g,weap));        
-                    reload = 15;
-                    knockback = 75;
-                break;
-                case SHOTGUN:
-                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g,weap));  
-                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g,weap));  
-                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g,weap));
-                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g,weap));  
-                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g,weap));  
-                    cloud.add(new Sprite(this, 50+(int)(Math.random()*5), 5, aimline.getAngle().getDeg()+((Math.random()*60)-30), 5, r, b, g,weap));
-                    knockback = 200;
-                    reload = 25;
-                break;
-                case RIFLE:
-                    //cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg()+((Math.random()*spray)-(spray/2)), 5, r, b, g)); 
-                    cloud.add(new Sprite(this, 30+(int)(Math.random()*2), 6, aimline.getAngle().getDeg()+(spray*(Math.random()*2-1)), 5, r, b, g,weap)); 
-                    
-                    reload = 1;
-                    knockback = 15;
-                break;
-                default:  
-                    weap = weapon.PISTOL;
+                
+                
+                default:
                 break;
             }
-            getVec().Accel(new Line(this,new Angle(aimline.getAngle().getDeg() - 180),knockback/20));
-            
+        }
+    }
+    public void move(){
+        if(stamina > 0){
+            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,255,0,0,true,Player.weapon.EXHAUST));
+            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,255,0,0,true,Player.weapon.EXHAUST));
+            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,255,0,0,true,Player.weapon.EXHAUST));
+            getVec().Accel(aimline,.5);
+            stamina -=4;
+        }
+    }
+    public void cloudHitNet(Net net){
+        for(int i = 0; i < net.lines.length;i++){
+            for(int j = 0;j<cloud.size();j++){
+                intersect.recalc(cloud.get(j).getVec(),net.lines[i]);
+                if(intersect.exists){
+                    if(cloud.get(j).getWeap() == Player.weapon.EXHAUST){
+                        cloud.remove(j);
+                    }else{
+                        cloud.get(j).hitWall(net.lines[i]);
+                    }
+                }
+            }
         }
     }
     public void hitNet(Net net){
         for(int i = 0; i < net.lines.length;i++){
-            getInt().recalc(getVec(), net.lines[i]);
-            for(int j = 0;j<cloud.size();j++){
-                cloud.get(j).getInt().recalc(cloud.get(j).getVec(),net.lines[i]);
-                if(cloud.get(j).getInt().exists){
-                    cloud.get(j).hitWall(net.lines[i]);
-                    break;
-                }
-            }
+            intersect.recalc(getVec(), net.lines[i]);
             if(getInt().exists){
                 getVec().recalc(getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- getVec().getAngle().getDeg())),getVec().getMag()*.5);
-                setxVelo(getVec().getRun());
-                setyVelo(-getVec().getRise());
-                break;
+                life -= 50;
             }
         }
     }
+    
     public double getxVelo(){
     return xvelo;}
     public double getyVelo(){
@@ -149,9 +152,33 @@ public class Player extends Entity{
         return _cloud;
     }
     public weapon getWeap(){
-        return weap;}
+        return weap;
+    }
+    public void setLife(int l){
+        life = l;
+    }
+    public int getLife(){
+        return life;
+    }
     public void setWeap(weapon _weap){
-        weap = _weap;}
+        weap = _weap;
+    }
+    public void setStamina(int s){
+        stamina = s;
+    }
+    public int getStamina(){
+        return stamina;
+    }
+    public void setMana(int m){
+        mana = m;
+    }
+    public int getMana(){
+        return mana;
+    }
     public void setSpray(double s){
-        spray = s;}
+        spray = s;
+    }
+    public Intersect getInt(){ 
+        return intersect;
+    }
 }

@@ -4,9 +4,7 @@ import java.util.*;
 public class Map {
     ArrayList<Net> walls = new ArrayList();
     ArrayList<Net> ui = new ArrayList();
-    public Map(){
-        
-    }
+    public Map(){}
     public void addWalls(Net... _walls){
         for(int x = 0;x<_walls.length;x++){
             walls.add(_walls[x]);

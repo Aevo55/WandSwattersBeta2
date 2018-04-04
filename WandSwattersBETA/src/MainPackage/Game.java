@@ -100,7 +100,6 @@ public class Game extends JPanel implements Runnable {
     //<editor-fold defaultstate="collapsed" desc="Wall Nets">
     Coord[] wall1p = {
         new Coord(460,360),
-        new Coord(410,310),
         new Coord(360,310),
         new Coord(360,260),
         new Coord(410,260),
@@ -108,7 +107,6 @@ public class Game extends JPanel implements Runnable {
     Net wall1 = new Net(wall1p);
     Coord[] wall2p = {
         new Coord(460,360),
-        new Coord(510,310),
         new Coord(560,310),
         new Coord(560,260),
         new Coord(510,260),
@@ -116,7 +114,6 @@ public class Game extends JPanel implements Runnable {
     Net wall2 = new Net(wall2p);
     Coord[] wall3p = {
         new Coord(460,360),
-        new Coord(410,410),
         new Coord(360,410),
         new Coord(360,460),
         new Coord(410,460),
@@ -124,7 +121,6 @@ public class Game extends JPanel implements Runnable {
     Net wall3 = new Net(wall3p);
     Coord[] wall4p = {
         new Coord(460,360),
-        new Coord(510,410),
         new Coord(560,410),
         new Coord(560,460),
         new Coord(510,460),
@@ -312,8 +308,7 @@ public class Game extends JPanel implements Runnable {
                 players[1].setWeap(weapon.MISSILE);
             break;
             case KeyEvent.VK_E:
-                players[0].setTo(new Coord(200,200));
-                players[0].getVec().recalc(new Coord(200,200), new Angle(0),0.0);
+                players[0].getVec().moveTo(new Coord(0,0));
             break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
@@ -409,6 +404,7 @@ public class Game extends JPanel implements Runnable {
             for(int y = 0;y<m1.getArrWall().length;y++){
                 players[x].hitNet(m1.getWall(y));
                 players[x].cloudHitNet(m1.getWall(y));
+                
             }
             players[x].live(bool_rot[x]);
             if(bool_fire[x] == true){

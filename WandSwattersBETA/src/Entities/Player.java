@@ -20,6 +20,7 @@ public class Player extends Entity{
     private int mana = 0;
     private int stamina = 100;
     private int cd = 0;
+    private Coord start;
     public enum weapon {EXHAUST,FLAME,MISSILE}
     weapon weap = weapon.EXHAUST;
     int level = 0;
@@ -36,6 +37,7 @@ public class Player extends Entity{
         
         this.setX(_loc.getX());
         this.setY(_loc.getY());
+        start = new Coord(_loc);
         vector = new Line(_loc,0,0);
         aimline.recalc(this, this.offset(20, 0));
         setSize(8);
@@ -125,6 +127,7 @@ public class Player extends Entity{
         }
     }
     public void hitNet(Net net){
+        int x = 0;
         for(int i = 0; i < net.lines.length;i++){
             intersect.recalc(getVec(), net.lines[i]);
             if(getInt().exists){
@@ -133,7 +136,6 @@ public class Player extends Entity{
             }
         }
     }
-    
     public double getxVelo(){
     return xvelo;}
     public double getyVelo(){

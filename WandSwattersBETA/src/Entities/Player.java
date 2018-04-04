@@ -96,8 +96,10 @@ public class Player extends Entity{
         }
         if(reload <= 0){
             switch(weap){
+                
+                //weapon types
                 case MISSILE:
-                    cloud.add(new Sprite(aimline,50,0,10,6,250,250,250,false,Player.weapon.MISSILE));
+                    cloud.add(new Sprite(aimline,50,0,3,6,250,250,250,false,Player.weapon.MISSILE));
                 break;
                 
                 default:
@@ -115,16 +117,24 @@ public class Player extends Entity{
             stamina -=4;
         }
     }
+    public void makeSprite(){} 
     public void cloudHitNet(Net net){
         for(int i = 0; i < net.lines.length;i++){
             for(int j = 0;j<cloud.size();j++){
                 intersect.recalc(cloud.get(j).getVec(),net.lines[i]);
                 if(intersect.exists){
-                    if(cloud.get(j).getWeap() == Player.weapon.EXHAUST){
-                        cloud.remove(j);
-                    }else{
-                        cloud.get(j).hitWall(net.lines[i]);
-                    }
+                    switch(cloud.get(j).weap){
+            case EXHAUST:
+                cloud.remove(j);
+            break;
+            case FLAME:
+            case MISSILE:
+                for(int y=0;y<6;y++){
+                    cloud.add(new Sprite(new Line(cloud.get(j).getLoc(),new Angle(180),0),50,(15*y)+45,50,6,250,250,250,false,weapon.EXHAUST));
+                }
+                cloud.remove(j);
+            break;
+        }
                 }
             }
         }

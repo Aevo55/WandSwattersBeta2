@@ -38,7 +38,7 @@ public class Sprite extends Entity{
                 
             case FLAME:
             case MISSILE:
-                
+                if(getVec().getMag() < 35){getVec().setMag(getVec().getMag() + 1);}
             break;
             
         }
@@ -51,15 +51,7 @@ public class Sprite extends Entity{
         }
     }
     public void hitWall(Line l){
-        switch(weap){
-            case EXHAUST:
-                System.out.println("Man you really fucked up how did you manage to call this");
-            break;
-            case FLAME:
-            case MISSILE:
-                getVec().recalc(getVec().getP1(),new Angle(l.getAngle().getDeg() + (l.getAngle().getDeg()- getVec().getAngle().getDeg())),getVec().getMag()*.5);
-            break;
-        }
+        
     }
 //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public int getLife() {

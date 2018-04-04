@@ -5,12 +5,12 @@
  */
 package DataTypes;
 import java.awt.*;
-import Functions.*;
+import Util.*;
 /**
  * @author G
  */
 public class Intersect extends Coord{
-    public Functions func = new Functions();
+    public Util func = new Util();
     public boolean exists;
     Line l1,l2;
     public Intersect(){

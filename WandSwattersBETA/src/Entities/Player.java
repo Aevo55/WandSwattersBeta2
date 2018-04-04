@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Entities;
-import Functions.*;
+import Util.*;
 import DataTypes.*;
 import java.util.ArrayList;
 /**
@@ -30,7 +30,7 @@ public class Player extends Entity{
     double xvelo=0;
     double yvelo=0;
     private Intersect intersect = new Intersect();
-    Functions func = new Functions();
+    Util func = new Util();
     ArrayList<Sprite> cloud = new ArrayList();
     Line aimline = new Line();
     public Player(Coord _loc){
@@ -96,9 +96,12 @@ public class Player extends Entity{
         }
         if(reload <= 0){
             switch(weap){
-                
+                case MISSILE:
+                    cloud.add(new Sprite(aimline,50,0,10,6,250,250,250,false,Player.weapon.MISSILE));
+                break;
                 
                 default:
+                    weap = Player.weapon.MISSILE;
                 break;
             }
         }
@@ -132,7 +135,7 @@ public class Player extends Entity{
             intersect.recalc(getVec(), net.lines[i]);
             if(getInt().exists){
                 getVec().recalc(getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- getVec().getAngle().getDeg())),getVec().getMag()*.5);
-                life -= 50;
+                life -= getVec().getMag()*2;
             }
         }
     }

@@ -35,6 +35,7 @@ public class Sprite extends Entity{
     public void live(){
         switch (weap){
             case EXHAUST:
+                
             case FLAME:
             case MISSILE:
                 

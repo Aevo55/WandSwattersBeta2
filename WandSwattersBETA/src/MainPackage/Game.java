@@ -2,7 +2,7 @@ package MainPackage;
 import Entities.*;
 import DataTypes.*;
 import Entities.Player.weapon;
-import Functions.*;
+import Util.*;
 import java.awt.*;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game extends JPanel implements Runnable { 
-    Functions func = new Functions();
-    //Sprite test = new Sprite(new Coord(100,100),Integer.MAX_VALUE,4,0,10,100,200,50);
-    
+    Util func = new Util();
     public ArrayList<Coord> newShape = new ArrayList();
     public ArrayList<Line> path = new ArrayList();
     boolean
@@ -308,7 +306,7 @@ public class Game extends JPanel implements Runnable {
                 players[1].setWeap(weapon.MISSILE);
             break;
             case KeyEvent.VK_E:
-                players[0].getVec().moveTo(new Coord(0,0));
+                //players[0].getVec().moveTo(new Coord(0,0));
             break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);

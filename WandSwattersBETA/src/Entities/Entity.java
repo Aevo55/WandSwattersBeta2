@@ -8,6 +8,5 @@ public class Entity extends Coord{
     Line vector = new Line(new Coord(0,0),0,0);
     public Line getVec(){
         return vector;
-    }
-    
+    }   
 }

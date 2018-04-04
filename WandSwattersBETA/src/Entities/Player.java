@@ -19,6 +19,7 @@ public class Player extends Entity{
     private int life = 100;
     private int mana = 0;
     private int stamina = 100;
+    private double stamMul = 1;
     private int cd = 0;
     private Coord start;
     public enum weapon {EXHAUST,FLAME,MISSILE}
@@ -54,19 +55,23 @@ public class Player extends Entity{
                 }
             }
         if(input[1] == true){
-            getAim().rotate(new Angle(-15));
+            getAim().rotate(new Angle(-7.5));
         }
         if(input[0] == true){
-            getAim().rotate(new Angle(15));
+            getAim().rotate(new Angle(7.5));
         }
         getAim().recalc(this,getAim().getAngle(),getAim().getMag());
         if(stamina <= 0 && cd <= 0){
             stamina = 0;
-            cd = 30;
+            cd = 60;
         }
         cd --;
         if(cd <= 0 && stamina < 100){
-            stamina+=1;
+            stamina+=(1*stamMul);
+            stamMul *= 1.05;
+        }
+        if(stamina > 100){
+            stamina = 100;
         }
     }
     public void createSprite(){
@@ -113,8 +118,9 @@ public class Player extends Entity{
             cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
             cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
             cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
-            getVec().Accel(aimline,.5);
+            getVec().Accel(aimline,.25);
             stamina -=4;
+            stamMul = 1;
             cloud.add(new Sprite(this.getLoc(),6,500,Player.weapon.EXHAUST));
         }
     }

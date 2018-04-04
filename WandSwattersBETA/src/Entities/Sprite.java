@@ -15,10 +15,9 @@ public class Sprite extends Entity{
     public int red;
     public int green;
     public int blue;
-    public boolean exhaust;
     public int damage;
     Player.weapon weap;
-    public Sprite(Line _line, int _life, double angchange,double speed, int _size, int _red, int _blue, int _green,boolean _exhaust,Player.weapon _weap){
+    public Sprite(Line _line, int _life, double angchange,double speed, int _size, int _red, int _blue, int _green,Player.weapon _weap){
         setX(_line.getX1());
         setY(_line.getY1());
         life = _life;
@@ -30,7 +29,41 @@ public class Sprite extends Entity{
         getVec().setMag(speed);
         getVec().rotate(new Angle(angchange));
         weap = _weap;
-        exhaust = _exhaust;
+    }
+    public Sprite(Line _line, int _life, double angchange,double speed, int _size,Player.weapon _weap){
+        setX(_line.getX1());
+        setY(_line.getY1());
+        life = _life;
+        setSize(_size);
+        red = 0;
+        blue = 0;
+        green = 0;
+        getVec().recalc(_line.copy());
+        getVec().setMag(speed);
+        getVec().rotate(new Angle(angchange));
+        weap = _weap;
+    }
+    public Sprite(Coord cor, int _life, double ang, double speed, int _size, Player.weapon _weap){
+        setX(cor.getX());
+        setY(cor.getY());
+        life = _life;
+        setSize(_size);
+        getVec().recalc(cor,new Angle(ang),speed);
+        weap = _weap;
+        red = 0;
+        blue = 0;
+        green = 0;
+    }
+    public Sprite(Coord cor, int _life, double ang, double speed, int _size,int _r, int _g, int _b, Player.weapon _weap){
+        red = _r;
+        green = _g;
+        blue = _b;
+        setX(cor.getX());
+        setY(cor.getY());
+        life = _life;
+        setSize(_size);
+        getVec().recalc(cor,new Angle(ang),speed);
+        weap = _weap;
     }
     public void live(){
         switch (weap){

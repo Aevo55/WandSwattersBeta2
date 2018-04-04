@@ -141,8 +141,7 @@ public class Line{
         return pts;
     }
     public void rotate(Angle a){
-        angle.setDeg(angle.getDeg() - a.getDeg());
-        recalc(p1,angle,mag);
+        recalc(p1,new Angle(angle.getDeg() - a.getDeg()),mag);
     }
     public void setAng(Angle a){
         recalc(p1,a,mag);

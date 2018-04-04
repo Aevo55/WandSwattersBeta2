@@ -158,20 +158,25 @@ public class Game extends JPanel implements Runnable {
         for(int x = 0;x<4;x++){
             gc.setColor(Color.black);
             drawLine(gc,players[x].getAim());
-            switch(x){
-                case 0:
-                    gc.setColor(Color.red);
-                break;
-                case 1:
-                    gc.setColor(Color.blue);
-                break;
-                case 2:
-                    gc.setColor(Color.green);
-                break;
-                case 3:
-                    gc.setColor(Color.orange);
-                break;
+            if(players[x].getLife()<=0){
+                
+            }else{
+                switch(x){
+                    case 0:
+                        gc.setColor(Color.red);
+                    break;
+                    case 1:
+                        gc.setColor(Color.blue);
+                    break;
+                    case 2:
+                        gc.setColor(Color.green);
+                    break;
+                    case 3:
+                        gc.setColor(Color.orange);
+                    break;
+                }
             }
+            
             Color col = gc.getColor();
             for(int i = 0; i < players[x].getCloud().length;i++){
                 gc.setColor(col);
@@ -404,13 +409,21 @@ public class Game extends JPanel implements Runnable {
                 players[x].cloudHitNet(m1.getWall(y));
                 
             }
-            players[x].live(bool_rot[x]);
-            if(bool_fire[x] == true){
-                players[x].createSprite();
+            
+            if(players[x].getLife() > 0){
+                players[x].live(bool_rot[x]);
+                if(bool_fire[x] == true){
+                    players[x].createSprite();
+                }   
+                if(bool_move[x] == true){
+                    players[x].move();
+                }
+            }else{
+                bool_rot[x][0] = false;
+                bool_rot[x][1] = false;
+                players[x].live(bool_rot[x]);
             }
-            if(bool_move[x] == true){
-                players[x].move();
-            }
+            
             //players[x].getVec().Accel(gravity,0.5);
         }
         bool_frame = !bool_frame;

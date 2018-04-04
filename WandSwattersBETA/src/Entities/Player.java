@@ -99,7 +99,7 @@ public class Player extends Entity{
                 
                 //weapon types
                 case MISSILE:
-                    cloud.add(new Sprite(aimline,50,0,3,6,250,250,250,false,Player.weapon.MISSILE));
+                    cloud.add(new Sprite(aimline,50,0,3,6,Player.weapon.MISSILE));
                 break;
                 
                 default:
@@ -110,9 +110,9 @@ public class Player extends Entity{
     }
     public void move(){
         if(stamina > 0){
-            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,255,0,0,true,Player.weapon.EXHAUST));
-            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,255,0,0,true,Player.weapon.EXHAUST));
-            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,255,0,0,true,Player.weapon.EXHAUST));
+            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
+            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
+            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
             getVec().Accel(aimline,.5);
             stamina -=4;
         }
@@ -130,7 +130,7 @@ public class Player extends Entity{
             case FLAME:
             case MISSILE:
                 for(int y=0;y<6;y++){
-                    cloud.add(new Sprite(new Line(cloud.get(j).getLoc(),new Angle(180),0),50,(15*y)+45,50,6,250,250,250,false,weapon.EXHAUST));
+                    cloud.add(new Sprite(new Line(cloud.get(j).getLoc(),new Angle(180),0),50,(15*y)+45,50,6,weapon.EXHAUST));
                 }
                 cloud.remove(j);
             break;

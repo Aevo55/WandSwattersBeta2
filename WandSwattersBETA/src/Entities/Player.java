@@ -115,9 +115,9 @@ public class Player extends Entity{
             cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
             getVec().Accel(aimline,.5);
             stamina -=4;
+            cloud.add(new Sprite(this.getLoc(),6,500,Player.weapon.EXHAUST));
         }
     }
-    public void makeSprite(){} 
     public void cloudHitNet(Net net){
         for(int i = 0; i < net.lines.length;i++){
             for(int j = 0;j<cloud.size();j++){

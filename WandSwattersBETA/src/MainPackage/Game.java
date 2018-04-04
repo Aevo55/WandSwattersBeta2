@@ -471,7 +471,7 @@ public class Game extends JPanel implements Runnable {
         }
         //</editor-fold>
             try{
-                    /**/Thread.sleep(30);/* Add an extra '/' in front to toggle fps
+                    //**/Thread.sleep(30);/* Add an extra '/' in front to toggle fps
                     Thread.sleep(16,500000);//*/
             }catch(InterruptedException ex){ 
             } 

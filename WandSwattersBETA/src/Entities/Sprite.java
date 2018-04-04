@@ -43,6 +43,14 @@ public class Sprite extends Entity{
         getVec().rotate(new Angle(angchange));
         weap = _weap;
     }
+    public Sprite(Coord cor, int _size, int _life, Player.weapon _weap){
+        setX(cor.getX());
+        setY(cor.getY());
+        life = _life;
+        setSize(_size);
+        getVec().recalc(cor,0,0);
+        weap = _weap;
+    }
     public Sprite(Coord cor, int _life, double ang, double speed, int _size, Player.weapon _weap){
         setX(cor.getX());
         setY(cor.getY());
@@ -68,7 +76,7 @@ public class Sprite extends Entity{
     public void live(){
         switch (weap){
             case EXHAUST:
-                
+            break;
             case FLAME:
             case MISSILE:
                 if(getVec().getMag() < 35){getVec().setMag(getVec().getMag() + 1);}
@@ -82,9 +90,6 @@ public class Sprite extends Entity{
         if(life != Integer.MAX_VALUE){
             life --;
         }
-    }
-    public void hitWall(Line l){
-        
     }
 //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public int getLife() {

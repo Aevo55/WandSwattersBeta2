@@ -33,21 +33,24 @@ public class Player extends Entity{
     ArrayList<Sprite> cloud = new ArrayList();
     Line aimline = new Line();
     public Player(Coord _loc, Color col){
+        setLife(100);
         this.setX(_loc.getX());
         this.setY(_loc.getY());
-        vector = new Line(_loc,0,0);
         aimline.recalc(this, this.offset(20, 0));
         setSize(8);
         colour = col;
+        recalc(this.getLoc(),0,0);
     }
     public void live(boolean[] input){
         reload--;
-        setX(getVec().getX2());
-        setY(getVec().getY2());
-        getVec().moveTo(getVec().getP2());
-        getVec().mulMag(0.985);
-        if(getVec().getMag()<0.125){
-            getVec().setMag(0);
+        setX(getX2());
+        setY(getY2());
+        moveTo(getP2());
+        if(getLife() > 0){
+            mulMag(0.985);
+        }
+        if(getMag()<0.125){
+            setMag(0);
         }
         for(int x = 0;x<cloud.size();x++){
                 cloud.get(cloud.size() - 1 - x).live();
@@ -118,7 +121,7 @@ public class Player extends Entity{
             cloud.add(new Sprite(aimline,new Angle(170+Math.random()*20),5,1,4,getCol()));
             cloud.add(new Sprite(aimline,new Angle(170+Math.random()*20),5,2,4,getCol()));
             cloud.add(new Sprite(aimline,new Angle(170+Math.random()*20),5,3,4,getCol()));
-            getVec().Accel(aimline,.25);
+            Accel(aimline,.25);
             stamina -=4;
             stamMul = 1;
         }
@@ -126,7 +129,7 @@ public class Player extends Entity{
     public void cloudHitNet(Net net){
         for(int i = 0; i < net.lines.length;i++){
             for(int j = 0;j<cloud.size();j++){
-                intersect.recalc(cloud.get(j).getVec(),net.lines[i]);
+                intersect.recalc(cloud.get(j),net.lines[i]);
                 if(intersect.exists){
                 for(int y=0;y<6;y++){
                     //cloud.add(new Sprite(cloud.get(j).getLoc(),new Angle(60*y),10,10,5));
@@ -139,9 +142,9 @@ public class Player extends Entity{
     public void hitNet(Net net){
         int x = 0;
         for(int i = 0; i < net.lines.length;i++){
-            intersect.recalc(getVec(), net.lines[i]);
+            intersect.recalc(this, net.lines[i]);
             if(getInt().exists){
-                getVec().recalc(getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- getVec().getAngle().getDeg())),getVec().getMag()*.5);
+                this.setAng(new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- getAngle().getDeg())));
             }
         }
     }
@@ -156,18 +159,6 @@ public class Player extends Entity{
     }
     public weapon getWeap(){
         return weap;
-    }
-    public void setLife(int _life){
-        life = _life;
-        if(life <= 0){
-            setCol(Color.BLACK);
-        }
-    }
-    public void subLife(int _life){
-        setLife(getLife() - _life);
-    }
-    public int getLife(){
-        return life;
     }
     public void setWeap(weapon _weap){
         weap = _weap;

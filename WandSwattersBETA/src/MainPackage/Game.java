@@ -291,7 +291,7 @@ public class Game extends JPanel implements Runnable {
                 players[1].setWeap(weapon.MISSILE);
             break;
             case KeyEvent.VK_E:
-                //players[0].getVec().moveTo(new Coord(0,0));
+                //players[0].moveTo(new Coord(0,0));
             break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
@@ -404,7 +404,7 @@ public class Game extends JPanel implements Runnable {
                 players[x].live(bool_rot[x]);
             }
             
-            //players[x].getVec().Accel(gravity,0.5);
+            //players[x].Accel(gravity,0.5);
         }
         bool_frame = !bool_frame;
     }
@@ -430,9 +430,12 @@ public class Game extends JPanel implements Runnable {
                     if(x != y){
                         for(int z = 0; z < players[y].getCloud().length; z++){
                             if(collideEntity(players[x],players[y].getCloud()[z])){
-                                players[x].setLife(players[x].getLife() - 5);
+                                players[x].setLife(players[x].getLife() - players[y].getCloud()[z].getDamage() - 1);
                                 players[y].getCloud()[z].die();
-                                players[x].getVec().Accel(players[y].getCloud()[z]);
+                                players[x].Accel(players[y].getCloud()[z]);
+                                if(players[x].getLife() <= 0){
+                                    players[x].setCol(Color.BLACK);
+                                }
                             }
                         }
                     }

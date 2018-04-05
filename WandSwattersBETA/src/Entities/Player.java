@@ -45,6 +45,10 @@ public class Player extends Entity{
         setX(getVec().getX2());
         setY(getVec().getY2());
         getVec().moveTo(getVec().getP2());
+        getVec().mulMag(0.985);
+        if(getVec().getMag()<0.125){
+            getVec().setMag(0);
+        }
         for(int x = 0;x<cloud.size();x++){
                 cloud.get(cloud.size() - 1 - x).live();
                 if(cloud.get(x).getLife()<=0){
@@ -98,13 +102,11 @@ public class Player extends Entity{
         }
         if(reload <= 0){
             switch(weap){
-                
                 //weapon types
                 case MISSILE:
                     cloud.add(new Sprite(aimline, 5, 50, 6,getCol()));
                     reload = 0;
                 break;
-                
                 default:
                     weap = Player.weapon.MISSILE;
                 break;
@@ -113,9 +115,9 @@ public class Player extends Entity{
     }
     public void move(){
         if(stamina > 0){
-            cloud.add(new Sprite(aimline,new Angle(180),10,3,6,getCol()));
-            cloud.add(new Sprite(aimline,new Angle(180),10,3,6,getCol()));
-            cloud.add(new Sprite(aimline,new Angle(180),10,3,6,getCol()));
+            cloud.add(new Sprite(aimline,new Angle(170+Math.random()*20),5,1,4,getCol()));
+            cloud.add(new Sprite(aimline,new Angle(170+Math.random()*20),5,2,4,getCol()));
+            cloud.add(new Sprite(aimline,new Angle(170+Math.random()*20),5,3,4,getCol()));
             getVec().Accel(aimline,.25);
             stamina -=4;
             stamMul = 1;

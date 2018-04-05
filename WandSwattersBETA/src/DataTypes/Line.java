@@ -1,5 +1,6 @@
 
 package DataTypes;
+import Entities.Sprite;
 import java.awt.*;
 /**
  *
@@ -155,6 +156,9 @@ public class Line{
     public void setMag(double m){
         recalc(p1,angle,m);
     }
+    public void Accel(Sprite s){
+        Accel(s.getVec(),(double)s.getDamage());
+    }
     public void Accel(Line l1){
         incRise(l1.getRise());
         incRun(l1.getRun());
@@ -199,7 +203,12 @@ public class Line{
     public Line copy(){
         return new Line(this);
     }
-    
+    public void minMag(double d){
+        setMag(getMag() - d);
+    }
+    public void mulMag(double d){
+        setMag(getMag()*d);
+    }
     //<editor-fold defaultstate="collapsed" desc="Setters">
     public boolean isVert() {
         return vert;

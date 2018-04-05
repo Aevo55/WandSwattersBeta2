@@ -40,7 +40,10 @@ public class Sprite extends Entity{
             life --;
         }
     }
-    public void die(){/*Its blank!*/}
+    public void die(){
+        setLife(0);
+        //Other stuff!
+    }
 //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public int getLife() {
         return life;
@@ -50,6 +53,12 @@ public class Sprite extends Entity{
     }
     public Color getCol(){
         return colour;
+    }
+    public int getDamage(){
+        return damage;
+    }
+    public void setDamage(int d){
+        damage = d;
     }
     //</editor-fold>
     

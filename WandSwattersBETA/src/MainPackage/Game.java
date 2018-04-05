@@ -158,33 +158,13 @@ public class Game extends JPanel implements Runnable {
         for(int x = 0;x<4;x++){
             gc.setColor(Color.black);
             drawLine(gc,players[x].getAim());
-            if(players[x].getLife()<=0){
-                
-            }else{
-                switch(x){
-                    case 0:
-                        gc.setColor(Color.red);
-                    break;
-                    case 1:
-                        gc.setColor(Color.blue);
-                    break;
-                    case 2:
-                        gc.setColor(Color.green);
-                    break;
-                    case 3:
-                        gc.setColor(Color.orange);
-                    break;
-                }
-            }
-            
-            Color col = gc.getColor();
             for(int i = 0; i < players[x].getCloud().length;i++){
-                gc.setColor(col);
+                gc.setColor(players[x].getCloud()[i].getCol());
                 gc.fillOval((int)players[x].getCloud()[i].getLoc().getX()-(players[x].getCloud()[i].getSize()/2),(int)players[x].getCloud()[i].getLoc().getY()-(players[x].getCloud()[i].getSize()/2),players[x].getCloud()[i].getSize(),players[x].getCloud()[i].getSize());
                 gc.setColor(Color.BLACK);
                 gc.drawOval((int)players[x].getCloud()[i].getLoc().getX()-(players[x].getCloud()[i].getSize()/2),(int)players[x].getCloud()[i].getLoc().getY()-(players[x].getCloud()[i].getSize()/2),players[x].getCloud()[i].getSize(),players[x].getCloud()[i].getSize());
             }
-            gc.setColor(col);
+            gc.setColor(players[x].getCol());
             gc.fillOval((int)players[x].getX()-4,(int)players[x].getY()-4,(int)players[x].getSize(),(int)players[x].getSize());
             gc.setColor(Color.BLACK);
             gc.drawOval((int)players[x].getX()-4,(int)players[x].getY()-4,(int)players[x].getSize(),(int)players[x].getSize());
@@ -432,12 +412,12 @@ public class Game extends JPanel implements Runnable {
         return(new Line(e,_e).getMag()<e.getSize()+_e.getSize());
     }
     public void run(){
-        players[0] = new Player(new Coord(460,285));
+        players[0] = new Player(new Coord(460,285), Color.RED);
         players[0].getAim().setAng(new Angle(270));
-        players[1] = new Player(new Coord(535,360));
-        players[2] = new Player(new Coord(385,360));
+        players[1] = new Player(new Coord(535,360),Color.BLUE);
+        players[2] = new Player(new Coord(385,360),Color.GREEN);
         players[2].getAim().setAng(new Angle(180));
-        players[3] = new Player(new Coord(460,435));
+        players[3] = new Player(new Coord(460,435),Color.ORANGE);
         players[3].getAim().setAng(new Angle(90));
         func.sysout(str_appath);
         m1.addWalls(edge,wall1,wall2,wall3,wall4,wall5);
@@ -445,9 +425,15 @@ public class Game extends JPanel implements Runnable {
         while(true){
             Move();
             repaint();
-            for(int x = 1;x<3;x++){
-                if(collideEntity(players[0],players[x])){
-                    System.out.println("Ab you suck " + x);
+            for(int x = 0; x < 4; x++){
+                for(int y = 0; y < 4; y++){
+                    if(x != y){
+                        for(int z = 0; z < players[y].getCloud().length; z++){
+                            if(collideEntity(players[x],players[y].getCloud()[z])){
+                                players[x].setLife(players[x].getLife() - 5);
+                            }
+                        }
+                    }
                 }
             }
             //<editor-fold defaultstate="collapsed" desc="RGB cycle">

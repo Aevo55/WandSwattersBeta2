@@ -7,6 +7,7 @@ package Entities;
 import Util.*;
 import DataTypes.*;
 import java.util.ArrayList;
+import java.awt.*;
 /**
  *
  * @author dawsg
@@ -21,27 +22,23 @@ public class Player extends Entity{
     private int stamina = 100;
     private double stamMul = 1;
     private int cd = 0;
-    private Coord start;
+    private Color colour;
     public enum weapon {EXHAUST,FLAME,MISSILE}
     weapon weap = weapon.EXHAUST;
-    int level = 0;
     double spray = 1;
     int reload = 0;
     double knockback = 5;
-    double xvelo=0;
-    double yvelo=0;
     private Intersect intersect = new Intersect();
     Util func = new Util();
     ArrayList<Sprite> cloud = new ArrayList();
     Line aimline = new Line();
-    public Player(Coord _loc){
-        
+    public Player(Coord _loc, Color col){
         this.setX(_loc.getX());
         this.setY(_loc.getY());
-        start = new Coord(_loc);
         vector = new Line(_loc,0,0);
         aimline.recalc(this, this.offset(20, 0));
         setSize(8);
+        colour = col;
     }
     public void live(boolean[] input){
         reload--;
@@ -104,7 +101,8 @@ public class Player extends Entity{
                 
                 //weapon types
                 case MISSILE:
-                    cloud.add(new Sprite(aimline,50,0,0,6,Player.weapon.MISSILE));
+                    cloud.add(new Sprite(aimline, 5, 50, 6,getCol()));
+                    reload = 0;
                 break;
                 
                 default:
@@ -115,13 +113,12 @@ public class Player extends Entity{
     }
     public void move(){
         if(stamina > 0){
-            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
-            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
-            cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
+            cloud.add(new Sprite(aimline,new Angle(180),10,3,6,getCol()));
+            cloud.add(new Sprite(aimline,new Angle(180),10,3,6,getCol()));
+            cloud.add(new Sprite(aimline,new Angle(180),10,3,6,getCol()));
             getVec().Accel(aimline,.25);
             stamina -=4;
             stamMul = 1;
-            cloud.add(new Sprite(this.getLoc(),6,500,Player.weapon.EXHAUST));
         }
     }
     public void cloudHitNet(Net net){
@@ -129,18 +126,10 @@ public class Player extends Entity{
             for(int j = 0;j<cloud.size();j++){
                 intersect.recalc(cloud.get(j).getVec(),net.lines[i]);
                 if(intersect.exists){
-                    switch(cloud.get(j).weap){
-            case EXHAUST:
-                cloud.remove(j);
-            break;
-            case FLAME:
-            case MISSILE:
                 for(int y=0;y<6;y++){
-                    cloud.add(new Sprite(new Line(cloud.get(j).getLoc(),new Angle(180),0),50,(15*y)+45,50,6,weapon.EXHAUST));
+                    //cloud.add(new Sprite(cloud.get(j).getLoc(),new Angle(60*y),10,10,5));
                 }
                 cloud.remove(j);
-            break;
-        }
                 }
             }
         }
@@ -151,18 +140,9 @@ public class Player extends Entity{
             intersect.recalc(getVec(), net.lines[i]);
             if(getInt().exists){
                 getVec().recalc(getVec().getP1(),new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- getVec().getAngle().getDeg())),getVec().getMag()*.5);
-                life -= getVec().getMag()*2;
             }
         }
     }
-    public double getxVelo(){
-    return xvelo;}
-    public double getyVelo(){
-    return yvelo;}
-    public void setxVelo(double x){
-        xvelo = x;}
-    public void setyVelo(double y){
-        yvelo = y;}
     public Line getAim(){
         return aimline;}
     public Sprite[] getCloud(){
@@ -175,8 +155,14 @@ public class Player extends Entity{
     public weapon getWeap(){
         return weap;
     }
-    public void setLife(int l){
-        life = l;
+    public void setLife(int _life){
+        life = _life;
+        if(life <= 0){
+            setCol(Color.BLACK);
+        }
+    }
+    public void subLife(int _life){
+        setLife(getLife() - _life);
     }
     public int getLife(){
         return life;
@@ -201,5 +187,12 @@ public class Player extends Entity{
     }
     public Intersect getInt(){ 
         return intersect;
+    }
+    /**Return the color of the sprite*/
+    public Color getCol(){
+        return colour;
+    }
+    public void setCol(Color col){
+        colour = col;
     }
 }

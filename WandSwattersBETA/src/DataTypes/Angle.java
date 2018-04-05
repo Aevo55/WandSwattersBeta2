@@ -37,4 +37,10 @@ public class Angle {
     public double fix(double _deg){
         return _deg<0?_deg%360+360:_deg%360;
     }
+    public Angle offset(Angle ang){
+        return(new Angle(getDeg() + ang.getDeg()));
+    }
+    public Angle offset(double ang){
+        return(new Angle(getDeg() + ang));
+    }
 }

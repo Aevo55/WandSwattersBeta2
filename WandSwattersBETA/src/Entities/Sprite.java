@@ -79,7 +79,7 @@ public class Sprite extends Entity{
             break;
             case FLAME:
             case MISSILE:
-                if(getVec().getMag() < 35){getVec().setMag(getVec().getMag() + 1);}
+                if(getVec().getMag() < 35){getVec().setMag(getVec().getMag() + 0.5);}
             break;
             
         }

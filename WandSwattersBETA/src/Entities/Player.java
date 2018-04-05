@@ -104,7 +104,7 @@ public class Player extends Entity{
                 
                 //weapon types
                 case MISSILE:
-                    cloud.add(new Sprite(aimline,50,0,3,6,Player.weapon.MISSILE));
+                    cloud.add(new Sprite(aimline,50,0,0,6,Player.weapon.MISSILE));
                 break;
                 
                 default:

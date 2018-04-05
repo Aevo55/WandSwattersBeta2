@@ -100,6 +100,7 @@ public class Player extends Entity{
                 //weapon types
                 case MISSILE:
                     cloud.add(new Sprite(aimline,50,0,3,6,Player.weapon.MISSILE));
+                    reload = 3;
                 break;
                 
                 default:
@@ -115,7 +116,7 @@ public class Player extends Entity{
             cloud.add(new Sprite(aimline,2,180+(Math.random()*12-6),10,6,Player.weapon.EXHAUST));
             getVec().Accel(aimline,.5);
             stamina -=4;
-            cloud.add(new Sprite(this.getLoc(),6,500,Player.weapon.EXHAUST));
+            cloud.add(new Sprite(this.getLoc(),6,500+(int)(Math.random()*15),Player.weapon.EXHAUST));
         }
     }
     public void cloudHitNet(Net net){
@@ -130,7 +131,8 @@ public class Player extends Entity{
             case FLAME:
             case MISSILE:
                 for(int y=0;y<6;y++){
-                    cloud.add(new Sprite(new Line(cloud.get(j).getLoc(),new Angle(180),0),50,(15*y)+45,50,6,weapon.EXHAUST));
+                    cloud.add(new Sprite(cloud.get(j).getLoc(),20,60*y,10,5,Player.weapon.EXHAUST));
+                    //public Sprite(Coord cor, int _life, double ang, double speed, int _size, Player.weapon _weap)
                 }
                 cloud.remove(j);
             break;

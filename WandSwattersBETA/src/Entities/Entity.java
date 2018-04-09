@@ -16,6 +16,11 @@ public class Entity extends Line{
         setLife(life + _life);
     }
     public void minLife(int _life){
-        setLife(life - _life);
+        if(getLife() > 0){
+            setLife(life - _life);
+        }
+        if(getLife() < 0){
+            setLife(0);
+        }
     }
 }

@@ -131,6 +131,46 @@ public class Game extends JPanel implements Runnable {
         new Coord(485,335),
     };
     Net wall5 = new Net(wall5p);
+    Coord[] wall6p = {
+        new Coord(560,360),
+        new Coord(610,310),
+        new Coord(610,260),
+        new Coord(640,260),
+        new Coord(640,460),
+        new Coord(610,460),
+        new Coord(610,410)
+    };
+    Net wall6 = new Net(wall6p);
+    Coord[] wall7p = {
+        new Coord(360,360),
+        new Coord(310,310),
+        new Coord(310,260),
+        new Coord(280,260),
+        new Coord(280,460),
+        new Coord(310,460),
+        new Coord(310,410)
+    };
+    Net wall7 = new Net(wall7p);
+    Coord[] wall8p = {
+        new Coord(460,260),
+        new Coord(510,210),
+        new Coord(560,210),
+        new Coord(560,180),
+        new Coord(360,180),
+        new Coord(360,210),
+        new Coord(410,210)
+    };
+    Net wall8 = new Net(wall8p);
+    Coord[] wall9p = {
+        new Coord(460,460),
+        new Coord(510,510),
+        new Coord(560,510),
+        new Coord(560,540),
+        new Coord(360,540),
+        new Coord(360,510),
+        new Coord(410,510)
+    };
+    Net wall9 = new Net(wall9p);
     //</editor-fold>
     
     Map m1 = new Map();
@@ -387,7 +427,6 @@ public class Game extends JPanel implements Runnable {
             for(int y = 0;y<m1.getArrWall().length;y++){
                 players[x].hitNet(m1.getWall(y));
                 players[x].cloudHitNet(m1.getWall(y));
-                
             }
             
             if(players[x].getLife() > 0){
@@ -420,7 +459,7 @@ public class Game extends JPanel implements Runnable {
         players[3] = new Player(new Coord(460,435),Color.ORANGE);
         players[3].getAim().setAng(new Angle(90));
         func.sysout(str_appath);
-        m1.addWalls(edge,wall1,wall2,wall3,wall4,wall5);
+        m1.addWalls(edge,wall1,wall2,wall3,wall4,wall5,wall6,wall7,wall8,wall9);
         m1.addUi(hud);
         while(true){
             Move();
@@ -432,7 +471,7 @@ public class Game extends JPanel implements Runnable {
                             if(collideEntity(players[x],players[y].getCloud()[z])){
                                 players[x].setLife(players[x].getLife() - players[y].getCloud()[z].getDamage() - 1);
                                 players[y].getCloud()[z].die();
-                                players[x].Accel(players[y].getCloud()[z]);
+                                players[x].Accel(players[y].getCloud()[z].copy());
                                 if(players[x].getLife() <= 0){
                                     players[x].setCol(Color.BLACK);
                                 }

@@ -17,7 +17,7 @@ public class Player extends Entity{
     private int r = 15;
     private int g = 15;
     private int b = 255;
-    private int life = 100;
+    private int shield = 0;
     private int mana = 0;
     private int stamina = 100;
     private double stamMul = 1;
@@ -30,7 +30,7 @@ public class Player extends Entity{
     double knockback = 5;
     private Intersect intersect = new Intersect();
     Util func = new Util();
-    ArrayList<Sprite> cloud = new ArrayList();
+    public ArrayList<Sprite> cloud = new ArrayList();
     Line aimline = new Line();
     public Player(Coord _loc, Color col){
         setLife(100);
@@ -59,10 +59,10 @@ public class Player extends Entity{
                 }
             }
         if(input[1] == true){
-            getAim().rotate(new Angle(-7.5));
+            getAim().rotate(new Angle(-6));
         }
         if(input[0] == true){
-            getAim().rotate(new Angle(7.5));
+            getAim().rotate(new Angle(6));
         }
         getAim().recalc(this,getAim().getAngle(),getAim().getMag());
         if(stamina <= 0 && cd <= 0){

@@ -471,7 +471,7 @@ public class Game extends JPanel implements Runnable {
                             if(collideEntity(players[x],players[y].getCloud()[z])){
                                 players[x].setLife(players[x].getLife() - players[y].getCloud()[z].getDamage() - 1);
                                 players[y].getCloud()[z].die();
-                                players[x].Accel(players[y].getCloud()[z].copy());
+                                players[x].Accel(players[y].getCloud()[z].copy(),players[y].getCloud()[z].getKnockback());
                                 if(players[x].getLife() <= 0){
                                     players[x].setCol(Color.BLACK);
                                 }

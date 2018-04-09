@@ -48,6 +48,8 @@ public class Player extends Entity{
         moveTo(getP2());
         if(getLife() > 0){
             mulMag(0.985);
+        }else{
+            mulMag(0.995);
         }
         if(getMag()<0.125){
             setMag(0);
@@ -55,6 +57,7 @@ public class Player extends Entity{
         for(int x = 0;x<cloud.size();x++){
                 cloud.get(cloud.size() - 1 - x).live();
                 if(cloud.get(x).getLife()<=0){
+                    cloud.get(x).die();
                     cloud.remove(x);
                 }
             }

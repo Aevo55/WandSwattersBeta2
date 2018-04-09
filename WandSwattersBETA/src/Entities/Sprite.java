@@ -11,6 +11,7 @@ import java.awt.*;
  */
 public class Sprite extends Entity{
     private int damage;
+    private double knockback = .9;
     private Color colour;
     public Sprite(Coord cor, int _life,int _size, Color col){
         this(cor,new Angle(0),0,_life,_size,col);
@@ -38,6 +39,9 @@ public class Sprite extends Entity{
         if(getLife() != Integer.MAX_VALUE){
             minLife(1);
         }
+        if(getLife() <= 0){
+            die();
+        }
     }
     public void die(){
         setLife(0);
@@ -52,6 +56,12 @@ public class Sprite extends Entity{
     }
     public void setDamage(int d){
         damage = d;
+    }
+    public void setKnockback(double d){
+        knockback = d;
+    }
+    public double getKnockback(){
+        return knockback;
     }
     //</editor-fold>
     

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game extends JPanel implements Runnable { 
-    Util func = new Util();
     public ArrayList<Coord> newShape = new ArrayList();
     public ArrayList<Line> path = new ArrayList();
     boolean
@@ -188,7 +187,12 @@ public class Game extends JPanel implements Runnable {
     public void drawLine(Graphics gc, Line l){
         gc.drawLine(l.draw()[0], l.draw()[1], l.draw()[2], l.draw()[3]);
     }
-    
+    public void drawPolygon(Graphics gc, Net n){
+        gc.drawPolygon(n.getXs(), n.getYs(), n.length());
+    }
+    public void fillPolygon(Graphics gc, Net n){
+        gc.fillPolygon(n.getXs(), n.getYs(), n.length());
+    }
     public void paintComponent(Graphics gc){
         setOpaque(false); //wipes everything on the frame
         super.paintComponent(gc); //creates the class for painting indavidual objects in the frame
@@ -210,17 +214,17 @@ public class Game extends JPanel implements Runnable {
             gc.drawOval((int)players[x].getX()-4,(int)players[x].getY()-4,(int)players[x].getSize(),(int)players[x].getSize());
         }
         for(int x = 0;x<path.size();x++){
-            drawLine(gc,path.get(x));
+            drawLine(gc, path.get(x));
         }
         
         gc.setColor(Color.BLACK);
         for (int x = 1; x<m1.getArrWall().length;x++){
-            gc.drawPolygon(m1.getWall(x).getXs(), m1.getWall(x).getYs(), m1.getWall(x).length());
-            gc.fillPolygon(m1.getWall(x).getXs(), m1.getWall(x).getYs(), m1.getWall(x).length());
+            drawPolygon(gc, m1.getWall(x));
+            fillPolygon(gc, m1.getWall(x));
         }
         for(int x = 0;x<m1.getArrUi().length;x++){
-            gc.drawPolygon(m1.getUi(x).getXs(), m1.getUi(x).getYs(), m1.getUi(x).length());
-            gc.fillPolygon(m1.getUi(x).getXs(), m1.getUi(x).getYs(), m1.getUi(x).length());
+            drawPolygon(gc, m1.getUi(x));
+            fillPolygon(gc, m1.getUi(x));
         }
         //<editor-fold defaultstate="collapsed" desc="Draw UI">
         gc.setColor(Color.red);
@@ -442,15 +446,15 @@ public class Game extends JPanel implements Runnable {
                 bool_rot[x][1] = false;
                 players[x].live(bool_rot[x]);
             }
-            
             //players[x].Accel(gravity,0.5);
         }
         bool_frame = !bool_frame;
     }
-    public boolean collideEntity(Entity e,Entity _e){
+    public boolean collideStaticEntity(Entity e,Entity _e){
         return(new Line(e,_e).getMag()<e.getSize()+_e.getSize());
     }
     public void run(){
+        Util.sysout(str_appath);
         players[0] = new Player(new Coord(460,285), Color.RED);
         players[0].getAim().setAng(new Angle(270));
         players[1] = new Player(new Coord(535,360),Color.BLUE);
@@ -458,7 +462,6 @@ public class Game extends JPanel implements Runnable {
         players[2].getAim().setAng(new Angle(180));
         players[3] = new Player(new Coord(460,435),Color.ORANGE);
         players[3].getAim().setAng(new Angle(90));
-        func.sysout(str_appath);
         m1.addWalls(edge,wall1,wall2,wall3,wall4,wall5,wall6,wall7,wall8,wall9);
         m1.addUi(hud);
         while(true){
@@ -468,7 +471,7 @@ public class Game extends JPanel implements Runnable {
                 for(int y = 0; y < 4; y++){
                     if(x != y){
                         for(int z = 0; z < players[y].getCloud().length; z++){
-                            if(collideEntity(players[x],players[y].getCloud()[z])){
+                            if(collideStaticEntity(players[x],players[y].getCloud()[z])){
                                 players[x].setLife(players[x].getLife() - players[y].getCloud()[z].getDamage() - 1);
                                 players[y].getCloud()[z].die();
                                 players[x].Accel(players[y].getCloud()[z].copy(),players[y].getCloud()[z].getKnockback());

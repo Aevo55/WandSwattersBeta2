@@ -6,6 +6,7 @@
 package Entities;
 import Util.*;
 import DataTypes.*;
+import Entities.Weapons.Missile;
 import java.util.ArrayList;
 import java.awt.*;
 /**
@@ -29,7 +30,6 @@ public class Player extends Entity{
     int reload = 0;
     double knockback = 5;
     private Intersect intersect = new Intersect();
-    Util func = new Util();
     public ArrayList<Sprite> cloud = new ArrayList();
     Line aimline = new Line();
     public Player(Coord _loc, Color col){
@@ -41,15 +41,13 @@ public class Player extends Entity{
         colour = col;
         recalc(this.getLoc(),0,0);
     }
-    public void live(boolean[] input){
+    @Override
+    public void liveMod(boolean[] input){
         reload--;
-        setX(getX2());
-        setY(getY2());
-        moveTo(getP2());
         if(getLife() > 0){
             mulMag(0.985);
         }else{
-            mulMag(0.995);
+            mulMag(0.997);
         }
         if(getMag()<0.125){
             setMag(0);
@@ -102,7 +100,6 @@ public class Player extends Entity{
             b-=20;
         }
         //</editor-fold>
-        int _life = 50;
         if(spray <= 20){
             spray += 2;
         }
@@ -110,7 +107,7 @@ public class Player extends Entity{
             switch(weap){
                 //weapon types
                 case MISSILE:
-                    cloud.add(new Sprite(aimline, 5, 50, 6,getCol()));
+                    cloud.add(new Sprite(aimline, 5, 50, 6, getCol()));
                     reload = 0;
                 break;
                 default:
@@ -134,20 +131,19 @@ public class Player extends Entity{
             for(int j = 0;j<cloud.size();j++){
                 intersect.recalc(cloud.get(j),net.lines[i]);
                 if(intersect.exists){
-                for(int y=0;y<6;y++){
-                    //cloud.add(new Sprite(cloud.get(j).getLoc(),new Angle(60*y),10,10,5));
-                }
-                cloud.remove(j);
+                    cloud.remove(j);
                 }
             }
         }
     }
     public void hitNet(Net net){
-        int x = 0;
         for(int i = 0; i < net.lines.length;i++){
             intersect.recalc(this, net.lines[i]);
             if(getInt().exists){
                 this.setAng(new Angle(net.lines[i].getAngle().getDeg() + (net.lines[i].getAngle().getDeg()- getAngle().getDeg())));
+                this.setMag(this.getMag() * .99);
+                hitNet(net);
+                break;
             }
         }
     }

@@ -10,7 +10,6 @@ import Util.*;
  * @author G
  */
 public class Intersect extends Coord{
-    public Util func = new Util();
     public boolean exists;
     Line l1,l2;
     public Intersect(){
@@ -21,26 +20,26 @@ public class Intersect extends Coord{
         l1 = _l1;
         l2 = _l2;
         if (l1.getAngle().getDeg() == l2.getAngle().getDeg()){
-            //func.sysout("they the same");
+            //Util.sysout("they the same");
             exists = false;
         }else if(l1.isVert() == true){
-            //func.sysout("hey line 1 is vertical");
+            //Util.sysout("hey line 1 is vertical");
             setX(l1.getX1());
             setY(((l2.getSlope()*l1.getX1())+l2.getB()));
-            if(func.range(l1.getY1(), getY(), l1.getY2()) && func.range(l2.getX1(),getX(),l2.getX2())){
+            if(Util.range(l1.getY1(), getY(), l1.getY2()) && Util.range(l2.getX1(),getX(),l2.getX2())){
                 exists = true;
             }
         }else if(l2.isVert() == true){
-            //func.sysout("hey line 2 is vertical");
+            //Util.sysout("hey line 2 is vertical");
             setX(l2.getX1());
             setY((l1.getSlope()*l2.getX1())+l1.getB());
-            if(func.range(l1.getX1(), getX(), l1.getX2()) && func.range(l2.getY1(),getY(),l2.getY2())){
+            if(Util.range(l1.getX1(), getX(), l1.getX2()) && Util.range(l2.getY1(),getY(),l2.getY2())){
                 exists = true;
             }
         }else{
             setX((l2.getB()-l1.getB())/(l1.getSlope()-l2.getSlope()));
             setY((getX() * l1.getSlope()) + l1.getB());
-            if(func.range(l1.getX1(), getX(), l1.getX2()) && func.range(l2.getX1(),getX(),l2.getX2())){
+            if(Util.range(l1.getX1(), getX(), l1.getX2()) && Util.range(l2.getX1(),getX(),l2.getX2())){
                 exists = true;
             }
         }

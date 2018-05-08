@@ -12,7 +12,6 @@ import Entities.*;
  */
 public class Coord{
     double x,y;
-    int size;
     public Coord(){
         x = 0;
         y = 0;
@@ -62,10 +61,5 @@ public class Coord{
     public Coord getLoc(){
         return this;
     }
-    public int getSize(){
-        return size;
-    }
-    public void setSize(int _size){
-        size = _size;
-    }
+    
 }

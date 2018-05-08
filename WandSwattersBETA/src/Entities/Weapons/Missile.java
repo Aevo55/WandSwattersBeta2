@@ -25,10 +25,6 @@ public class Missile extends Sprite{
     public Missile(Line line,Angle ang, double speed, int _life, int _size, Color col){
         super(line.getP1(),line.getAngle().offset(ang),speed,_life,_size,col);
     }
-    public void liveFunc(){
-        
-    }
-    public void die(){
-        
-    }
+    public void liveFunc(){}
+    public void die(){}
 }

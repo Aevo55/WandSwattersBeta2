@@ -6,7 +6,6 @@ import DataTypes.*;
  * @author G
  */
 public final class Util {
-    public Util(){}
     static public boolean squareCollide(Coord point, Line line){
         return range(line.getX1(),point.getX(),line.getX2()) &&
                range(line.getY1(),point.getX(),line.getY2());
@@ -17,8 +16,8 @@ public final class Util {
     }
     static public void sysout(Object... in){
         for(int x = 0;x<in.length;x++){
-            Class c = in[x].getClass();
-            System.out.println(c.isPrimitive() || c==String.class?in[x]:c);
+            //Class c = in[x].getClass();
+            System.out.println(in[x].toString());
         }
     }
 }

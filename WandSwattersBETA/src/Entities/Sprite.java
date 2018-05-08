@@ -30,12 +30,9 @@ public class Sprite extends Entity{
         this(line.getP1(),line.getAngle().offset(ang),speed,_life,_size,col);
     }
     public void liveFunc(){/*Its blank!*/}
-    public void live(){
+    public void liveMod(){
         liveFunc();
         recalc(getLoc(), getAngle(), getMag());
-        setX(getX2());
-        setY(getY2());
-        moveTo(getP2());
         if(getLife() != Integer.MAX_VALUE){
             minLife(1);
         }

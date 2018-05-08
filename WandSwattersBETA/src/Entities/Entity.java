@@ -6,6 +6,24 @@ import DataTypes.*;
 */
 public class Entity extends Line{
     private int life;
+    
+    private int size;
+    public void liveMod(boolean[] input){}
+    public void liveMod(){}
+    public void live(boolean[] input){
+        
+        setX(getX2());
+        setY(getY2());
+        moveTo(getP2());
+        liveMod(input);
+    }
+    public void live(){
+        
+        setX(getX2());
+        setY(getY2());
+        moveTo(getP2());
+        liveMod();
+    }
     public int getLife(){
         return life;
     }
@@ -22,5 +40,11 @@ public class Entity extends Line{
         if(getLife() < 0){
             setLife(0);
         }
+    }
+    public int getSize(){
+        return size;
+    }
+    public void setSize(int _size){
+        size = _size;
     }
 }

@@ -35,7 +35,7 @@ public class Missile extends Sprite{
         setLife(0);
     }
     public int getReload(){
-        return 5;
+        return 15;
     }
     public double getKnockback(){
         return 0.9;

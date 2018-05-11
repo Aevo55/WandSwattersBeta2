@@ -277,10 +277,10 @@ public class Game extends JPanel implements Runnable {
         gc.fillRect(723,623,(int)(players[3].getLife()*1.74),17);
         
         gc.setColor(Color.BLUE);
-        gc.fillRect(23,51,(int)(players[0].getMana()*1.74),17);
-        gc.fillRect(723,51,(int)(players[1].getMana()*1.74),17);
-        gc.fillRect(23,651,(int)(players[2].getMana()*1.74),17);
-        gc.fillRect(723,651,(int)(players[3].getMana()*1.74),17);
+        gc.fillRect(23,51,(int)(players[0].getManaPercent()*174),17);
+        gc.fillRect(723,51,(int)(players[1].getManaPercent()*174),17);
+        gc.fillRect(23,651,(int)(players[2].getManaPercent()*174),17);
+        gc.fillRect(723,651,(int)(players[3].getManaPercent()*174),17);
         
         gc.setColor(Color.GREEN);
         gc.fillRect(23,79,(int)(players[0].getStamina()*1.74),17);
@@ -436,7 +436,7 @@ public class Game extends JPanel implements Runnable {
             if(players[x].getLife() > 0){
                 players[x].live(bool_rot[x]);
                 if(bool_fire[x] == true){
-                    players[x].createSprite();
+                    players[x].shoot();
                 }   
                 if(bool_move[x] == true){
                     players[x].move();

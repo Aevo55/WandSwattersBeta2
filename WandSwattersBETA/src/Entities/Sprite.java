@@ -13,6 +13,7 @@ public class Sprite extends Entity{
     private int damage;
     private double knockback;
     private int reload;
+    private int cost;
     private Color colour;
     public Sprite(Coord cor, int _life,int _size, Color col){
         this(cor,new Angle(0),0,_life,_size,col);
@@ -67,7 +68,12 @@ public class Sprite extends Entity{
     public int getReload(){
         return reload;
     }
-    
+    public void setCost(int c){
+        cost = c;
+    }
+    public int getCost(){
+        return cost;
+    }
     //</editor-fold>
     
 }

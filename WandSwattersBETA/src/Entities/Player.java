@@ -19,13 +19,13 @@ public class Player extends Entity{
     private int g = 15;
     private int b = 255;
     private int shield = 0;
-    private int mana = 0;
+    private int mana = 20;
     private int stamina = 100;
     private double stamMul = 1;
     private int cd = 0;
     private Color colour;
     public enum weapon {EXHAUST,FLAME,MISSILE}
-    weapon weap = weapon.EXHAUST;
+    weapon weap = weapon.MISSILE;
     double spray = 1;
     int reload = 0;
     double knockback = 5;
@@ -48,6 +48,9 @@ public class Player extends Entity{
             mulMag(0.985);
         }else{
             mulMag(0.997);
+            if(getMag() > 0){
+                getAim().rotate(new Angle(getMag()*(getRise()/Math.abs(getRise()))*(getRun()/Math.abs(getRun()))));
+            }
         }
         if(getMag()<0.125){
             setMag(0);
@@ -79,7 +82,7 @@ public class Player extends Entity{
             stamina = 100;
         }
     }
-    public void createSprite(){
+    public void shoot(){
         //<editor-fold defaultstate="collapsed" desc="RGB cycle">
         if(b == 255 && g == 15){
             r+=(20);
@@ -103,12 +106,13 @@ public class Player extends Entity{
         if(spray <= 20){
             spray += 2;
         }
-        if(reload <= 0){
+        if(reload <= 0 && getMana() > 0){
             switch(weap){
                 //weapon types
                 case MISSILE:
                     cloud.add(new Missile(aimline, getCol()));
                     reload = cloud.get(cloud.size()-1).getReload();
+                    minMana(1);
                 break;
                 default:
                     weap = Player.weapon.MISSILE;
@@ -171,8 +175,25 @@ public class Player extends Entity{
     public void setMana(int m){
         mana = m;
     }
+    public void minMana(int m){
+        setMana(getMana() - m);
+        if(getMana() < 0){
+            setMana(0);
+        }
+    }
     public int getMana(){
         return mana;
+    }
+    public int getMaxMana(){
+        switch(weap){
+            case MISSILE:
+                return 20;
+            default:
+                return 1;
+        }
+    }
+    public double getManaPercent(){
+        return ((double)mana)/((double)getMaxMana());
     }
     public void setSpray(double s){
         spray = s;

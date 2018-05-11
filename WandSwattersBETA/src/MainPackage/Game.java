@@ -472,7 +472,7 @@ public class Game extends JPanel implements Runnable {
                     if(x != y){
                         for(int z = 0; z < players[y].getCloud().length; z++){
                             if(collideStaticEntity(players[x],players[y].getCloud()[z])){
-                                players[x].setLife(players[x].getLife() - players[y].getCloud()[z].getDamage() - 1);
+                                players[x].minLife(players[y].getCloud()[z].getDamage());
                                 players[y].getCloud()[z].die();
                                 players[x].Accel(players[y].getCloud()[z].copy(),players[y].getCloud()[z].getKnockback());
                                 if(players[x].getLife() <= 0){

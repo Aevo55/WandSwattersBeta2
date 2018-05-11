@@ -11,7 +11,8 @@ import java.awt.*;
  */
 public class Sprite extends Entity{
     private int damage;
-    private double knockback = .9;
+    private double knockback;
+    private int reload;
     private Color colour;
     public Sprite(Coord cor, int _life,int _size, Color col){
         this(cor,new Angle(0),0,_life,_size,col);
@@ -60,6 +61,13 @@ public class Sprite extends Entity{
     public double getKnockback(){
         return knockback;
     }
+    public void setReload(int i){
+        reload = i;
+    }
+    public int getReload(){
+        return reload;
+    }
+    
     //</editor-fold>
     
 }

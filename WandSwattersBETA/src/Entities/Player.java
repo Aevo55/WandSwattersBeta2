@@ -6,7 +6,7 @@
 package Entities;
 import Util.*;
 import DataTypes.*;
-import Entities.Weapons.Missile;
+import Entities.Weapons.*;
 import java.util.ArrayList;
 import java.awt.*;
 /**
@@ -107,8 +107,8 @@ public class Player extends Entity{
             switch(weap){
                 //weapon types
                 case MISSILE:
-                    cloud.add(new Sprite(aimline, 5, 50, 6, getCol()));
-                    reload = 0;
+                    cloud.add(new Missile(aimline, getCol()));
+                    reload = cloud.get(cloud.size()-1).getReload();
                 break;
                 default:
                     weap = Player.weapon.MISSILE;
@@ -118,9 +118,9 @@ public class Player extends Entity{
     }
     public void move(){
         if(stamina > 0){
-            cloud.add(new Sprite(aimline,new Angle(170+Math.random()*20),5,1,4,getCol()));
-            cloud.add(new Sprite(aimline,new Angle(170+Math.random()*20),5,2,4,getCol()));
-            cloud.add(new Sprite(aimline,new Angle(170+Math.random()*20),5,3,4,getCol()));
+            cloud.add(new Exhaust(aimline,new Angle(170+Math.random()*30),5,1,4,getCol()));
+            cloud.add(new Exhaust(aimline,new Angle(170+Math.random()*30),5,2,4,getCol()));
+            cloud.add(new Exhaust(aimline,new Angle(170+Math.random()*30),5,3,4,getCol()));
             Accel(aimline,.25);
             stamina -=4;
             stamMul = 1;
